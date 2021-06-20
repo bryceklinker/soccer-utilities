@@ -54,7 +54,7 @@ resource "azurerm_storage_container" "function_assets" {
 }
 
 resource "azurerm_storage_blob" "function_blob" {
-  name = "${var.name}.zip"
+  name = "${var.name}-${data.archive_file.function_code.output_md5}.zip"
   storage_account_name = azurerm_storage_account.function_app_storage.name
   storage_container_name = azurerm_storage_container.function_assets.name
   source = data.archive_file.function_code.output_path
