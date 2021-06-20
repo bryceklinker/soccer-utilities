@@ -25,6 +25,7 @@
       name: Deploy
       runs-on: ubuntu-20.04
       needs: [verify]
+      environment: prod
       steps:
         - uses: actions/checkout@v2
           name: Checkout
@@ -61,7 +62,7 @@
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
-        - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=${{ github.workspace }}/prod.tfplan
+        - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=prod.tfplan
           name: Terraform Plan
           working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
           env:
@@ -73,7 +74,8 @@
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
-        - run: terraform apply ${{ github.workspace }}/prod.tfplan
+        - run: terraform apply prod.tfplan
+          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
           name: Terraform Apply
           env:
             ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
