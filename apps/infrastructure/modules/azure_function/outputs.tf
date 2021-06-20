@@ -1,5 +1,5 @@
 output "function_app_url" {
-  value = "https://${azurerm_function_app.function_app.default_hostname}"
+  value = "https://${azurerm_function_app.function_app.default_hostname}/api"
 }
 
 output "api_identifier" {

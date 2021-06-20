@@ -13,6 +13,7 @@ async function createApp(): Promise<INestApplication> {
 
 async function createAzureApp(): Promise<INestApplication> {
   const app = await createApp();
+  app.setGlobalPrefix('api');
   return await app.init();
 }
 
