@@ -22,5 +22,5 @@ module "site" {
   location = local.location
   resource_group_name = local.resource_group_name
   audience = module.api.api_identifier
-  site_directory = "${path.cwd}../../../../dist/apps/web-ui"
+  site_directory = "${path.cwd}/../../../../dist/apps/web-ui"
 }
