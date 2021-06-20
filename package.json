@@ -5,7 +5,7 @@
   "scripts": {
     "nx": "nx",
     "start": "nx run-many --target=serve --all --parallel",
-    "build": "nx run-many --target=build --all --parallel",
+    "build": "nx run-many --target=build --all --parallel --prod",
     "test": "nx run-many --target=test --all",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx run-many --target=e2e --all",
