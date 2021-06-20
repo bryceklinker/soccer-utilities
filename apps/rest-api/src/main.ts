@@ -4,11 +4,15 @@ import { NestFactory } from '@nestjs/core';
 import { AzureHttpAdapter } from '@nestjs/azure-func-http';
 
 import { AppModule } from './app/app.module';
+import { JwtGuard } from '@soccer-utilities/nest-auth0';
 
 const isAzureFunction = process.env.IS_AZURE_FUNCTION && Boolean(process.env.IS_AZURE_FUNCTION);
 
 async function createApp(): Promise<INestApplication> {
-  return await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  app.useGlobalGuards(new JwtGuard());
+  return app;
 }
 
 async function createAzureApp(): Promise<INestApplication> {

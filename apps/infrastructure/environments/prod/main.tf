@@ -23,6 +23,7 @@ module "api" {
   location = local.location
   resource_group_name = local.resource_group_name
   api_directory = "${local.dist_directory}/apps/rest-api"
+  auth0_domain = var.auth0_domain
 
   depends_on = [azurerm_resource_group.resource_group]
 }

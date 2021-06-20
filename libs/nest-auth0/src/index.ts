@@ -1,1 +1,1 @@
-export * from './lib/nest-auth0.module';
+export * from './lib';

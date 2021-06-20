@@ -14,6 +14,10 @@ variable "api_directory" {
   type = string
 }
 
+variable "auth0_domain" {
+  type = string
+}
+
 variable "tags" {
   type = map(string)
   default = {}

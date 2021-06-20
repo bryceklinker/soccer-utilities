@@ -107,11 +107,15 @@ resource "azurerm_function_app" "function_app" {
   }
 
   app_settings = {
+    // Runtime Variables
     FUNCTIONS_WORKER_RUNTIME = "node"
     HASH = data.archive_file.function_code.output_md5
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.function_app_storage.name}.blob.core.windows.net/${azurerm_storage_container.function_assets.name}/${azurerm_storage_blob.function_blob.name}${data.azurerm_storage_account_sas.function_app_sas.sas}"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.function_app_insights.instrumentation_key
 
+    // Application Environment Variables
+    ISSUER_URL = "https://${var.auth0_domain}/"
+    AUDIENCE = auth0_resource_server.rest_api_server.identifier
     IS_AZURE_FUNCTION = true
   }
 }
