@@ -11,6 +11,10 @@ locals {
   dist_directory = "${path.cwd}/../../../../dist"
 }
 
+resource "azurerm_resource_group" "resource_group" {
+  location = local.location
+  name = local.resource_group_name
+}
 
 module "api" {
   source = "../../modules/azure_function"
@@ -19,6 +23,8 @@ module "api" {
   location = local.location
   resource_group_name = local.resource_group_name
   api_directory = "${local.dist_directory}/apps/rest-api"
+
+  depends_on = [azurerm_resource_group.resource_group]
 }
 
 module "site" {
@@ -31,4 +37,6 @@ module "site" {
   site_directory = "${local.dist_directory}/apps/web-ui"
   api_url = module.api.function_app_url
   auth0_domain = var.auth0_domain
+
+  depends_on = [azurerm_resource_group.resource_group, module.api]
 }
