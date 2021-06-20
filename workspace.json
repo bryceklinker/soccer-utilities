@@ -151,10 +151,6 @@
       }
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/nest"
-  },
-  "defaultProject": "rest-api",
   "generators": {
     "@nrwl/react": {
       "application": {
