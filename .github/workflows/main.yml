@@ -31,7 +31,7 @@
 
         - run: npm install
           name: Install Function App Packages
-          working-directory: ${{ github.workspace }}/dist/rest-api
+          working-directory: ${{ github.workspace }}/dist/apps/rest-api
 
         - run: terraform init
           name: Initialize Terraform
