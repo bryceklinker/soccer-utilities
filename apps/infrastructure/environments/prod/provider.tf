@@ -10,6 +10,13 @@ terraform {
       version = "=0.21.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name = "terraform-storage"
+    storage_account_name = "stklinkerterraformstate"
+    container_name = "soccer"
+    key = "prod.tfstate"
+  }
 }
 
 
