@@ -29,6 +29,10 @@
         - run: npm run build
           name: Build Applications
 
+        - run: npm install
+          name: Install Function App Packages
+          working-directory: ${{ github.workspace }}/dist/rest-api
+
         - run: terraform init
           name: Initialize Terraform
           working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
