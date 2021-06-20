@@ -58,14 +58,14 @@ resource "auth0_client" "site_client" {
   is_first_party = true
 
   allowed_origins = [
-    azurerm_storage_account.site_storage.primary_web_host
+    "https://${azurerm_storage_account.site_storage.primary_web_host}"
   ]
 
   callbacks = [
-    azurerm_storage_account.site_storage.primary_web_host
+    "https://${azurerm_storage_account.site_storage.primary_web_host}"
   ]
 
   allowed_logout_urls = [
-    azurerm_storage_account.site_storage.primary_web_host
+    "https://${azurerm_storage_account.site_storage.primary_web_host}"
   ]
 }
