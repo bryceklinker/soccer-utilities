@@ -38,8 +38,8 @@ resource "azurerm_app_service_plan" "function_app_plan" {
   kind = "FunctionApp"
 
   sku {
-    size = "Dynamic"
-    tier = "Y1"
+    size = "Y1"
+    tier = "Dynamic"
   }
 
   tags = var.tags
