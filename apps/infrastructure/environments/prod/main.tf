@@ -1,3 +1,7 @@
+variable "auth0_domain" {
+  type = string
+}
+
 locals {
   app_name = "soccer"
   env_name = "prod"
@@ -23,4 +27,6 @@ module "site" {
   resource_group_name = local.resource_group_name
   audience = module.api.api_identifier
   site_directory = "${path.cwd}/../../../../dist/apps/web-ui"
+  api_url = module.api.function_app_url
+  auth0_domain = var.auth0_domain
 }

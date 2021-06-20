@@ -33,6 +33,24 @@ resource "azurerm_storage_blob" "site_content" {
   type = "Block"
 }
 
+resource "azurerm_storage_blob" "settings_json" {
+  storage_account_name = azurerm_storage_account.site_storage.name
+  storage_container_name = "$web"
+
+  name = "settings.json"
+  content_type = "text/json"
+  source_content = jsonencode({
+    "api": {
+      "url": var.api_url
+    },
+    "auth": {
+      "domain": var.auth0_domain
+      "client_id": auth0_client.site_client.client_id
+    }
+  })
+  type = "Block"
+}
+
 resource "auth0_client" "site_client" {
   name = "${var.name} Client"
   oidc_conformant = true
