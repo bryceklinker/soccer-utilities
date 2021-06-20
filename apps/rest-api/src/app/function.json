@@ -12,5 +12,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "./main.js"
+  "scriptFile": "../main.js"
 }

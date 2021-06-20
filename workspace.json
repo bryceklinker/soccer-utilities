@@ -16,7 +16,7 @@
             "generatePackageJson": true,
             "assets": [
               "apps/rest-api/src/assets",
-              "apps/rest-api/src/function.json",
+              "apps/rest-api/src/app/function.json",
               "apps/rest-api/src/host.json"
             ]
           },
