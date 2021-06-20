@@ -74,6 +74,7 @@ resource "azurerm_function_app" "function_app" {
     HASH = data.archive_file.function_code.output_md5
     WEBSITE_RUN_FROM_PACKAGE = azurerm_storage_blob.function_blob.url
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.function_app_insights.instrumentation_key
+    IS_AZURE_FUNCTION = true
   }
 }
 
