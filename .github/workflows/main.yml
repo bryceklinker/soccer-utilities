@@ -1,8 +1,30 @@
   on: [push]
   jobs:
-    build_and_test:
-      name: Build and Test
+    verify:
+      name: Verify
       runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+          name: Checkout
+
+        - uses: actions/setup-node@v2
+          name: Setup Node
+          with:
+            node-version: '14'
+
+        - run: npm ci
+          name: Install Node Packages
+
+        - run: npm test
+          name: Run Tests
+
+        - run: npm run e2e
+          name: Run End-to-End Tests
+
+    deploy:
+      name: Deploy
+      runs-on: ubuntu-20.04
+      needs: [verify]
       steps:
         - uses: actions/checkout@v2
           name: Checkout
@@ -19,12 +41,6 @@
 
         - run: npm ci
           name: Install Node Packages
-
-        - run: npm test
-          name: Run Tests
-
-        - run: npm run e2e
-          name: Run End-to-End Tests
 
         - run: npm run build
           name: Build Applications
