@@ -4,6 +4,38 @@ data "archive_file" "function_code" {
   output_path = "${path.module}/functions/${var.name}.zip"
 }
 
+data "azurerm_storage_account_sas" "function_app_sas" {
+  connection_string = azurerm_storage_account.function_app_storage.primary_connection_string
+  https_only = true
+  start = "2021-06-20"
+  expiry = "2021-09-20"
+
+
+  resource_types {
+    container = false
+    object = true
+    service = false
+  }
+
+  permissions {
+    add = false
+    create = false
+    delete = false
+    list = false
+    process = false
+    read = true
+    update = false
+    write = false
+  }
+
+  services {
+    blob = true
+    file = false
+    queue = false
+    table = false
+  }
+}
+
 resource "azurerm_storage_account" "function_app_storage" {
   name = "st${replace(var.name, "-", "")}"
   location = var.location
@@ -36,6 +68,7 @@ resource "azurerm_app_service_plan" "function_app_plan" {
   name = "plan-${var.name}"
   resource_group_name = var.resource_group_name
   kind = "FunctionApp"
+  reserved = true
 
   sku {
     size = "Y1"
@@ -63,17 +96,22 @@ resource "azurerm_function_app" "function_app" {
   app_service_plan_id = azurerm_app_service_plan.function_app_plan.id
   storage_account_name = azurerm_storage_account.function_app_storage.name
   storage_account_access_key = azurerm_storage_account.function_app_storage.primary_access_key
+  os_type = "linux"
 
   tags = var.tags
   version = "~3"
 
+  site_config {
+    linux_fx_version = "node|14"
+    use_32_bit_worker_process = false
+  }
+
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "node"
-    WEBSITE_NODE_DEFAULT_VERSION = "~14"
-    FUNCTION_APP_EDIT_MODE = "readonly"
     HASH = data.archive_file.function_code.output_md5
-    WEBSITE_RUN_FROM_PACKAGE = azurerm_storage_blob.function_blob.url
+    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.function_app_storage.name}.blob.core.windows.net/${azurerm_storage_container.function_assets.name}/${azurerm_storage_blob.function_blob.name}${data.azurerm_storage_account_sas.function_app_sas.sas}"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.function_app_insights.instrumentation_key
+
     IS_AZURE_FUNCTION = true
   }
 }
