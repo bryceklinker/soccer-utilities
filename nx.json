@@ -1,7 +1,7 @@
 {
   "npmScope": "soccer-utilities",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "package.json": {
@@ -21,6 +21,13 @@
   "projects": {
     "rest-api": {
       "tags": []
+    },
+    "web-ui": {
+      "tags": []
+    },
+    "web-ui-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-ui"]
     }
   }
 }
