@@ -1,0 +1,49 @@
+  on: [push]
+  jobs:
+    job: build_and_test
+      name: Build and Test
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+          name: Checkout
+
+        - uses: actions/setup-node@v2
+          name: Setup Node
+          with:
+            node-version: '14'
+
+        - uses: hashicorp/setup-terraform@v1
+          name: Setup Terraform
+          with:
+            terraform_version: 1.0.0
+
+        - run: npm ci
+          name: Install Node Packages
+
+        - run: npm test
+          name: Run Tests
+
+        - run: npm run e2e
+          name: Run End-to-End Tests
+
+        - run: npm run build
+          name: Build Applications
+
+        - run: terraform init
+          name: Initialize Terraform
+          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
+          env:
+            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+        - run: terraform plan -no-color
+          name: Generate Terraform Plan
+          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
+          env:
+            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
