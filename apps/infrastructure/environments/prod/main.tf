@@ -8,6 +8,7 @@ locals {
   name = "${local.env_name}-${local.app_name}"
   location = "Central US"
   resource_group_name = "rg-${local.name}"
+  dist_directory = "${path.cwd}/../../../../dist"
 }
 
 
@@ -17,6 +18,7 @@ module "api" {
   name = "${local.name}-api"
   location = local.location
   resource_group_name = local.resource_group_name
+  api_directory = "${local.dist_directory}/apps/rest-api"
 }
 
 module "site" {
@@ -26,7 +28,7 @@ module "site" {
   location = local.location
   resource_group_name = local.resource_group_name
   audience = module.api.api_identifier
-  site_directory = "${path.cwd}/../../../../dist/apps/web-ui"
+  site_directory = "${local.dist_directory}/apps/web-ui"
   api_url = module.api.function_app_url
   auth0_domain = var.auth0_domain
 }
