@@ -5,6 +5,7 @@ import { AzureHttpAdapter } from '@nestjs/azure-func-http';
 
 import { AppModule } from './app/app.module';
 import { JwtGuard } from '@soccer-utilities/nest-auth0';
+import * as appInsights from 'applicationinsights';
 
 const isAzureFunction = process.env.IS_AZURE_FUNCTION && Boolean(process.env.IS_AZURE_FUNCTION);
 
@@ -30,6 +31,7 @@ async function createLocalApp(): Promise<INestApplication> {
 }
 
 function azureFunctionHandler(context: Context, req: HttpRequest) {
+  appInsights.setup().start();
   AzureHttpAdapter.handle(createAzureApp, context, req);
 }
 
