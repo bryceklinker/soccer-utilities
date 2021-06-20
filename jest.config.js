@@ -1,3 +1,7 @@
 module.exports = {
-  projects: ['<rootDir>/apps/rest-api', '<rootDir>/apps/web-ui'],
+  projects: [
+    '<rootDir>/apps/rest-api',
+    '<rootDir>/apps/web-ui',
+    '<rootDir>/libs/nest-auth0',
+  ],
 };

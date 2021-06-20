@@ -1,6 +1,31 @@
 {
   "version": 2,
   "projects": {
+    "nest-auth0": {
+      "root": "libs/nest-auth0",
+      "sourceRoot": "libs/nest-auth0/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/nest-auth0/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/nest-auth0"
+          ],
+          "options": {
+            "jestConfig": "libs/nest-auth0/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "rest-api": {
       "root": "apps/rest-api",
       "sourceRoot": "apps/rest-api/src",
@@ -8,7 +33,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/rest-api",
             "main": "apps/rest-api/src/main.ts",
@@ -37,12 +64,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/rest-api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/rest-api/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/rest-api"],
+          "outputs": [
+            "coverage/apps/rest-api"
+          ],
           "options": {
             "jestConfig": "apps/rest-api/jest.config.js",
             "passWithNoTests": true
@@ -57,15 +88,22 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/web-ui",
             "index": "apps/web-ui/src/index.html",
             "main": "apps/web-ui/src/main.tsx",
             "polyfills": "apps/web-ui/src/polyfills.ts",
             "tsConfig": "apps/web-ui/tsconfig.app.json",
-            "assets": ["apps/web-ui/src/favicon.ico", "apps/web-ui/src/assets"],
-            "styles": ["apps/web-ui/src/styles.scss"],
+            "assets": [
+              "apps/web-ui/src/favicon.ico",
+              "apps/web-ui/src/assets"
+            ],
+            "styles": [
+              "apps/web-ui/src/styles.scss"
+            ],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -110,12 +148,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/web-ui/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/web-ui/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/web-ui"],
+          "outputs": [
+            "coverage/apps/web-ui"
+          ],
           "options": {
             "jestConfig": "apps/web-ui/jest.config.js",
             "passWithNoTests": true
@@ -144,7 +186,9 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/web-ui-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/web-ui-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
