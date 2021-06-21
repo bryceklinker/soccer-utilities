@@ -57,6 +57,12 @@ resource "auth0_client" "site_client" {
   app_type = "spa"
   is_first_party = true
 
+  grant_types = [
+    "password",
+    "authorization_code",
+    "refresh_token"
+  ]
+
   allowed_origins = [
     "https://${azurerm_storage_account.site_storage.primary_web_host}"
   ]

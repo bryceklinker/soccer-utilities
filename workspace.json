@@ -1,6 +1,27 @@
 {
   "version": 2,
   "projects": {
+    "common-ui": {
+      "root": "libs/common-ui",
+      "sourceRoot": "libs/common-ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/common-ui/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/common-ui"],
+          "options": {
+            "jestConfig": "libs/common-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "nest-auth0": {
       "root": "libs/nest-auth0",
       "sourceRoot": "libs/nest-auth0/src",
@@ -71,6 +92,27 @@
         }
       }
     },
+    "settings-ui": {
+      "root": "libs/settings-ui",
+      "sourceRoot": "libs/settings-ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/settings-ui/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/settings-ui"],
+          "options": {
+            "jestConfig": "libs/settings-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "web-ui": {
       "root": "apps/web-ui",
       "sourceRoot": "apps/web-ui/src",
@@ -92,12 +134,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/web-ui/src/environments/environment.ts",
-                  "with": "apps/web-ui/src/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -188,5 +224,8 @@
         "strict": true
       }
     }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
   }
 }

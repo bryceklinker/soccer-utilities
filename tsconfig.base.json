@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@soccer-utilities/nest-auth0": ["libs/nest-auth0/src/index.ts"]
+      "@soccer-utilities/common-ui": ["libs/common-ui/src/index.ts"],
+      "@soccer-utilities/nest-auth0": ["libs/nest-auth0/src/index.ts"],
+      "@soccer-utilities/settings-ui": ["libs/settings-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -19,10 +19,16 @@
     }
   },
   "projects": {
+    "common-ui": {
+      "tags": []
+    },
     "nest-auth0": {
       "tags": []
     },
     "rest-api": {
+      "tags": []
+    },
+    "settings-ui": {
       "tags": []
     },
     "web-ui": {
