@@ -37,7 +37,7 @@ resource "azurerm_storage_blob" "settings_json" {
   storage_account_name = azurerm_storage_account.site_storage.name
   storage_container_name = "$web"
 
-  name = "settings.json"
+  name = "assets/settings.json"
   content_type = "text/json"
   source_content = jsonencode({
     "api": {
