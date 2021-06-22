@@ -92,27 +92,6 @@
         }
       }
     },
-    "settings-ui": {
-      "root": "libs/settings-ui",
-      "sourceRoot": "libs/settings-ui/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/settings-ui/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/settings-ui"],
-          "options": {
-            "jestConfig": "libs/settings-ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "web-ui": {
       "root": "apps/web-ui",
       "sourceRoot": "apps/web-ui/src",

@@ -28,9 +28,6 @@
     "rest-api": {
       "tags": []
     },
-    "settings-ui": {
-      "tags": []
-    },
     "web-ui": {
       "tags": []
     },

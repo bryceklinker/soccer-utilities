@@ -21,6 +21,9 @@
         - run: npm run e2e
           name: Run End-to-End Tests
           env:
+            CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+            CYPRESS_AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+            CYPRESS_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
             CYPRESS_AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
             CYPRESS_AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
 

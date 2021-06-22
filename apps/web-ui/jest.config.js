@@ -1,6 +1,9 @@
 module.exports = {
   displayName: 'web-ui',
   preset: '../../jest.preset.js',
+  setupFilesAfterEnv: [
+    '<rootDir>/src/testing/setup-tests.ts'
+  ],
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
     '^.+\\.[tj]sx?$': 'babel-jest',

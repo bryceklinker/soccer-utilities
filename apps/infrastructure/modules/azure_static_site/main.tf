@@ -45,7 +45,8 @@ resource "azurerm_storage_blob" "settings_json" {
     },
     "auth": {
       "domain": var.auth0_domain
-      "client_id": auth0_client.site_client.client_id
+      "clientId": auth0_client.site_client.client_id,
+      "audience": var.audience
     }
   })
   type = "Block"
@@ -64,14 +65,17 @@ resource "auth0_client" "site_client" {
   ]
 
   allowed_origins = [
-    "https://${azurerm_storage_account.site_storage.primary_web_host}"
+    "https://${azurerm_storage_account.site_storage.primary_web_host}",
+    "http://localhost:4200"
   ]
 
   callbacks = [
-    "https://${azurerm_storage_account.site_storage.primary_web_host}"
+    "https://${azurerm_storage_account.site_storage.primary_web_host}",
+    "http://localhost:4200"
   ]
 
   allowed_logout_urls = [
-    "https://${azurerm_storage_account.site_storage.primary_web_host}"
+    "https://${azurerm_storage_account.site_storage.primary_web_host}",
+    "http://localhost:4200"
   ]
 }
