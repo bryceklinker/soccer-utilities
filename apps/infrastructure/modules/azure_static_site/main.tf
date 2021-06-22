@@ -78,4 +78,9 @@ resource "auth0_client" "site_client" {
     "https://${azurerm_storage_account.site_storage.primary_web_host}",
     "http://localhost:4200"
   ]
+
+  web_origins = [
+    "https://${azurerm_storage_account.site_storage.primary_web_host}",
+    "http://localhost:4200"
+  ]
 }
