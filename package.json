@@ -6,7 +6,7 @@
     "nx": "nx",
     "start": "nx run-many --target=serve --all --parallel",
     "build": "nx run-many --target=build --all --parallel --prod",
-    "postbuild": "rmiraf ./dist/apps/web-ui/assets/settings.json",
+    "postbuild": "rimraf ./dist/apps/web-ui/assets/settings.json",
     "test": "nx run-many --target=test --all",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx run-many --target=e2e --all",
