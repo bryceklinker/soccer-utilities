@@ -1,5 +1,5 @@
 import {ThemeProvider} from '@material-ui/core/styles'
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent} from 'react';
 import { PaletteType } from '@material-ui/core';
 import { createSoccerTheme } from './create-soccer-theme';
 
