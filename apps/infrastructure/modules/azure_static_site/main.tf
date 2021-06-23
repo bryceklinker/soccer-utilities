@@ -57,7 +57,7 @@ resource "auth0_client" "site_client" {
   oidc_conformant = true
   app_type = "spa"
   is_first_party = true
-  token_endpoint_auth_method = "client_secret_post"
+  token_endpoint_auth_method = "none"
 
   grant_types = [
     "password",

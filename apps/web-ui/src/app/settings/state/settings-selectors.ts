@@ -10,4 +10,8 @@ export const selectSettings = createSelector(
   s => s.settings
 );
 
-export const selectIsLoadingSettings = selectIsLoading(SettingsActions.load.request);
+export const selectIsLoadingSettings = createSelector(
+  selectSettings,
+  selectIsLoading(SettingsActions.load.request),
+  (settings, isLoading) => isLoading || settings == null
+)

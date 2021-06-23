@@ -1,46 +1,40 @@
-import { FunctionComponent, useCallback, useEffect } from 'react';
+import { FunctionComponent, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useRootDispatch, useRootSelector } from '../../state';
-import { selectIsLoadingSettings, selectSettings, SettingsActions, SettingsModel } from '../../settings';
-import { Auth0Provider } from '@auth0/auth0-react';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { ShellWithAuth } from './ShellWithAuth';
 import { ShellLoading } from './ShellLoading';
+import { AuthActions } from '../../auth';
+import { ShellView } from './ShellView';
+import { selectApplicationUser } from '../../auth/state/auth-selectors';
 
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
-  const isLoadingSettings = useRootSelector(selectIsLoadingSettings);
-  const settings = useRootSelector(selectSettings);
-  const history = useHistory();
-
-  const handleRedirectCallback = useCallback((appState: any) => {
-    history.replace((appState && appState.returnTo) || window.location.pathname);
-  }, [history]);
+  const applicationUser = useRootSelector(selectApplicationUser);
+  const {isLoading, isAuthenticated, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently} = useAuth0();
 
   useEffect(() => {
-    if (settings || isLoadingSettings)
+    if (isLoading || user) {
       return;
+    }
 
-    (async function loadSettings() {
-      dispatch(SettingsActions.load.request());
-      const response = await axios.get<SettingsModel>('/assets/settings.json');
-      dispatch(SettingsActions.load.success(response.data));
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('code')) {
+      handleRedirectCallback().catch(err => console.error(err));
+    } else {
+      loginWithRedirect().catch(err => console.error(err));
+    }
+  }, [isLoading, handleRedirectCallback, user, loginWithRedirect, applicationUser, dispatch]);
+
+  useEffect(() => {
+    (async function syncUserWithState() {
+      dispatch(AuthActions.loadUser.request());
+      const accessToken = await getAccessTokenSilently();
+      dispatch(AuthActions.loadUser.success({...user, accessToken}));
     })();
-  }, [isLoadingSettings, settings]);
+  }, [user, dispatch])
 
-  if (!settings) {
+  if (isLoading || !isAuthenticated || !user) {
     return <ShellLoading />;
   }
 
-  const { auth } = settings;
-  return (
-    <Auth0Provider domain={auth.domain}
-                   clientId={auth.clientId}
-                   audience={auth.audience}
-                   scope={'openid profile'}
-                   onRedirectCallback={handleRedirectCallback}
-                   redirectUri={window.location.origin}>
-      <ShellWithAuth />
-    </Auth0Provider>
-  );
+  return <ShellView />
 };
