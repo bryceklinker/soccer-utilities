@@ -6,6 +6,8 @@ import { AuthActions } from '../../auth';
 import { ShellView } from './ShellView';
 import { selectApplicationUser } from '../../auth/state/auth-selectors';
 
+const isCypressTest = !!(window as any).Cypress;
+
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
   const applicationUser = useRootSelector(selectApplicationUser);
@@ -19,20 +21,40 @@ export const ShellContainer: FunctionComponent = () => {
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has('code')) {
       handleRedirectCallback().catch(err => console.error(err));
-    } else {
+    } else if (!isCypressTest) {
       loginWithRedirect().catch(err => console.error(err));
     }
-  }, [isLoading, handleRedirectCallback, user, loginWithRedirect, applicationUser, dispatch]);
+  }, [isLoading, handleRedirectCallback, user, loginWithRedirect]);
 
   useEffect(() => {
-    (async function syncUserWithState() {
+    async function syncUserWithState() {
       dispatch(AuthActions.loadUser.request());
       const accessToken = await getAccessTokenSilently();
       dispatch(AuthActions.loadUser.success({...user, accessToken}));
-    })();
+    }
+
+    function syncCypressUserWithState() {
+      const cypressUser = localStorage.getItem('auth0-cypress');
+      if (!cypressUser) {
+        return;
+      }
+
+      const storedUser = JSON.parse(cypressUser);
+      dispatch(AuthActions.loadUser.success({
+        ...storedUser.body.decodedToken.user,
+        accessToken: storedUser.body.access_token
+      }))
+    }
+
+    if (isCypressTest) {
+      syncCypressUserWithState();
+    } else {
+      syncUserWithState().catch(err => console.error(err));
+    }
+
   }, [user, dispatch])
 
-  if (isLoading || !isAuthenticated || !user) {
+  if (!applicationUser) {
     return <ShellLoading />;
   }
 

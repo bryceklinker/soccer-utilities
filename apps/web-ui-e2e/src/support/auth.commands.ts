@@ -60,5 +60,6 @@ Cypress.Commands.add('login', (username = DEFAULT_CREDENTIALS.username, password
     };
 
     window.localStorage.setItem('auth0-cypress', JSON.stringify(item));
+    cy.visit('/');
   });
 });
