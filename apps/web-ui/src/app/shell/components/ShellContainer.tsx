@@ -11,7 +11,7 @@ const isCypressTest = !!(window as any).Cypress;
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
   const applicationUser = useRootSelector(selectApplicationUser);
-  const {isLoading, isAuthenticated, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently} = useAuth0();
+  const {isLoading, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently} = useAuth0();
 
   useEffect(() => {
     if (isLoading || user) {

@@ -29,7 +29,8 @@
       "tags": []
     },
     "web-ui": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": ["rest-api"]
     },
     "web-ui-e2e": {
       "tags": [],

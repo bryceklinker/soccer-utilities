@@ -6,13 +6,13 @@ const DEFAULT_CREDENTIALS = {
 };
 
 Cypress.Commands.add('login', (username = DEFAULT_CREDENTIALS.username, password = DEFAULT_CREDENTIALS.password) => {
-  cy.log(`Logging in as ${username}`);
   const auth_domain = Cypress.env('AUTH0_DOMAIN');
   const client_id = Cypress.env('AUTH0_CLIENT_ID');
   const client_secret = Cypress.env('AUTH0_CLIENT_SECRET');
   const audience = Cypress.env('AUTH0_AUDIENCE');
   const scope = 'openid profile';
 
+  cy.visit('/');
   cy.request({
     method: 'POST',
     url: `https://${auth_domain}/oauth/token`,
