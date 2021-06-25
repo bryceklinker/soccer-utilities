@@ -22,6 +22,27 @@
         }
       }
     },
+    "core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "nest-auth0": {
       "root": "libs/nest-auth0",
       "sourceRoot": "libs/nest-auth0/src",
@@ -87,6 +108,27 @@
           "outputs": ["coverage/apps/rest-api"],
           "options": {
             "jestConfig": "apps/rest-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "testing-support": {
+      "root": "libs/testing-support",
+      "sourceRoot": "libs/testing-support/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/testing-support/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/testing-support"],
+          "options": {
+            "jestConfig": "libs/testing-support/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -187,10 +229,7 @@
           "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
           "options": {
-            "commands": [
-              "nx run web-ui:serve",
-              "nx run rest-api:serve"
-            ],
+            "commands": ["nx run web-ui:serve", "nx run rest-api:serve"],
             "parallel": true,
             "readyWhen": "vendor.js"
           }

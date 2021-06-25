@@ -10,6 +10,11 @@ export const selectSettings = createSelector(
   s => s.settings
 );
 
+export const selectSettingsApiUrl = createSelector(
+  selectSettings,
+  settings => settings?.api?.url
+);
+
 export const selectIsLoadingSettings = createSelector(
   selectSettings,
   selectIsLoading(SettingsActions.load.request),

@@ -4,5 +4,7 @@ module.exports = {
     '<rootDir>/apps/web-ui',
     '<rootDir>/libs/nest-auth0',
     '<rootDir>/libs/common-ui',
+    '<rootDir>/libs/core',
+    '<rootDir>/libs/testing-support',
   ],
 };

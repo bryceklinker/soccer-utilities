@@ -22,10 +22,16 @@
     "common-ui": {
       "tags": []
     },
+    "core": {
+      "tags": []
+    },
     "nest-auth0": {
       "tags": []
     },
     "rest-api": {
+      "tags": []
+    },
+    "testing-support": {
       "tags": []
     },
     "web-ui": {

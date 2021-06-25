@@ -1,12 +1,19 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore} from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
 import { rootReducer } from './root-reducer';
+import { rootSaga } from './root-saga';
 
 export function configureRootStore() {
-  return configureStore({
+  const sagaMiddleware = createSagaMiddleware();
+  const store = configureStore({
     devTools: true,
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-      thunk: false
-    })
+    middleware: (getDefaultMiddleware) =>
+      [
+        ...getDefaultMiddleware({thunk: false}),
+        sagaMiddleware
+      ]
   });
+  sagaMiddleware.run(rootSaga);
+  return store;
 }
