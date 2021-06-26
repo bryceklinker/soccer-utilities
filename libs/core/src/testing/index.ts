@@ -54,9 +54,18 @@ function createGameSchedule(
   };
 }
 
+function createMany<T>(factory: () => T, count: number): Array<T> {
+  const items: Array<T> = [];
+  for (let i = 0; i < count; i++) {
+    items.push(factory());
+  }
+  return items;
+}
+
 export const ModelFactory = {
   createAgeGroup,
   createReferee,
   createGame,
   createGameSchedule,
+  createMany
 };

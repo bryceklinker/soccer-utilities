@@ -19,6 +19,7 @@
       "@soccer-utilities/core": ["libs/core/src/index.ts"],
       "@soccer-utilities/core/testing": ["libs/core/src/testing/index.ts"],
       "@soccer-utilities/nest-auth0": ["libs/nest-auth0/src/index.ts"],
+      "@soccer-utilities/schedules-ui": ["libs/schedules-ui/src/index.ts"],
       "@soccer-utilities/testing-support": ["libs/testing-support/src/index.ts"]
     }
   },

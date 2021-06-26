@@ -113,6 +113,27 @@
         }
       }
     },
+    "schedules-ui": {
+      "root": "libs/schedules-ui",
+      "sourceRoot": "libs/schedules-ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/schedules-ui/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/schedules-ui"],
+          "options": {
+            "jestConfig": "libs/schedules-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "testing-support": {
       "root": "libs/testing-support",
       "sourceRoot": "libs/testing-support/src",

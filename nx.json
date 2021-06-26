@@ -31,6 +31,9 @@
     "rest-api": {
       "tags": []
     },
+    "schedules-ui": {
+      "tags": []
+    },
     "testing-support": {
       "tags": []
     },
