@@ -1,6 +1,9 @@
 module.exports = {
   displayName: 'core',
   preset: '../../jest.preset.js',
+  setupFilesAfterEnv: [
+    '<rootDir>/src/testing/setup-tests.ts'
+  ],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

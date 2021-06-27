@@ -1,9 +1,9 @@
-import { LoadingState } from './loading-state';
 import { AnyAction } from 'redux';
-import { getAsyncActionSetBaseType, isFailedAction, isRequestAction, isSuccessAction } from '../../state';
+import { getAsyncActionSetBaseType, isFailedAction, isRequestAction, isSuccessAction } from '../../state/create-async-action-set';
+import { LoadingState } from './loading-state';
 
-
-export function loadingReducer(state: LoadingState | undefined = {}, action: AnyAction) {
+export const loadingInitialState: LoadingState = {};
+export function loadingReducer(state: LoadingState | undefined = loadingInitialState, action: AnyAction) {
   const baseType = getAsyncActionSetBaseType(action);
   const count = state[baseType] || 0;
   if (isRequestAction(action)) {

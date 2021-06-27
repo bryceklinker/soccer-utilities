@@ -1,8 +1,9 @@
 import { Action } from 'redux';
 import createMockStore, { MockStore } from 'redux-mock-store';
-import { RootState, rootSaga } from '../app/state';
 import { generateRootStateFromActions } from './generate-state-from-actions';
 import createSagaMiddleware from 'redux-saga';
+import { RootState } from '../app/state/root-state';
+import { rootSaga } from '../app/state/root-saga';
 
 export interface TestingStore extends MockStore<RootState> {
 

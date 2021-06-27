@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { CurrentScheduleState } from './current-schedule-state';
 import { CurrentScheduleActions } from './current-schedule-actions';
+import { CurrentScheduleState } from './current-schedule-state';
 
-const initialState: CurrentScheduleState = {
+export const currentScheduleInitialState: CurrentScheduleState = {
   games: [],
   lastUpdated: null
 };
 
-export const currentScheduleReducer = createReducer(initialState, builder => builder
+export const currentScheduleReducer = createReducer(currentScheduleInitialState, builder => builder
   .addCase(CurrentScheduleActions.load.success, (state, {payload}) => ({...state, ...payload}))
 );

@@ -1,5 +1,5 @@
-import { createAsyncActionSet, emptyPrepare } from '../../state';
 import { SettingsModel } from './settings-model';
+import { createAsyncActionSet, emptyPrepare } from '../../state/create-async-action-set';
 
 export const SettingsActions = {
   load: createAsyncActionSet('[Settings] Load',

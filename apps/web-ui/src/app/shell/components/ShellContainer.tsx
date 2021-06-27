@@ -1,17 +1,18 @@
 import { FunctionComponent, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useRootDispatch, useRootSelector } from '../../state';
-import { ShellLoading } from './ShellLoading';
-import { AuthActions } from '../../auth';
 import { ShellView } from './ShellView';
+import { LoadingIndicator } from '@soccer-utilities/common-ui';
+import { Typography } from '@material-ui/core';
+import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
 import { selectApplicationUser } from '../../auth/state/auth-selectors';
+import { AuthActions } from '../../auth/state/auth-actions';
 
 const isCypressTest = !!(window as any).Cypress;
 
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
   const applicationUser = useRootSelector(selectApplicationUser);
-  const {isLoading, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently} = useAuth0();
+  const { isLoading, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     if (isLoading || user) {
@@ -30,7 +31,7 @@ export const ShellContainer: FunctionComponent = () => {
     async function syncUserWithState() {
       dispatch(AuthActions.loadUser.request());
       const accessToken = await getAccessTokenSilently();
-      dispatch(AuthActions.loadUser.success({...user, accessToken}));
+      dispatch(AuthActions.loadUser.success({ ...user, accessToken }));
     }
 
     function syncCypressUserWithState() {
@@ -43,7 +44,7 @@ export const ShellContainer: FunctionComponent = () => {
       dispatch(AuthActions.loadUser.success({
         ...storedUser.body.decodedToken.user,
         accessToken: storedUser.body.access_token
-      }))
+      }));
     }
 
     if (isCypressTest) {
@@ -52,11 +53,16 @@ export const ShellContainer: FunctionComponent = () => {
       syncUserWithState().catch(err => console.error(err));
     }
 
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   if (!applicationUser) {
-    return <ShellLoading />;
+    return (
+      <LoadingIndicator show center>
+        <Typography variant={'h4'}>Preparing Your Application...</Typography>
+      </LoadingIndicator>
+    );
   }
 
-  return <ShellView />
-};
+  return <ShellView />;
+}
+;

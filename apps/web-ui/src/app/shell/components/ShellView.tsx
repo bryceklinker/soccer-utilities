@@ -5,6 +5,8 @@ import { WelcomePage } from '../../welcome/Welcome';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
 import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
+import { ROUTES } from '../routing';
+import { CurrentSchedulePage } from '../../current-schedule/pages/CurrentSchedulePage';
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -25,14 +27,17 @@ export function ShellView() {
         <ShellAppBar onNavigationToggle={handleNavigationToggled} />
         <ShellNavigation isOpen={isNavigationOpen} onClose={handleNavigationClosed} />
 
-        <ColumnFlexBox display={'flex'} flex={1} flexDirection={'column'} >
+        <ColumnFlexBox display={'flex'} flex={1} flexDirection={'column'}>
           <Toolbar />
           <ColumnFlexBox className={styles.mainContent}>
             <Switch>
-              <Route path={'/welcome'}>
+              <Route path={ROUTES.WELCOME}>
                 <WelcomePage />
               </Route>
-              <Redirect from={'**'} to={'/welcome'} />
+              <Route path={ROUTES.CURRENT_SCHEDULE}>
+                <CurrentSchedulePage />
+              </Route>
+              <Redirect from={ROUTES.REDIRECT} to={ROUTES.WELCOME} />
             </Switch>
           </ColumnFlexBox>
         </ColumnFlexBox>

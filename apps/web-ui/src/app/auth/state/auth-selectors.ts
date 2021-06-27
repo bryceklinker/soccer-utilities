@@ -1,11 +1,12 @@
-import { RootState } from '../../state';
-import { AuthState } from './auth-state';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectIsLoading } from '../../loading';
 import { AuthActions } from './auth-actions';
+import { authInitialState } from './auth-reducer';
+import { AuthState } from './auth-state';
+import { RootState } from '../../state/root-state';
+import { selectIsLoading } from '../../loading/state/loading-selectors';
 
 function selectAuthState(state: RootState): AuthState {
-  return state.auth;
+  return state?.auth || authInitialState;
 }
 
 export const selectApplicationUser = createSelector(
@@ -14,3 +15,7 @@ export const selectApplicationUser = createSelector(
 );
 
 export const selectIsApplicationUserLoading = selectIsLoading(AuthActions.loadUser.request);
+export const selectUserAccessToken = createSelector(
+  selectApplicationUser,
+  state => state?.accessToken
+)

@@ -1,6 +1,6 @@
 import { generateStateFromActions, ModelFactory } from '../../../testing';
-import { AuthActions } from '../../auth';
 import { loadingReducer } from './loading-reducer';
+import { AuthActions } from '../../auth/state/auth-actions';
 
 describe('loadingReducer', () => {
   test('when request action received then action type count incremented', () => {

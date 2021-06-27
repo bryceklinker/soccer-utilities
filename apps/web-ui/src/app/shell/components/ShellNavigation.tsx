@@ -1,12 +1,14 @@
 import { FunctionComponent } from 'react';
-import { Divider, Drawer, makeStyles, Toolbar } from '@material-ui/core';
+import { Divider, Drawer, List, ListItem, makeStyles, Toolbar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { ColumnFlexBox } from '@soccer-utilities/common-ui';
+import { ROUTES } from '../routing';
 
 const useStyles = makeStyles(() => ({
   drawer: {
     width: 240
   }
-}))
+}));
 
 export type ShellNavigationProps = {
   isOpen: boolean;
@@ -16,11 +18,15 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({ isOpe
   const styles = useStyles();
   return (
     <>
-      <Drawer role={'navigation'} open={isOpen} onClose={onClose}>
+      <Drawer open={isOpen} onClose={onClose}>
         <Toolbar />
         <Divider />
         <ColumnFlexBox className={styles.drawer}>
-
+          <List component={'nav'}>
+            <ListItem button component={Link} to={ROUTES.CURRENT_SCHEDULE}>
+              Current Schedule
+            </ListItem>
+          </List>
         </ColumnFlexBox>
       </Drawer>
     </>

@@ -1,13 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { AuthState } from './auth-state';
 import { AuthActions } from './auth-actions';
+import { AuthState } from './auth-state';
 
-const initialState: AuthState = {
+export const authInitialState: AuthState = {
   user: null
 };
 
 export const authReducer = createReducer(
-  initialState,
+  authInitialState,
   builder => builder
     .addCase(AuthActions.loadUser.success, (state, {payload}) => ({...state, user: payload}))
 );

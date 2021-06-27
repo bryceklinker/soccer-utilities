@@ -1,9 +1,10 @@
-import { RootState } from '../../state';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectIsLoading } from '../../loading';
 import { SettingsActions } from './settings-actions';
+import { settingsInitialState } from './settings-reducer';
+import { RootState } from '../../state/root-state';
+import { selectIsLoading } from '../../loading/state/loading-selectors';
 
-const selectSettingsState = (state: RootState) => state.settings;
+const selectSettingsState = (state: RootState) => state?.settings || settingsInitialState;
 
 export const selectSettings = createSelector(
   selectSettingsState,

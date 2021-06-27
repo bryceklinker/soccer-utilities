@@ -1,4 +1,4 @@
-import { createAsyncActionSet, emptyPrepare } from '../../state';
+import { createAsyncActionSet, emptyPrepare } from '../../state/create-async-action-set';
 import { GameScheduleModel } from '@soccer-utilities/core';
 
 export const CurrentScheduleActions = {

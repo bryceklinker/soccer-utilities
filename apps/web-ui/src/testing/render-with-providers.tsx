@@ -4,7 +4,7 @@ import { FunctionComponent } from 'react';
 import { Router, MemoryRouter, MemoryRouterProps, RouterProps } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createTestingStore } from './create-testing-store';
-import { RootState } from '../app/state';
+import { RootState } from '../app/state/root-state';
 
 export type RenderWithProvidersOptions =
   Partial<MemoryRouterProps>

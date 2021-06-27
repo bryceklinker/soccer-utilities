@@ -78,10 +78,10 @@ describe('CurrentSchedulePage', () => {
   test('when schedule is uploaded then hides upload schedule dialog', async () => {
     renderWithProviders(<CurrentSchedulePage />);
 
-    await uploadScheduleFile(new File([], 'schedule.csv'));
+    await uploadScheduleFile(new File(['data'], 'schedule.csv'));
 
     await waitFor(() => expect(screen.queryByLabelText('upload schedule dialog')).not.toBeInTheDocument());
-  })
+  });
 
   test('when schedule upload is cancelled then hides upload schedule dialog', async () => {
     renderWithProviders(<CurrentSchedulePage />);
@@ -90,11 +90,57 @@ describe('CurrentSchedulePage', () => {
     userEvent.click(await screen.findByLabelText('cancel upload button'));
 
     await waitFor(() => expect(screen.queryByLabelText('upload schedule dialog')).not.toBeInTheDocument());
+  });
+
+  test('when schedule fails to load then shows failed to load schedule', async () => {
+    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    renderWithProviders(<CurrentSchedulePage />, { store });
+
+    expect(screen.getByLabelText('errors')).toBeInTheDocument();
+  });
+
+  test('when schedule fails and load is retried then requests to load schedule', async () => {
+    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    renderWithProviders(<CurrentSchedulePage />, { store });
+
+    store.clearActions();
+    userEvent.click(screen.getByLabelText('retry button'));
+
+    expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.request());
+  });
+
+  test('when schedule refresh requested then requests to load schedule', async () => {
+    const store = createTestingStore();
+    renderWithProviders(<CurrentSchedulePage />, { store });
+
+    store.clearActions();
+    userEvent.click(screen.getByLabelText('refresh schedule'));
+
+    expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.request());
+  });
+
+  test('when schedule failed to load then upload schedule is available', async () => {
+    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    renderWithProviders(<CurrentSchedulePage />, { store });
+    store.clearActions();
+
+    userEvent.click(screen.getByLabelText('upload schedule'));
+
+    expect(await screen.findByLabelText('upload schedule dialog')).toBeVisible();
+  });
+
+  test('when schedule failed to load then skips loading schedule', async () => {
+    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    renderWithProviders(<CurrentSchedulePage />, { store });
+
+    expect(store.getActions()).not.toContainEqual(CurrentScheduleActions.load.request());
   })
 
   async function uploadScheduleFile(file: File) {
     userEvent.click(screen.getByLabelText('upload schedule'));
     userEvent.upload(await screen.findByLabelText('schedule file'), file);
+    await waitFor(() => expect(screen.getByLabelText('upload schedule button')).toBeEnabled());
+
     userEvent.click(await screen.findByLabelText('upload schedule button'));
   }
 });

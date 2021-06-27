@@ -10,7 +10,7 @@ function createUser(model: Partial<ApplicationUser> = {}): ApplicationUser {
     address: faker.address.streetAddress(),
     email: faker.internet.email(),
     email_verified: faker.datatype.boolean(),
-    accessToken: faker.random.alphaNumeric(),
+    accessToken: faker.random.alphaNumeric(20),
     ...model,
   };
 }

@@ -23,10 +23,12 @@ describe('UploadScheduleDialog', () => {
 
   test('when file uploaded then notifies file upload', async () => {
     const onUpload = jest.fn();
-    const file = new File([], 'schedule.csv');
+    const file = new File(['data'], 'schedule.csv');
     render(<UploadScheduleDialog open={true} onUpload={onUpload} />);
 
     userEvent.upload(await screen.findByLabelText('schedule file'), file);
+    await waitFor(() => expect(screen.getByLabelText('upload schedule button')).toBeEnabled());
+
     userEvent.click(await screen.findByLabelText('upload schedule button'));
 
     const expectedForm = new FormData();
