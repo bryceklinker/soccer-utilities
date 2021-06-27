@@ -12,6 +12,12 @@
           with:
             node-version: '14'
 
+        - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+          name: Increase File Watches
+
+        - run: sudo sysctl -p
+          name: Setup System For Increased Watches
+
         - run: npm ci
           name: Install Node Packages
 
