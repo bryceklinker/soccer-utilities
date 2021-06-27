@@ -7,5 +7,6 @@ module.exports = {
     '<rootDir>/libs/core',
     '<rootDir>/libs/testing-support',
     '<rootDir>/libs/schedules-ui',
+    '<rootDir>/libs/schedules-api',
   ],
 };
