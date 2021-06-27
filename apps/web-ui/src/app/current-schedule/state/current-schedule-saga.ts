@@ -21,8 +21,9 @@ function* loadCurrentSchedule() {
 
 function* uploadCurrentSchedule(action: ReturnType<typeof CurrentScheduleActions.upload.request>) {
   const apiUrl: string | undefined = yield select(selectSettingsApiUrl);
+  const auth: string | undefined = yield select(selectUserAccessToken);
   if (apiUrl) {
-    const restApi = createRestApi(apiUrl);
+    const restApi = createRestApi(apiUrl, auth);
     try {
       yield call(restApi.postForm, `/schedules/current`, action.payload);
       yield put(CurrentScheduleActions.upload.success());

@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/dom';
 import { createTestingStore, ModelFactory, renderWithProviders } from '../../../testing';
 import { CurrentSchedulePage } from './CurrentSchedulePage';
-import { CurrentScheduleActions } from '../state';
 import userEvent from '@testing-library/user-event';
+import { CurrentScheduleActions } from '../state/current-schedule-actions';
 
 describe('CurrentSchedulePage', () => {
   test('when current schedule is missing then requests to load current schedule', () => {

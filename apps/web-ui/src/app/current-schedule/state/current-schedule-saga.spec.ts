@@ -82,5 +82,16 @@ describe('Current Schedule Saga', () => {
 
       await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.upload.failed()));
     });
+
+    test('when uploading schedule then uses user token', async () => {
+      let request: RestRequest | null = null;
+      TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`, undefined, {
+        captureRequest: req => request = req
+      });
+
+      store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
+
+      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`))
+    })
   });
 });

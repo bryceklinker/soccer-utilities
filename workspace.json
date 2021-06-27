@@ -250,7 +250,7 @@
           "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
           "options": {
-            "commands": ["nx run web-ui:serve", "nx run rest-api:serve"],
+            "commands": ["nx run web-ui:serve --watch=false", "nx run rest-api:serve --watch=false"],
             "parallel": true,
             "readyWhen": "vendor.js"
           }

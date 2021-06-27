@@ -1,6 +1,6 @@
 import { generateRootStateFromActions, ModelFactory } from '../../../testing';
-import { AuthActions } from '../../auth';
 import { selectIsLoading } from './loading-selectors';
+import { AuthActions } from '../../auth/state/auth-actions';
 
 describe('loading selectors', () => {
   test('when request action type is unfinished then is loading is true for action type', () => {
