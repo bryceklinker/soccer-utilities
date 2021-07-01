@@ -9,16 +9,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/common-ui/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/common-ui/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/common-ui"
-          ],
+          "outputs": ["coverage/libs/common-ui"],
           "options": {
             "jestConfig": "libs/common-ui/jest.config.js",
             "passWithNoTests": true
@@ -34,18 +30,35 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/core/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/core/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/core"
-          ],
+          "outputs": ["coverage/libs/core"],
           "options": {
             "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "data-access": {
+      "root": "libs/data-access",
+      "sourceRoot": "libs/data-access/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/data-access/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access"],
+          "options": {
+            "jestConfig": "libs/data-access/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -59,16 +72,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/nest-auth0/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/nest-auth0/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/nest-auth0"
-          ],
+          "outputs": ["coverage/libs/nest-auth0"],
           "options": {
             "jestConfig": "libs/nest-auth0/jest.config.js",
             "passWithNoTests": true
@@ -83,9 +92,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/rest-api",
             "main": "apps/rest-api/src/main.ts",
@@ -114,16 +121,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/rest-api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/rest-api/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/rest-api"
-          ],
+          "outputs": ["coverage/apps/rest-api"],
           "options": {
             "jestConfig": "apps/rest-api/jest.config.js",
             "passWithNoTests": true
@@ -139,16 +142,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/schedules-api/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/schedules-api/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/schedules-api"
-          ],
+          "outputs": ["coverage/libs/schedules-api"],
           "options": {
             "jestConfig": "libs/schedules-api/jest.config.js",
             "passWithNoTests": true
@@ -164,16 +163,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/schedules-ui/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["libs/schedules-ui/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/schedules-ui"
-          ],
+          "outputs": ["coverage/libs/schedules-ui"],
           "options": {
             "jestConfig": "libs/schedules-ui/jest.config.js",
             "passWithNoTests": true
@@ -189,16 +184,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/testing-support/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/testing-support/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/testing-support"
-          ],
+          "outputs": ["coverage/libs/testing-support"],
           "options": {
             "jestConfig": "libs/testing-support/jest.config.js",
             "passWithNoTests": true
@@ -213,22 +204,15 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/web-ui",
             "index": "apps/web-ui/src/index.html",
             "main": "apps/web-ui/src/main.tsx",
             "polyfills": "apps/web-ui/src/polyfills.ts",
             "tsConfig": "apps/web-ui/tsconfig.app.json",
-            "assets": [
-              "apps/web-ui/src/favicon.ico",
-              "apps/web-ui/src/assets"
-            ],
-            "styles": [
-              "apps/web-ui/src/styles.scss"
-            ],
+            "assets": ["apps/web-ui/src/favicon.ico", "apps/web-ui/src/assets"],
+            "styles": ["apps/web-ui/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -267,16 +251,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/web-ui/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/web-ui/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/web-ui"
-          ],
+          "outputs": ["coverage/apps/web-ui"],
           "options": {
             "jestConfig": "apps/web-ui/jest.config.js",
             "passWithNoTests": true
@@ -305,19 +285,14 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/web-ui-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/web-ui-e2e/**/*.{js,ts}"]
           }
         },
         "start-app": {
           "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
           "options": {
-            "commands": [
-              "nx run web-ui:serve",
-              "nx run rest-api:serve"
-            ],
+            "commands": ["nx run web-ui:serve", "nx run rest-api:serve"],
             "parallel": true,
             "readyWhen": "vendor.js"
           }

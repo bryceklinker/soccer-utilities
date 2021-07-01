@@ -17,7 +17,7 @@ export interface RefereeModel {
   type: RefereeType;
 }
 
-export interface AgeGroup {
+export interface AgeGroupModel {
   age: number;
   gender: Gender;
 }
@@ -29,7 +29,7 @@ export interface GameModel {
   awayTeam: string;
   field: string;
   division: string;
-  ageGroup: AgeGroup;
+  ageGroup: AgeGroupModel;
   referees: Array<RefereeModel>;
 }
 

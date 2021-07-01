@@ -1,5 +1,5 @@
 import {
-  AgeGroup,
+  AgeGroupModel,
   GameModel,
   GameScheduleModel,
   Genders,
@@ -9,7 +9,7 @@ import {
 } from '../lib';
 import * as faker from 'faker';
 
-function createAgeGroup(ageGroup: Partial<AgeGroup> = {}): AgeGroup {
+function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
   return {
     age: faker.datatype.number({ min: 5, max: 19 }),
     gender: faker.random.arrayElement(Genders),

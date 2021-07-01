@@ -25,6 +25,9 @@
     "core": {
       "tags": []
     },
+    "data-access": {
+      "tags": []
+    },
     "nest-auth0": {
       "tags": []
     },

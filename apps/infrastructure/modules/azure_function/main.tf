@@ -126,3 +126,20 @@ resource "auth0_resource_server" "rest_api_server" {
   allow_offline_access = true
   skip_consent_for_verifiable_first_party_clients = true
 }
+
+resource "azurerm_cosmosdb_account" "rest_api_cosmos_account" {
+  location = var.location
+  name = "cosmos-${var.name}"
+  resource_group_name = var.resource_group_name
+  offer_type = "Standard"
+  enable_free_tier = true
+  kind = "GlobalDocumentDB"
+
+  consistency_policy {
+    consistency_level = "Eventual"
+  }
+  geo_location {
+    failover_priority = 0
+    location = var.location
+  }
+}
