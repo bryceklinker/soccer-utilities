@@ -52,12 +52,16 @@ export class TestingCosmosContainer extends Container {
   }
 
   item(id: string, partitionKeyValue?: PartitionKey): Item {
-    const resource = this.testingItems.getAll().find(i => i.id === id);
-    return new TestingCosmosItem(this, id, resource);
+    const item = this.testingItems.getAll().find(i => i.id === id);
+    return new TestingCosmosItem(this, id, item.resource);
   }
 
   setupItem<T extends Entity>(item: T) {
     this.testingItems.setupItem(item);
+  }
+
+  getAllEntities<T extends Entity>() {
+    return this.testingItems.getAll().map(i => i.resource);
   }
 
   conflict(id: string, partitionKey?: PartitionKey): Conflict {

@@ -5,9 +5,13 @@ export class AgeGroupEntity implements AgeGroupModel {
   gender: Gender;
 
   static fromModel(model: AgeGroupModel): AgeGroupEntity {
-      const entity = new AgeGroupEntity();
-      entity.age = model.age;
-      entity.gender = model.gender;
-      return entity;
+    const entity = new AgeGroupEntity();
+    entity.age = model.age;
+    entity.gender = model.gender;
+    return entity;
+  }
+
+  toModel(): AgeGroupModel {
+    return { ...this };
   }
 }

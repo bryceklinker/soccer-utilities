@@ -34,8 +34,7 @@ export class TestingCosmosItem extends Item {
   public toItemResponse<T>(): ItemResponse<T> {
     const resource = {
       ...this.resource,
-      id: this.id,
-      ttl: 0
+      id: this.id
     };
     return new TestingItemResponse<T & Resource>(resource, this);
   }

@@ -10,4 +10,10 @@ export class RefereeEntity implements RefereeModel {
     entity.name = model.name;
     return entity;
   }
+
+  toModel(): RefereeModel {
+    return {
+      ...this
+    }
+  }
 }

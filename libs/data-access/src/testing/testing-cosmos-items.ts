@@ -63,7 +63,7 @@ export class TestingCosmosItems extends Items {
       return this.create<T>(body, options);
     }
 
-    const updated = {...existing, ...body};
+    const updated = {...existing.resource, ...body};
     const item = new TestingCosmosItem(this.container as TestingCosmosContainer, updated.id, updated);
     this.items.splice(this.items.indexOf(existing), 1);
     this.items.push(item);

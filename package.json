@@ -36,6 +36,7 @@
     "applicationinsights": "2.1.2",
     "axios": "0.21.1",
     "core-js": "3.14.0",
+    "csv-parser": "3.0.0",
     "document-register-element": "1.13.1",
     "formik": "2.2.9",
     "jwks-rsa": "2.0.3",

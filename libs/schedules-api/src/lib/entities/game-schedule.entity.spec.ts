@@ -12,4 +12,17 @@ describe('GameScheduleEntity', () => {
     expect(entity.games).toEqual(model.games);
     expect(entity.lastUpdated).toEqual(model.lastUpdated);
   });
+
+  test('when converted to model then populates model from entity', () => {
+    const expected = ModelFactory.createGameSchedule();
+
+    const actual = GameScheduleEntity
+      .fromModel(expected)
+      .toModel();
+
+    expect(actual).toEqual({
+      ...expected,
+      type: 'game-schedule'
+    });
+  });
 });

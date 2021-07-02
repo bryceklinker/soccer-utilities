@@ -1,8 +1,7 @@
 import { Container, CosmosClient, SqlQuerySpec } from '@azure/cosmos';
 import { DataAccessOptions } from './data-access-options';
-import { Type } from '@nestjs/common';
 import { Repository } from './repository';
-import { EntityType } from './entity';
+import { Entity, EntityType } from './entity';
 
 function selectAllQuery(type: string): SqlQuerySpec {
   return {
@@ -13,7 +12,7 @@ function selectAllQuery(type: string): SqlQuerySpec {
   }
 }
 
-export class CosmosRepository<T> implements Repository<T> {
+export class CosmosRepository<T extends Entity> implements Repository<T> {
   private get databaseName(): string {
     return this.options.database;
   }
@@ -33,7 +32,7 @@ export class CosmosRepository<T> implements Repository<T> {
   }
 
   async getAll(): Promise<Array<T>> {
-    const container = this.getEntitiesContainer();
+    const container = this.getContainer();
     const response = await container.items
       .query<T>(selectAllQuery(this.entityType))
       .fetchAll();
@@ -41,12 +40,24 @@ export class CosmosRepository<T> implements Repository<T> {
   }
 
   async getById(id: string): Promise<T> {
-    const container = this.getEntitiesContainer();
+    const container = this.getContainer();
     const response = await container.item(id).read<T>();
     return response.resource;
   }
 
-  private getEntitiesContainer(): Container {
+  async create(entity: T): Promise<T> {
+    const container = this.getContainer();
+    const result = await container.items.create<T>(entity);
+    return result.resource;
+  }
+
+  async update(updated: T): Promise<T> {
+    const container = this.getContainer();
+    const result = await container.items.upsert<T>(updated);
+    return result.resource;
+  }
+
+  private getContainer(): Container {
     const database = this.client.database(this.databaseName);
     return database.container(this.collectionName);
   }

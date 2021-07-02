@@ -24,4 +24,12 @@ export class GameEntity implements GameModel {
     entity.referees = model.referees.map(RefereeEntity.fromModel);
     return entity;
   }
+
+  toModel(): GameModel {
+    return {
+      ...this,
+      referees: this.referees.map(r => r.toModel()),
+      ageGroup: this.ageGroup.toModel()
+    };
+  }
 }
