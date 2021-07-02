@@ -5,6 +5,7 @@ import { setupTestingModule } from '../../testing';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { UpdateCurrentScheduleCommand } from '@soccer-utilities/schedules-api';
 import { readSampleGameSchedule } from '@soccer-utilities/testing-support';
+import { ModelFactory } from '@soccer-utilities/core/testing';
 
 describe('UpdateCurrentScheduleCommandHandler', () => {
   let commandBus: CommandBus;
@@ -16,7 +17,7 @@ describe('UpdateCurrentScheduleCommandHandler', () => {
     const factory = app.get(RepositoryFactory) as TestingRepositoryFactory;
     repository = factory.setupRepository(GameScheduleEntity);
     commandBus = app.get(CommandBus);
-  })
+  });
 
   test('when current schedule is missing then creates current schedule', async () => {
     const command = new UpdateCurrentScheduleCommand(readSampleGameSchedule());
@@ -25,5 +26,15 @@ describe('UpdateCurrentScheduleCommandHandler', () => {
 
     expect(currentScheduleId).toBeDefined();
     expect(await repository.getAll()).toHaveLength(1);
+  });
+
+  test('when current schedule exists then updates current schedule', async () => {
+    const {id} = await repository.create(GameScheduleEntity.fromModel(ModelFactory.createGameSchedule()));
+
+    const command = new UpdateCurrentScheduleCommand(readSampleGameSchedule());
+    const scheduleId = await commandBus.execute(command);
+
+    expect(scheduleId).toEqual(id);
+    expect(await repository.getAll()).toHaveLength(1);
   })
-})
+});

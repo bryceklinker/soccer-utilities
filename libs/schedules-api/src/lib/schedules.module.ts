@@ -3,6 +3,7 @@ import { DataAccessModule } from '@soccer-utilities/data-access';
 import { CqrsModule } from '@nestjs/cqrs';
 import { QUERY_HANDLERS } from './queries';
 import { COMMAND_HANDLERS } from './commands';
+import { REPOSITORIES } from './repositories';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { COMMAND_HANDLERS } from './commands';
   ],
   controllers: [],
   providers: [
+    ...REPOSITORIES,
     ...QUERY_HANDLERS,
     ...COMMAND_HANDLERS
   ],

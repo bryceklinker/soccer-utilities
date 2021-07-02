@@ -28,5 +28,10 @@ export class GameScheduleEntity implements GameScheduleModel {
       games: this.games.map(g => g.toModel())
     };
   }
+
+  updateFromModel(model: GameScheduleModel) {
+    this.games = model.games.map(GameEntity.fromModel);
+    this.lastUpdated = new Date().toISOString();
+  }
 }
 
