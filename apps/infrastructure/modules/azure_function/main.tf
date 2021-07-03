@@ -143,3 +143,18 @@ resource "azurerm_cosmosdb_account" "rest_api_cosmos_account" {
     location = var.location
   }
 }
+
+resource "azurerm_cosmosdb_sql_database" "bsc_database" {
+  account_name = azurerm_cosmosdb_account.rest_api_cosmos_account.name
+  resource_group_name = var.resource_group_name
+  name = "bsc"
+}
+
+resource "azurerm_cosmosdb_sql_container" "entities_container" {
+  account_name = azurerm_cosmosdb_account.rest_api_cosmos_account.name
+  database_name = azurerm_cosmosdb_sql_database.bsc_database.name
+  resource_group_name = var.resource_group_name
+  name = "entities"
+  partition_key_path = "/type"
+  throughput = 400
+}
