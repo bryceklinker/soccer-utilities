@@ -30,6 +30,7 @@ resource "azurerm_storage_blob" "site_content" {
   name = each.key
   source = each.value.source_path
   content_type = each.value.content_type
+  content_md5 = each.digests.md5
   type = "Block"
 }
 
