@@ -1,13 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ReadStream } from 'fs';
-import { Repository, RepositoryFactory } from '@soccer-utilities/data-access';
 import { GameScheduleEntity } from '../entities';
 import { convertStreamToGameSchedule } from '../conversions/convert-stream-to-game-schedule';
 import { GameScheduleModel } from '@soccer-utilities/core';
 import { GameScheduleRepository } from '../repositories';
+import { Readable } from 'stream';
 
 export class UpdateCurrentScheduleCommand {
-  constructor(public readonly stream: ReadStream) {
+  constructor(public readonly stream: Readable) {
   }
 }
 

@@ -38,5 +38,5 @@ describe('convertCsvRowToReferees', () => {
     expect(referees).toContainEqual({ name: 'Jan', type: RefereeType.Center });
     expect(referees).toContainEqual({ name: 'Jill', type: RefereeType.Assistant });
     expect(referees).toContainEqual({ name: 'Sue', type: RefereeType.Assistant });
-  })
+  });
 });

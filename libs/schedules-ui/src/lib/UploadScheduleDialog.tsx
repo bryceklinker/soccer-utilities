@@ -1,12 +1,10 @@
-import { ChangeEvent, FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Input,
-  InputLabel
+  DialogTitle
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';

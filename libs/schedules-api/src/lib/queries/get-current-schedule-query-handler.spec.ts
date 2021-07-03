@@ -31,4 +31,10 @@ describe('GetCurrentScheduleQueryHandler', () => {
       type: entity.type
     });
   });
+
+  test('when current schedule is missing then returns null', async () => {
+    const actual = await queryBus.execute(new GetCurrentScheduleQuery());
+
+    expect(actual).toEqual(null);
+  })
 });

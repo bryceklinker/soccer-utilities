@@ -24,12 +24,30 @@ describe('convertCsvRowToGame', () => {
       awayTeam: 'Honkies',
       field: 'Field 1',
       division: 'U8 Girls',
-      ageGroup: {gender: Gender.Girls, age: 8},
+      ageGroup: { gender: Gender.Girls, age: 8 },
       referees: [
-        {type: RefereeType.Center, name: 'Bill'},
-        {type: RefereeType.Assistant, name: 'John'},
-        {type: RefereeType.Assistant, name: 'Jim'},
+        { type: RefereeType.Center, name: 'Bill' },
+        { type: RefereeType.Assistant, name: 'John' },
+        { type: RefereeType.Assistant, name: 'Jim' }
       ]
     });
+  });
+
+  test('when game has empty data then returns null', () => {
+    const row = {
+      'Game Date': '',
+      'Game Time': '',
+      'Home Team': '',
+      'Away Team': '',
+      Field: '',
+      Division: '',
+      Center: '',
+      AR1: '',
+      AR2: ''
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual(null);
   });
 });

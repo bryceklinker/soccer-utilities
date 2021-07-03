@@ -1,4 +1,4 @@
-import { readSampleGameSchedule } from '@soccer-utilities/testing-support';
+import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
 import { convertStreamToGameSchedule } from './convert-stream-to-game-schedule';
 
 const CURRENT_TIME = Date.UTC(2021, 6, 3, 14, 12, 56, 123);
@@ -10,7 +10,7 @@ describe('convertStreamToGameSchedule', () => {
   });
 
   test('when stream is csv then returns games from csv', async () => {
-    const stream = readSampleGameSchedule();
+    const stream = readSampleGameScheduleAsStream();
 
     const model = await convertStreamToGameSchedule(stream);
 
@@ -18,7 +18,7 @@ describe('convertStreamToGameSchedule', () => {
   });
 
   test('when stream is csv then returns last updated as now', async () => {
-    const model = await convertStreamToGameSchedule(readSampleGameSchedule());
+    const model = await convertStreamToGameSchedule(readSampleGameScheduleAsStream());
 
     expect(model.lastUpdated).toEqual('2021-07-03T14:12:56.123Z');
   });

@@ -7,13 +7,13 @@ export class GetCurrentScheduleQuery {
 }
 
 @QueryHandler(GetCurrentScheduleQuery)
-export class GetCurrentScheduleQueryHandler implements IQueryHandler<GetCurrentScheduleQuery, GameScheduleModel> {
+export class GetCurrentScheduleQueryHandler implements IQueryHandler<GetCurrentScheduleQuery, GameScheduleModel | null> {
   constructor(private readonly repository: GameScheduleRepository) {
 
   }
 
-  async execute(query: GetCurrentScheduleQuery): Promise<GameScheduleModel> {
+  async execute(query: GetCurrentScheduleQuery): Promise<GameScheduleModel | null> {
     const schedule = await this.repository.getCurrent();
-    return schedule.toModel();
+    return schedule ? schedule.toModel() : null;
   }
 }

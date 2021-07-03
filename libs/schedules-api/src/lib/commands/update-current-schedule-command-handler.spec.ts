@@ -4,7 +4,7 @@ import { GameScheduleEntity } from '../entities';
 import { setupTestingModule } from '../../testing';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { UpdateCurrentScheduleCommand } from '@soccer-utilities/schedules-api';
-import { readSampleGameSchedule } from '@soccer-utilities/testing-support';
+import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
 import { ModelFactory } from '@soccer-utilities/core/testing';
 
 describe('UpdateCurrentScheduleCommandHandler', () => {
@@ -20,7 +20,7 @@ describe('UpdateCurrentScheduleCommandHandler', () => {
   });
 
   test('when current schedule is missing then creates current schedule', async () => {
-    const command = new UpdateCurrentScheduleCommand(readSampleGameSchedule());
+    const command = new UpdateCurrentScheduleCommand(readSampleGameScheduleAsStream());
 
     const currentScheduleId = await commandBus.execute(command);
 
@@ -31,7 +31,7 @@ describe('UpdateCurrentScheduleCommandHandler', () => {
   test('when current schedule exists then updates current schedule', async () => {
     const {id} = await repository.create(GameScheduleEntity.fromModel(ModelFactory.createGameSchedule()));
 
-    const command = new UpdateCurrentScheduleCommand(readSampleGameSchedule());
+    const command = new UpdateCurrentScheduleCommand(readSampleGameScheduleAsStream());
     const scheduleId = await commandBus.execute(command);
 
     expect(scheduleId).toEqual(id);

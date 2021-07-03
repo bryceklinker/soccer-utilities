@@ -19,6 +19,8 @@ import { REPOSITORIES } from './repositories';
     ...QUERY_HANDLERS,
     ...COMMAND_HANDLERS
   ],
-  exports: [],
+  exports: [
+    CqrsModule
+  ],
 })
 export class SchedulesModule {}

@@ -18,5 +18,5 @@ describe('convertDivisionToAgeGroup', () => {
     const ageGroup = convertDivisionToAgeGroup('U10 Coed');
 
     expect(ageGroup).toEqual({ age: 10, gender: Gender.Coed });
-  })
+  });
 });
