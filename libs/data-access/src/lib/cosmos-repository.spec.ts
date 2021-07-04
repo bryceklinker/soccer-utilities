@@ -66,5 +66,5 @@ describe('CosmosRepository', () => {
 
     expect(result.id).toBeDefined();
     expect(container.getAllEntities<TestingEntity>()).toContainEqual(result);
-  })
+  });
 });

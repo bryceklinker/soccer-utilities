@@ -1,16 +1,8 @@
-import { Container, CosmosClient, SqlQuerySpec } from '@azure/cosmos';
+import { Container, CosmosClient } from '@azure/cosmos';
 import { DataAccessOptions } from './data-access-options';
 import { Repository } from './repository';
 import { Entity, EntityType } from './entity';
-
-function selectAllQuery(type: string): SqlQuerySpec {
-  return {
-    query: 'select * from root where type = @type',
-    parameters: [
-      {name: '@type', value: type}
-    ]
-  }
-}
+import { selectAllQuery } from './standard-queries';
 
 export class CosmosRepository<T extends Entity> implements Repository<T> {
   private get databaseName(): string {
