@@ -104,6 +104,11 @@ resource "azurerm_function_app" "function_app" {
   site_config {
     linux_fx_version = "node|14"
     use_32_bit_worker_process = false
+
+    cors {
+      allowed_origins = ["*"],
+      support_credentials = true
+    }
   }
 
   app_settings = {

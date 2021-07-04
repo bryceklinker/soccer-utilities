@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, HttpException, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Express } from 'express';
@@ -15,12 +15,14 @@ export class SchedulesController {
   }
 
   @Get('current')
-  async getCurrentSchedule(@Res() res: Response) {
+  async getCurrentSchedule() {
     const query = new GetCurrentScheduleQuery();
     const schedule = await this.queryBus.execute<GetCurrentScheduleQuery, GameScheduleModel | null>(query);
-    res.status(schedule ? constants.HTTP_STATUS_OK : constants.HTTP_STATUS_NOT_FOUND)
-      .json(schedule)
-      .send();
+    if (schedule) {
+      return schedule;
+    }
+
+    throw new HttpException('Could not find current schedule', constants.HTTP_STATUS_NOT_FOUND);
   }
 
   @Post('current')

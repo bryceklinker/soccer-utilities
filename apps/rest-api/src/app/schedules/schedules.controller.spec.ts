@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as FormData from 'form-data';
 import axios from 'axios';
 import { constants } from 'http2';
-import { readSampleGameAsBuffer, readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
+import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
 import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
