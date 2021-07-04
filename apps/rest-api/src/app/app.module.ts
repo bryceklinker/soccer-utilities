@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { NestAuth0Module } from '@soccer-utilities/nest-auth0';
 import { SchedulesModule } from '@soccer-utilities/schedules-api';
@@ -8,6 +8,7 @@ import { memoryStorage } from 'multer';
 import authConfig from '../config/auth';
 import cosmosConfig from '../config/cosmos';
 import { SchedulesController } from './schedules/schedules.controller';
+import { LoggingMiddleware } from './middleware';
 
 @Module({
   imports: [
@@ -29,7 +30,14 @@ import { SchedulesController } from './schedules/schedules.controller';
   controllers: [
     SchedulesController
   ],
-  providers: []
+  providers: [
+    Logger
+  ]
 })
-export class AppModule {
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggingMiddleware)
+      .forRoutes({path: '*', method: RequestMethod.ALL});
+  }
+
 }

@@ -6,11 +6,25 @@ import { AzureHttpAdapter } from '@nestjs/azure-func-http';
 import { AppModule } from './app/app.module';
 import { JwtGuard } from '@soccer-utilities/nest-auth0';
 import * as appInsights from 'applicationinsights';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 
 const isAzureFunction = process.env.IS_AZURE_FUNCTION && Boolean(process.env.IS_AZURE_FUNCTION);
 
 async function createApp(): Promise<INestApplication> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({
+      transports: new winston.transports.Console({
+        format: winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.ms(),
+          winston.format.splat(),
+          winston.format.metadata(),
+          winston.format.json()
+        )
+      })
+    })
+  });
   app.enableCors();
   app.useGlobalGuards(new JwtGuard());
   return app;
