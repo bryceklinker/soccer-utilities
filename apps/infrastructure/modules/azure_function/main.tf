@@ -117,6 +117,8 @@ resource "azurerm_function_app" "function_app" {
     ISSUER_URL = "https://${var.auth0_domain}/"
     AUDIENCE = auth0_resource_server.rest_api_server.identifier
     IS_AZURE_FUNCTION = true
+    COSMOS_ENDPOINT = azurerm_cosmosdb_account.cosmos_account.endpoint
+    COSMOS_KEY = azurerm_cosmosdb_account.cosmos_account.primary_master_key
   }
 }
 
@@ -127,7 +129,7 @@ resource "auth0_resource_server" "rest_api_server" {
   skip_consent_for_verifiable_first_party_clients = true
 }
 
-resource "azurerm_cosmosdb_account" "rest_api_cosmos_account" {
+resource "azurerm_cosmosdb_account" "cosmos_account" {
   location = var.location
   name = "cosmos-${var.name}"
   resource_group_name = var.resource_group_name
@@ -145,13 +147,13 @@ resource "azurerm_cosmosdb_account" "rest_api_cosmos_account" {
 }
 
 resource "azurerm_cosmosdb_sql_database" "bsc_database" {
-  account_name = azurerm_cosmosdb_account.rest_api_cosmos_account.name
+  account_name = azurerm_cosmosdb_account.cosmos_account.name
   resource_group_name = var.resource_group_name
   name = "bsc"
 }
 
 resource "azurerm_cosmosdb_sql_container" "entities_container" {
-  account_name = azurerm_cosmosdb_account.rest_api_cosmos_account.name
+  account_name = azurerm_cosmosdb_account.cosmos_account.name
   database_name = azurerm_cosmosdb_sql_database.bsc_database.name
   resource_group_name = var.resource_group_name
   name = "entities"
