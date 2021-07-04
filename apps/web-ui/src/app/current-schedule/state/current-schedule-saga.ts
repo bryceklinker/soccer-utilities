@@ -27,6 +27,7 @@ function* uploadCurrentSchedule(action: ReturnType<typeof CurrentScheduleActions
     try {
       yield call(restApi.postForm, `/schedules/current`, action.payload);
       yield put(CurrentScheduleActions.upload.success());
+      yield put(CurrentScheduleActions.load.request());
     } catch {
       yield put(CurrentScheduleActions.upload.failed());
     }

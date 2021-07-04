@@ -11,7 +11,9 @@ export class GameScheduleEntity implements GameScheduleModel {
 
   static fromEntity(source: GameScheduleEntity) {
     const actual = new GameScheduleEntity();
-    Object.assign(actual, source);
+    actual.id = source.id;
+    actual.games = source.games.map(GameEntity.fromModel);
+    actual.lastUpdated = source.lastUpdated;
     return actual;
   }
 

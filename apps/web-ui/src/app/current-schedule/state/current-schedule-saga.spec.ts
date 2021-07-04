@@ -49,11 +49,15 @@ describe('Current Schedule Saga', () => {
 
       store.dispatch(CurrentScheduleActions.load.request());
 
-      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`))
+      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`));
     });
   });
 
   describe('Upload Schedule', () => {
+    beforeEach(() => {
+      TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, ModelFactory.createGameSchedule());
+    });
+
     test('when upload schedule requested then dispatches upload success', async () => {
       const form = new FormData();
       TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`);
@@ -91,7 +95,15 @@ describe('Current Schedule Saga', () => {
 
       store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
 
-      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`))
-    })
+      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`));
+    });
+
+    test('when uploading schedule then notifies requests to load schedule once upload is successful', async () => {
+      TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`);
+
+      store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
+
+      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.request()));
+    });
   });
 });
