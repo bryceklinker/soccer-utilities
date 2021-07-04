@@ -106,7 +106,7 @@ resource "azurerm_function_app" "function_app" {
     use_32_bit_worker_process = false
 
     cors {
-      allowed_origins = ["*"],
+      allowed_origins = ["*"]
       support_credentials = true
     }
   }
