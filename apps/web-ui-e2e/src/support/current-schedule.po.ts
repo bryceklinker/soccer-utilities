@@ -1,5 +1,5 @@
 export const visitCurrentSchedule = () => {
-  cy.findByRole('button', {name: 'toggle navigation'}).click();
+  cy.findByRole('button', {name: 'navigation toggle'}).click();
   cy.findByRole('navigation', {name: 'current schedule'}).click();
 }
 
