@@ -100,3 +100,10 @@
             CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
             CYPRESS_BASE_URL: https://stprodsoccersite.z19.web.core.windows.net
 
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          with:
+            name: cypress
+            path: |
+              apps/web-ui-e2e/screenshots/**/*.*
+              apps/web-ui-e2e/videos/**/*.*
