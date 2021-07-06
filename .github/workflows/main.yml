@@ -105,5 +105,5 @@
           with:
             name: cypress
             path: |
-              apps/web-ui-e2e/screenshots/**/*.*
-              apps/web-ui-e2e/videos/**/*.*
+              dist/cypress/apps/web-ui-e2e/screenshots/**/*.*
+              dist/cypress/apps/web-ui-e2e/videos/**/*.*
