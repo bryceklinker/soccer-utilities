@@ -42,11 +42,16 @@ function apply_terraform_plan() {
 function warm_up_function_app() {
   pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
   curl "$(terraform output -raw function_app_url)/.health"
+  curl "$(terraform output -raw function_app_url)/.health"
+  curl "$(terraform output -raw function_app_url)/.health"
   popd || exit 1
 }
 
 function run_end_to_end_tests() {
+  pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
   export CYPRESS_BASE_URL="$(terraform output -raw web_site_url)"
+  popd || exit 1
+
   npm run e2e
 }
 
