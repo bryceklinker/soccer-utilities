@@ -49,10 +49,9 @@
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
-        - uses: montudor/action-zip@v1
+        - run: zip -rm "${{ github.workspace }}/dist/apps/rest-api.zip" -- *
           name: Create Rest Api Zip
-          with:
-            args: zip -qq -r dist/apps/rest-api.zip -d dist/apps/rest-api
+          working-directory: ${{ github.workspace }}/dist/apps/rest-api
 
         - uses: actions/upload-artifact@v2
           with:
@@ -94,12 +93,9 @@
         - uses: actions/download-artifact@v2
           with:
             name: rest-api
-            path: dist/apps/rest-api
 
-        - uses: montudor/action-zip@v1
-          name: Unzip Rest Api
-          with:
-            args: unzip -qq dist/apps/rest-api.zip -d dist/apps/rest-api
+        - run: unzip "rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
+          name: Extract Rest Api Artifact
 
         - uses: actions/download-artifact@v2
           with:
