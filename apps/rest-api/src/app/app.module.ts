@@ -9,6 +9,7 @@ import authConfig from '../config/auth';
 import cosmosConfig from '../config/cosmos';
 import { SchedulesController } from './schedules/schedules.controller';
 import { LoggingMiddleware } from './middleware';
+import { HealthController } from './health/health.controller';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { LoggingMiddleware } from './middleware';
     SchedulesModule
   ],
   controllers: [
-    SchedulesController
+    SchedulesController,
+    HealthController
   ],
   providers: [
     Logger

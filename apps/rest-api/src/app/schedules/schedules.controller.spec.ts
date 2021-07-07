@@ -10,7 +10,7 @@ import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { ModelFactory } from '@soccer-utilities/core/testing';
 import { GameScheduleModel } from '@soccer-utilities/core';
 
-describe('SchedulesApi', () => {
+describe('Schedules Api', () => {
   let app: INestApplication;
   let repository: TestingRepository<GameScheduleEntity>
   let baseUrl: string;
