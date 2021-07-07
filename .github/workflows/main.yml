@@ -67,7 +67,6 @@
             CYPRESS_AUTH0_USERNAME: ${{ secrets.CYPRESS_AUTH0_USERNAME }}
             CYPRESS_AUTH0_PASSWORD: ${{ secrets.CYPRESS_AUTH0_PASSWORD }}
             CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
-            CYPRESS_BASE_URL: https://stprodsoccersite.z19.web.core.windows.net
 
         - uses: actions/upload-artifact@v2
           if: failure()

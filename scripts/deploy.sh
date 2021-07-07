@@ -46,6 +46,7 @@ function warm_up_function_app() {
 }
 
 function run_end_to_end_tests() {
+  export CYPRESS_BASE_URL="$(terraform output -raw web_site_url)"
   npm run e2e
 }
 
