@@ -1,6 +1,6 @@
 import {Context, HttpRequest} from '@azure/functions';
 import { INestApplication, Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AzureHttpAdapter } from '@nestjs/azure-func-http';
 
 import { AppModule } from './app/app.module';
@@ -26,7 +26,7 @@ async function createApp(): Promise<INestApplication> {
     })
   });
   app.enableCors();
-  app.useGlobalGuards(new JwtGuard());
+  app.useGlobalGuards(new JwtGuard(app.get(Reflector)));
   return app;
 }
 
