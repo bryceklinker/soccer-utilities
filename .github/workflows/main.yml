@@ -12,22 +12,8 @@
           with:
             node-version: '14'
 
-        - run: npm ci
-          name: Install Node Packages
-
-        - run: npm test
-          name: Run Tests
-
-        - run: npm run build
-          name: Build Applications
-
-        - run: npm install --production
-          name: Install Function App Packages
-          working-directory: ${{ github.workspace }}/dist/apps/rest-api
-
-        - run: zip -rm "${{ github.workspace }}/dist/apps/rest-api.zip" -- *
-          name: Create Rest Api Zip
-          working-directory: ${{ github.workspace }}/dist/apps/rest-api
+        - run: ./scripts/build.sh
+          name: Run Build Script
 
         - uses: actions/upload-artifact@v2
           with:
@@ -65,22 +51,13 @@
           with:
             name: rest-api
 
-        - run: |
-            mkdir -p "${{ github.workspace }}/dist/apps/rest-api"
-            unzip "${{ steps.rest-api.outputs.download-path }}/rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
-          name: Extract Rest Api Artifact
-
         - uses: actions/download-artifact@v2
           with:
             name: web-ui
             path: dist/apps/web-ui
 
-        - run: npm ci
-          name: Install Node Packages
-
-        - run: terraform init
-          name: Initialize Terraform
-          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
+        - run: ./scripts/deploy.sh
+          name: Deploy Application
           env:
             ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
             ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -89,49 +66,6 @@
             AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-
-        - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=prod.tfplan
-          name: Terraform Plan
-          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
-          env:
-            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-
-        - run: terraform apply prod.tfplan
-          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
-          name: Terraform Apply
-          env:
-            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-
-        - run: |
-            FUNCTION_APP_URL=$(terraform output -json function_app_url | tr -d '"')
-            echo "${FUNCTION_APP_URL}"
-            curl "${FUNCTION_APP_URL}/.health"
-          name: Warm Up Function App
-          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
-          env:
-            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-
-        - run: npm run e2e
-          name: Run End-to-End Tests
-          env:
             CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.CYPRESS_AUTH0_CLIENT_ID }}
             CYPRESS_AUTH0_CLIENT_SECRET: ${{ secrets.CYPRESS_AUTH0_CLIENT_SECRET }}
             CYPRESS_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
