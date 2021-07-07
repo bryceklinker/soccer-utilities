@@ -24,6 +24,43 @@
         - run: npm test
           name: Run Tests
 
+        - run: npm run build
+          name: Build Applications
+
+        - run: npm install --production
+          name: Install Function App Packages
+          working-directory: ${{ github.workspace }}/dist/apps/rest-api
+
+        - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=prod.tfplan
+          name: Terraform Plan
+          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
+          env:
+            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+
+        - uses: actions/upload-artifact@v2
+          with:
+            name: rest-api
+            path: |
+              dist/apps/rest-api/**/*.*
+
+        - uses: actions/upload-artifact@v2
+          with:
+            name: web-ui
+            path: |
+              dist/apps/web-ui/**/*.*
+
+        - uses: actions/upload-artifact@v2
+          with:
+            name: plan
+            path: |
+              ${{ github.workspace }}/apps/infrastructure/environments/prod/*.plan
+
     deploy:
       name: Deploy
       runs-on: ubuntu-20.04
@@ -43,30 +80,25 @@
           with:
             terraform_version: 1.0.0
 
+        - uses: actions/download-artifact@v2
+          with:
+            name: rest-api
+            path: dist/apps/rest-api
+
+        - uses: actions/download-artifact@v2
+          with:
+            name: web-ui
+            path: dist/apps/web-ui
+        - uses: actions/download-artifact@v2
+          with:
+            name: plan
+            path: ${{ github.workspace }}/apps/infrastructure/environments/prod
+
         - run: npm ci
           name: Install Node Packages
 
-        - run: npm run build
-          name: Build Applications
-
-        - run: npm install
-          name: Install Function App Packages
-          working-directory: ${{ github.workspace }}/dist/apps/rest-api
-
         - run: terraform init
           name: Initialize Terraform
-          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
-          env:
-            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-
-        - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=prod.tfplan
-          name: Terraform Plan
           working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
           env:
             ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
