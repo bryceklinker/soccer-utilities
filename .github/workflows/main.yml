@@ -115,7 +115,7 @@
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
         - run: |
-            FUNCTION_APP_URL=$(terraform output -raw function_app_url)
+            FUNCTION_APP_URL=$(terraform output -json function_app_url)
             echo "${FUNCTION_APP_URL}"
             curl "${FUNCTION_APP_URL}/.health"
           name: Warm Up Function App
