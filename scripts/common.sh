@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -ex
+
 export WORKING_DIRECTORY="${GITHUB_WORKSPACE}"
 export APPS_DIST_DIRECTORY="${WORKING_DIRECTORY}/dist/apps"
 export REST_API_OUTPUT_DIRECTORY="${APPS_DIST_DIRECTORY}/rest-api"
