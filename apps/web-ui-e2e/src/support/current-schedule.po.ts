@@ -9,4 +9,4 @@ export const uploadSchedule = (schedulePath: string) => {
   cy.findByRole('button', {name: 'upload schedule button'}).click();
 }
 
-export const getScheduledGames = () => cy.findAllByLabelText('scheduled game');
+export const getGames = () => cy.findAllByLabelText('game');

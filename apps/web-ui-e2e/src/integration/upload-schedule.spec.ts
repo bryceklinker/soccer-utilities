@@ -1,4 +1,4 @@
-import { getScheduledGames, uploadSchedule, visitCurrentSchedule } from '../support/current-schedule.po';
+import { getGames, uploadSchedule, visitCurrentSchedule } from '../support/current-schedule.po';
 
 describe('Upload Schedule', () => {
   it('should allow user to upload a csv game schedule', () => {
@@ -7,6 +7,6 @@ describe('Upload Schedule', () => {
     visitCurrentSchedule();
     uploadSchedule('game-schedule.csv');
 
-    getScheduledGames().should('have.length.above', 0);
+    getGames().should('have.length.above', 0);
   });
 });
