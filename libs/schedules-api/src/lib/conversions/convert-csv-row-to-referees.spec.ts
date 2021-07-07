@@ -39,4 +39,12 @@ describe('convertCsvRowToReferees', () => {
     expect(referees).toContainEqual({ name: 'Jill', type: RefereeType.Assistant });
     expect(referees).toContainEqual({ name: 'Sue', type: RefereeType.Assistant });
   });
+
+  test('when row has "X" for referee then referee is ignored', () => {
+    const row = { 'Center': 'Mark', 'AR1': 'X', 'AR2': 'Sue' };
+
+    const referees = convertCsvRowToReferees(row);
+
+    expect(referees).toHaveLength(2);
+  });
 });
