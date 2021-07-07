@@ -33,7 +33,8 @@ function apply_terraform_plan() {
 
 function warm_up_function_app() {
   pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
-  terraform output -json function_app_url
+  FUNCTION_APP_URL=$(terraform output -json function_app_url)
+  echo "${FUNCTION_APP_URL}"
   popd || exit 1
 }
 
