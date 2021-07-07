@@ -91,10 +91,11 @@
             terraform_version: 1.0.0
 
         - uses: actions/download-artifact@v2
+          id: rest-api
           with:
             name: rest-api
 
-        - run: unzip "rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
+        - run: unzip "${{ steps.rest-api.outputs.download-path }}/rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
           name: Extract Rest Api Artifact
 
         - uses: actions/download-artifact@v2
