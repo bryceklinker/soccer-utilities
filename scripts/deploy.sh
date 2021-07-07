@@ -33,9 +33,7 @@ function apply_terraform_plan() {
 
 function warm_up_function_app() {
   pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
-  export FUNCTION_APP_URL=$(terraform output -json function_app_url | jq -r)
-  echo "URL: ${FUNCTION_APP_URL}"
-  curl "${FUNCTION_APP_URL}/.health" --verbose
+  terraform output -json function_app_url
   popd || exit 1
 }
 
