@@ -69,7 +69,7 @@
           with:
             name: plan
             path: |
-              ${{ github.workspace }}/apps/infrastructure/environments/prod/*.plan
+              ${{ github.workspace }}/apps/infrastructure/environments/prod/*.tfplan
 
     deploy:
       name: Deploy
@@ -95,7 +95,9 @@
           with:
             name: rest-api
 
-        - run: unzip "${{ steps.rest-api.outputs.download-path }}/rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
+        - run: |
+            ls -la
+            unzip "${{ steps.rest-api.outputs.download-path }}/rest-api.zip" -d "${{ github.workspace }}/dist/apps/rest-api"
           name: Extract Rest Api Artifact
 
         - uses: actions/download-artifact@v2
