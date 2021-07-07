@@ -49,11 +49,16 @@
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
+        - uses: montudor/action-zip@v1
+          name: Create Rest Api Zip
+          with:
+            args: zip -qq -r dist/apps/rest-api.zip -d dist/apps/rest-api
+
         - uses: actions/upload-artifact@v2
           with:
             name: rest-api
             path: |
-              dist/apps/rest-api/**/*.*
+              dist/apps/rest-api.zip
 
         - uses: actions/upload-artifact@v2
           with:
@@ -91,10 +96,16 @@
             name: rest-api
             path: dist/apps/rest-api
 
+        - uses: montudor/action-zip@v1
+          name: Unzip Rest Api
+          with:
+            args: unzip -qq dist/apps/rest-api.zip -d dist/apps/rest-api
+
         - uses: actions/download-artifact@v2
           with:
             name: web-ui
             path: dist/apps/web-ui
+
         - uses: actions/download-artifact@v2
           with:
             name: plan
