@@ -10,7 +10,7 @@ export PLAN_PATH="${ENVIRONMENTS_DIRECTORY}/${TARGET_ENVIRONMENT}.tfplan"
 
 function extract_rest_api_archive() {
   mkdir -p "${REST_API_OUTPUT_DIRECTORY}"
-  unzip "${WORKING_DIRECTORY}/rest-api.zip" -d "${REST_API_OUTPUT_DIRECTORY}"
+  unzip -qq "${WORKING_DIRECTORY}/rest-api.zip" -d "${REST_API_OUTPUT_DIRECTORY}"
 }
 
 function initialize_terraform() {

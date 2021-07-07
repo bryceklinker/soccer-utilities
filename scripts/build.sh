@@ -20,7 +20,7 @@ function install_function_app_packages() {
 
 function archive_function_app() {
   pushd "${REST_API_OUTPUT_DIRECTORY}" || exit 1
-  zip -rm "${REST_API_ARCHIVE_PATH}" -- *
+  zip -qq -rm "${REST_API_ARCHIVE_PATH}" -- *
   popd || exit 1
 }
 
