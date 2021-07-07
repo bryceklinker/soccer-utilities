@@ -12,12 +12,6 @@
           with:
             node-version: '14'
 
-        - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-          name: Increase File Watches
-
-        - run: sudo sysctl -p
-          name: Setup System For Increased Watches
-
         - run: npm ci
           name: Install Node Packages
 
@@ -30,6 +24,18 @@
         - run: npm install --production
           name: Install Function App Packages
           working-directory: ${{ github.workspace }}/dist/apps/rest-api
+
+        - run: terraform init
+          name: Initialize Terraform
+          working-directory: ${{ github.workspace }}/apps/infrastructure/environments/prod
+          env:
+            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
         - run: terraform plan -var='auth0_domain=${{ secrets.AUTH0_DOMAIN }}' -out=prod.tfplan
           name: Terraform Plan
