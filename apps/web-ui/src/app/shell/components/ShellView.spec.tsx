@@ -28,5 +28,14 @@ describe('ShellView', () => {
     userEvent.keyboard('{esc}');
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+  });
+
+  test('when navigation is triggered then side navigation is hidden', async () => {
+    renderWithProviders(<ShellView />);
+
+    userEvent.click(screen.getByLabelText('navigation toggle'));
+    userEvent.click(screen.getByRole('button', {name: 'current schedule'}));
+
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   })
 });

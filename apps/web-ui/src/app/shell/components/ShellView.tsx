@@ -1,6 +1,6 @@
 import { Box, CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
-import { useCallback, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { WelcomePage } from '../../welcome/Welcome';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
@@ -15,9 +15,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function ShellView() {
+  const location = useLocation();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const handleNavigationToggled = useCallback(() => setIsNavigationOpen(!isNavigationOpen), [isNavigationOpen, setIsNavigationOpen]);
   const handleNavigationClosed = useCallback(() => setIsNavigationOpen(false), [setIsNavigationOpen]);
+
+  useEffect(() => { handleNavigationClosed() }, [location, handleNavigationClosed])
 
   const styles = useStyles();
   return (
