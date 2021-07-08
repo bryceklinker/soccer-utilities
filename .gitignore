@@ -40,3 +40,6 @@ Thumbs.db
 
 # Terraform
 .terraform/
+
+# Local Environment
+.env

@@ -14,21 +14,20 @@ export type GameScheduleProps = {
 export const GameSchedule: FunctionComponent<GameScheduleProps> = ({ schedule, onRefresh, onUpload }) => {
   return (
     <ColumnFlexBox>
-      <AppBar>
-        <Toolbar>
-          <RowFlexBox>
-            <Typography variant={'subtitle1'} aria-label={'last updated'}>
-              {schedule?.lastUpdated || 'No Schedule'}
-            </Typography>
-            <IconButton aria-label={'upload schedule'} onClick={onUpload}>
-              <UploadIcon />
-            </IconButton>
-            <IconButton aria-label={'refresh schedule'} onClick={onRefresh}>
-              <RefreshIcon />
-            </IconButton>
-          </RowFlexBox>
-        </Toolbar>
-      </AppBar>
+      <Toolbar>
+        <RowFlexBox alignItems={'center'} justifyItems={'space-around'}>
+          <RowFlexBox />
+          <Typography variant={'subtitle1'} aria-label={'last updated'}>
+            {schedule?.lastUpdated || 'No Schedule'}
+          </Typography>
+          <IconButton aria-label={'upload schedule'} onClick={onUpload}>
+            <UploadIcon />
+          </IconButton>
+          <IconButton aria-label={'refresh schedule'} onClick={onRefresh}>
+            <RefreshIcon />
+          </IconButton>
+        </RowFlexBox>
+      </Toolbar>
 
       <GamesTable games={schedule?.games || []} />
     </ColumnFlexBox>
