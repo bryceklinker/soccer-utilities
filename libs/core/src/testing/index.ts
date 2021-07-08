@@ -3,9 +3,9 @@ import {
   GameModel,
   GameScheduleModel,
   Genders,
-  RefereeModel,
+  RefereeModel, RefereePayScaleModel,
   RefereeType,
-  RefereeTypes,
+  RefereeTypes
 } from '../lib';
 import * as faker from 'faker';
 
@@ -54,6 +54,15 @@ function createGameSchedule(
   };
 }
 
+function createPayScale(model: Partial<RefereePayScaleModel>): RefereePayScaleModel {
+  return {
+    ageGroup: createAgeGroup(),
+    amount: faker.datatype.number({min: 15, max: 50}),
+    refereeType: faker.random.arrayElement(RefereeTypes),
+    ...model,
+  }
+}
+
 function createMany<T>(factory: () => T, count: number): Array<T> {
   const items: Array<T> = [];
   for (let i = 0; i < count; i++) {
@@ -67,5 +76,6 @@ export const ModelFactory = {
   createReferee,
   createGame,
   createGameSchedule,
+  createPayScale,
   createMany
 };

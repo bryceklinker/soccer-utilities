@@ -38,3 +38,27 @@ export interface GameScheduleModel {
   games: Array<GameModel>;
   lastUpdated: string;
 }
+
+export interface RefereeCheckModel {
+  date: string;
+  time: string;
+  name: string;
+  type: RefereeType;
+  ageGroup: AgeGroupModel;
+  amount: number;
+}
+
+export interface List<T> {
+  items: Array<T>;
+}
+
+export interface RefereePayScaleModel {
+  refereeType: RefereeType;
+  ageGroup: AgeGroupModel;
+  amount: number;
+}
+
+export interface DateRange {
+  start: string;
+  end: string;
+}

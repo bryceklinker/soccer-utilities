@@ -10,6 +10,7 @@ import cosmosConfig from '../config/cosmos';
 import { SchedulesController } from './schedules/schedules.controller';
 import { LoggingMiddleware } from './middleware';
 import { HealthController } from './health/health.controller';
+import { RefereesController } from './referees/referees.controller';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { HealthController } from './health/health.controller';
   ],
   controllers: [
     SchedulesController,
-    HealthController
+    HealthController,
+    RefereesController
   ],
   providers: [
     Logger
