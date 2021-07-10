@@ -1,31 +1,30 @@
 import * as jwt from 'jsonwebtoken';
+import TokenResponse = Cypress.TokenResponse;
+import { CONFIG } from './config';
 
-const DEFAULT_CREDENTIALS = {
-  username: Cypress.env('AUTH0_USERNAME'),
-  password: Cypress.env('AUTH0_PASSWORD')
-};
+Cypress.Commands.add('getToken', (username = CONFIG.auth.username, password = CONFIG.auth.password) => {
+  const {auth} = CONFIG;
 
-Cypress.Commands.add('login', (username = DEFAULT_CREDENTIALS.username, password = DEFAULT_CREDENTIALS.password) => {
-  const auth_domain = Cypress.env('AUTH0_DOMAIN');
-  const client_id = Cypress.env('AUTH0_CLIENT_ID');
-  const client_secret = Cypress.env('AUTH0_CLIENT_SECRET');
-  const audience = Cypress.env('AUTH0_AUDIENCE');
-  const scope = 'openid profile';
-
-  cy.visit('/');
-  cy.request({
+  return cy.request<TokenResponse>({
     method: 'POST',
-    url: `https://${auth_domain}/oauth/token`,
+    url: `https://${auth.domain}/oauth/token`,
     body: {
       grant_type: 'password',
       username,
       password,
-      audience,
-      scope,
-      client_id,
-      client_secret
+      audience: auth.audience,
+      scope: auth.scope,
+      client_id: auth.client_id,
+      client_secret: auth.client_secret
     }
-  }).then(({ body }) => {
+  });
+});
+
+Cypress.Commands.add('login', (username = CONFIG.auth.username, password = CONFIG.auth.password) => {
+  const {auth} = CONFIG;
+
+  cy.visit('/');
+  cy.getToken(username, password).then(({ body }) => {
     const claims = jwt.decode(body.id_token) as any;
     const {
       nickname,
@@ -52,9 +51,9 @@ Cypress.Commands.add('login', (username = DEFAULT_CREDENTIALS.username, password
             email_verified,
             sub
           },
-          audience,
-          client_id
-        },
+          audience: auth.audience,
+          client_id: auth.client_id
+        }
       },
       expiresAt: exp
     };

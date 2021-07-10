@@ -1,1 +1,5 @@
-export const getWelcomeMessage = () => cy.findByLabelText('welcome message');
+const findMessage = () => cy.findByLabelText('welcome message');
+
+export const WelcomePage = {
+  findMessage
+}

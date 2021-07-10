@@ -8,6 +8,5 @@
   "video": true,
   "videosFolder": "../../dist/cypress/apps/web-ui-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/web-ui-e2e/screenshots",
-  "chromeWebSecurity": false,
-  "defaultCommandTimeout": 7500
+  "chromeWebSecurity": false
 }

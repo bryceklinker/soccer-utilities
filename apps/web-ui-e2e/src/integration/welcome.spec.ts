@@ -1,4 +1,4 @@
-import { getWelcomeMessage } from '../support/welcome.po';
+import { WelcomePage } from '../support/welcome.po';
 
 describe('Welcome', () => {
   beforeEach(() => cy.visit('/'));
@@ -6,6 +6,6 @@ describe('Welcome', () => {
   it('should display loading', () => {
     cy.login();
 
-    getWelcomeMessage().should('contain.text', 'Welcome');
+    WelcomePage.findMessage().should('contain.text', 'Welcome');
   });
 });
