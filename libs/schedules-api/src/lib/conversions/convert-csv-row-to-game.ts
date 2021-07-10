@@ -1,6 +1,8 @@
 import { GameModel } from '@soccer-utilities/core';
 import { convertDivisionToAgeGroup } from './convert-division-to-age-group';
 import { convertCsvRowToReferees } from './convert-csv-row-to-referees';
+import { convertCsvDateToDateString } from './convert-csv-date-to-date-string';
+import { convertCsvTimeToTimeString } from './convert-csv-time-to-time-string';
 
 export function convertCsvRowToGame(row: any): GameModel | null {
   const division = row['Division'];
@@ -8,12 +10,12 @@ export function convertCsvRowToGame(row: any): GameModel | null {
     return null;
   }
   return {
-    awayTeam: row['Away Team'],
-    date: row['Game Date'],
-    division,
-    field: row['Field'],
+    date: convertCsvDateToDateString(row['Game Date']),
+    time: convertCsvTimeToTimeString(row['Game Time']),
     homeTeam: row['Home Team'],
-    time: row['Game Time'],
+    awayTeam: row['Away Team'],
+    field: row['Field'],
+    division,
     ageGroup: convertDivisionToAgeGroup(division),
     referees: convertCsvRowToReferees(row)
   };

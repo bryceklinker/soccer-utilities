@@ -7,7 +7,7 @@ import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-suppor
 import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GameScheduleModel } from '@soccer-utilities/core';
 
 describe('Schedules Api', () => {

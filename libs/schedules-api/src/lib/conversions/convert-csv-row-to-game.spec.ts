@@ -5,7 +5,7 @@ describe('convertCsvRowToGame', () => {
   test('when row is converted to game then game is populated from row', () => {
     const row = {
       'Game Date': '4/10/2021',
-      'Game Time': '9:00 AM',
+      'Game Time': '9:00:00 AM',
       'Home Team': 'Bad News Bears',
       'Away Team': 'Honkies',
       Field: 'Field 1',
@@ -18,8 +18,8 @@ describe('convertCsvRowToGame', () => {
     const game = convertCsvRowToGame(row);
 
     expect(game).toEqual({
-      date: '4/10/2021',
-      time: '9:00 AM',
+      date: '2021-04-10',
+      time: '09:00 AM',
       homeTeam: 'Bad News Bears',
       awayTeam: 'Honkies',
       field: 'Field 1',

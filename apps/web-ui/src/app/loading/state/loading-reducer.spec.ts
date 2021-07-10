@@ -1,4 +1,4 @@
-import { generateStateFromActions, ModelFactory } from '../../../testing';
+import { generateStateFromActions, WebUiModelFactory } from '../../../testing';
 import { loadingReducer } from './loading-reducer';
 import { AuthActions } from '../../auth/state/auth-actions';
 
@@ -24,7 +24,7 @@ describe('loadingReducer', () => {
   test('when success action received then decrements action type count', () => {
     const state = generateStateFromActions(loadingReducer,
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(ModelFactory.createUser())
+      AuthActions.loadUser.success(WebUiModelFactory.createUser())
     );
 
     expect(state[AuthActions.loadUser.baseType]).toEqual(0);
@@ -42,9 +42,9 @@ describe('loadingReducer', () => {
   test('when many success actions received then decrements action type count to minimum of zero', () => {
     const state = generateStateFromActions(loadingReducer,
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(ModelFactory.createUser()),
-      AuthActions.loadUser.success(ModelFactory.createUser()),
-      AuthActions.loadUser.success(ModelFactory.createUser()),
+      AuthActions.loadUser.success(WebUiModelFactory.createUser()),
+      AuthActions.loadUser.success(WebUiModelFactory.createUser()),
+      AuthActions.loadUser.success(WebUiModelFactory.createUser()),
     );
 
     expect(state[AuthActions.loadUser.baseType]).toEqual(0);

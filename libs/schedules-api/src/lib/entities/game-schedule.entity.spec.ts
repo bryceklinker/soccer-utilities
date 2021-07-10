@@ -1,8 +1,7 @@
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GameScheduleEntity } from './game-schedule.entity';
 import * as faker from 'faker';
 import { DateRange, DEFAULT_REFEREE_PAY_SCALES, RefereeType } from '@soccer-utilities/core';
-import { Games } from '@material-ui/icons';
 
 describe('GameScheduleEntity', () => {
   beforeEach(() => {

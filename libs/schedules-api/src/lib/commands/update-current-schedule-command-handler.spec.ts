@@ -5,7 +5,7 @@ import { setupTestingModule } from '../../testing';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { UpdateCurrentScheduleCommand } from '@soccer-utilities/schedules-api';
 import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 
 describe('UpdateCurrentScheduleCommandHandler', () => {
   let commandBus: CommandBus;

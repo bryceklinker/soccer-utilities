@@ -1,4 +1,4 @@
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { render, screen, within } from '@testing-library/react';
 import { GamesTable } from '@soccer-utilities/schedules-ui';
 import { Gender, RefereeType } from '@soccer-utilities/core';

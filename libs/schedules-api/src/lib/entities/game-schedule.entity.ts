@@ -1,12 +1,11 @@
 import {
   DateRange,
-  GameScheduleModel,
+  GameScheduleModel, isDateInRange,
   RefereeCheckModel,
   RefereePayScaleModel
 } from '@soccer-utilities/core';
 import { GameEntity } from './game.entity';
 import { RefereeChecksGenerator } from './referee-checks-generator';
-import {isWithinRange} from 'date-fns';
 
 export class GameScheduleEntity implements GameScheduleModel {
   static type = 'game-schedule';
@@ -53,7 +52,7 @@ export class GameScheduleEntity implements GameScheduleModel {
       return this.games;
     }
 
-    return this.games.filter(g => isWithinRange(g.date, range.start, range.end));
+    return this.games.filter(g => isDateInRange(g.date, range));
   }
 }
 

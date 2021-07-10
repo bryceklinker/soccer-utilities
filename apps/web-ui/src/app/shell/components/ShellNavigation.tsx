@@ -26,6 +26,9 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({ isOpe
             <ListItem button component={Link} to={ROUTES.CURRENT_SCHEDULE} aria-label={'current schedule'}>
               Current Schedule
             </ListItem>
+            <ListItem button component={Link} to={ROUTES.REFEREE_CHECKS} aria-label={'referee checks'}>
+              Referee Checks
+            </ListItem>
           </List>
         </ColumnFlexBox>
       </Drawer>

@@ -1,7 +1,7 @@
-import { ModelFactory as UtilitiesModelFactory } from '@soccer-utilities/core/testing';
-import { ApplicationUser } from '../app/auth';
+import { ModelFactory } from '@soccer-utilities/testing-support';
+import { ApplicationUser } from '../app/auth/state/auth-models';
 import * as faker from 'faker';
-import { SettingsModel } from '../app/settings';
+import { SettingsModel } from '../app/settings/state/settings-model';
 
 function createUser(model: Partial<ApplicationUser> = {}): ApplicationUser {
   return {
@@ -31,8 +31,8 @@ function createSettings(model: Partial<SettingsModel> = {}): SettingsModel {
   };
 }
 
-export const ModelFactory = {
-  ...UtilitiesModelFactory,
+export const WebUiModelFactory = {
+  ...ModelFactory,
   createUser,
   createSettings,
 };

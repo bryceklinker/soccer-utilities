@@ -1,19 +1,23 @@
 import {
-  AgeGroupModel,
+  AgeGroupModel, DATE_FORMAT,
   GameModel,
   GameScheduleModel,
   Genders,
-  RefereeModel, RefereePayScaleModel,
+  RefereeCheckModel,
+  RefereeModel,
+  RefereePayScaleModel,
   RefereeType,
-  RefereeTypes
-} from '../lib';
+  RefereeTypes, TIME_FORMAT
+} from '@soccer-utilities/core';
+import { format } from 'date-fns';
 import * as faker from 'faker';
+import { ClientRefereeCheckModel } from '@soccer-utilities/schedules-ui';
 
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
   return {
     age: faker.datatype.number({ min: 5, max: 19 }),
     gender: faker.random.arrayElement(Genders),
-    ...ageGroup,
+    ...ageGroup
   };
 }
 
@@ -21,7 +25,7 @@ function createReferee(referee: Partial<RefereeModel> = {}): RefereeModel {
   return {
     name: faker.name.lastName(),
     type: faker.random.arrayElement(RefereeTypes),
-    ...referee,
+    ...referee
   };
 }
 
@@ -38,9 +42,9 @@ function createGame(game: Partial<GameModel> = {}): GameModel {
     referees: [
       createReferee({ type: RefereeType.Center }),
       createReferee({ type: RefereeType.Assistant }),
-      createReferee({ type: RefereeType.Assistant }),
+      createReferee({ type: RefereeType.Assistant })
     ],
-    ...game,
+    ...game
   };
 }
 
@@ -50,16 +54,37 @@ function createGameSchedule(
   return {
     lastUpdated: faker.date.recent().toISOString(),
     games: [createGame(), createGame(), createGame()],
-    ...schedule,
+    ...schedule
   };
 }
 
 function createPayScale(model: Partial<RefereePayScaleModel>): RefereePayScaleModel {
   return {
     ageGroup: createAgeGroup(),
-    amount: faker.datatype.number({min: 15, max: 50}),
+    amount: faker.datatype.number({ min: 15, max: 50 }),
     refereeType: faker.random.arrayElement(RefereeTypes),
-    ...model,
+    ...model
+  };
+}
+
+function createRefereeCheck(model: Partial<RefereeCheckModel> = {}): RefereeCheckModel {
+  return {
+    date: format(faker.date.soon(), DATE_FORMAT),
+    time: format(faker.time.recent(), TIME_FORMAT),
+    amount: faker.datatype.number(),
+    type: faker.random.arrayElement(RefereeTypes),
+    name: faker.name.firstName(),
+    ageGroup: createAgeGroup(model.ageGroup),
+    ...model
+  };
+}
+
+function createClientRefereeCheckModel(model: Partial<ClientRefereeCheckModel> = {}): ClientRefereeCheckModel {
+  return {
+    ...createRefereeCheck(model),
+    id: faker.datatype.uuid(),
+    hasBeenWritten: false,
+    ...model
   }
 }
 
@@ -77,5 +102,7 @@ export const ModelFactory = {
   createGame,
   createGameSchedule,
   createPayScale,
+  createRefereeCheck,
+  createClientRefereeCheckModel,
   createMany
 };

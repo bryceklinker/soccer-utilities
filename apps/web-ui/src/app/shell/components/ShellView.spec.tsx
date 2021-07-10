@@ -34,8 +34,8 @@ describe('ShellView', () => {
     renderWithProviders(<ShellView />);
 
     userEvent.click(screen.getByLabelText('navigation toggle'));
-    userEvent.click(screen.getByRole('button', {name: 'current schedule'}));
+    userEvent.click(screen.getByRole('button', { name: 'current schedule' }));
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
-  })
+  });
 });

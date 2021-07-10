@@ -2,7 +2,7 @@ import { setupTestingModule } from '../../testing';
 import { QueryBus } from '@nestjs/cqrs';
 import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '../entities';
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GetCurrentScheduleQuery } from './get-current-schedule-query-handler';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 

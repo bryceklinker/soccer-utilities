@@ -1,4 +1,4 @@
-export * from './model-factory';
+export * from './web-ui-model-factory';
 export * from './testing-rest-api-server';
 export * from './generate-state-from-actions'
 export * from './create-testing-store';

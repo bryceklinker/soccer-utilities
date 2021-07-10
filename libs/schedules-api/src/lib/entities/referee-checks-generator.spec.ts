@@ -1,4 +1,4 @@
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { RefereeModel, RefereeType } from '@soccer-utilities/core';
 import { RefereeChecksGenerator } from './referee-checks-generator';
 

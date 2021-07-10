@@ -3,7 +3,7 @@ import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/d
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { startApp } from '../../testing/start-app';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import axios from 'axios';
 import { List, RefereeCheckModel } from '@soccer-utilities/core';
 import { constants } from 'http2';

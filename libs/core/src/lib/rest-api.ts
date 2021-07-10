@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-interface RestApi {
+export interface RestApi {
   get<T>(path: string): Promise<T>;
 
   post<T = void>(path: string, body?: unknown): Promise<T>;

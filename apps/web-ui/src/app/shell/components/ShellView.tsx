@@ -7,6 +7,7 @@ import { ShellNavigation } from './ShellNavigation';
 import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { CurrentSchedulePage } from '../../current-schedule/pages/CurrentSchedulePage';
+import { RefereeChecksPage } from '../../referees/pages/RefereeChecksPage';
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -39,6 +40,9 @@ export function ShellView() {
               </Route>
               <Route path={ROUTES.CURRENT_SCHEDULE}>
                 <CurrentSchedulePage />
+              </Route>
+              <Route path={ROUTES.REFEREE_CHECKS}>
+                <RefereeChecksPage />
               </Route>
               <Redirect from={ROUTES.REDIRECT} to={ROUTES.WELCOME} />
             </Switch>

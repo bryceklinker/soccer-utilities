@@ -4,7 +4,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { setupTestingModule } from '../../testing';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { GetRefereeChecksQuery } from './get-referee-checks-query-handler';
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { RefereeType } from '@soccer-utilities/core';
 
 describe('GetRefereeChecksQueryHandler', () => {

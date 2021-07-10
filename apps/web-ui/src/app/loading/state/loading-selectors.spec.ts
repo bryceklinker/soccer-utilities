@@ -1,4 +1,4 @@
-import { generateRootStateFromActions, ModelFactory } from '../../../testing';
+import { generateRootStateFromActions, WebUiModelFactory } from '../../../testing';
 import { selectIsLoading } from './loading-selectors';
 import { AuthActions } from '../../auth/state/auth-actions';
 
@@ -20,7 +20,7 @@ describe('loading selectors', () => {
       AuthActions.loadUser.request(),
       AuthActions.loadUser.request(),
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(ModelFactory.createUser())
+      AuthActions.loadUser.success(WebUiModelFactory.createUser())
     );
 
     expect(selectIsLoading(AuthActions.loadUser.success)(state)).toEqual(true);

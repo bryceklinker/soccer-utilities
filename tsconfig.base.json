@@ -17,7 +17,6 @@
     "paths": {
       "@soccer-utilities/common-ui": ["libs/common-ui/src/index.ts"],
       "@soccer-utilities/core": ["libs/core/src/index.ts"],
-      "@soccer-utilities/core/testing": ["libs/core/src/testing/index.ts"],
       "@soccer-utilities/data-access": ["libs/data-access/src/index.ts"],
       "@soccer-utilities/data-access/testing": ["libs/data-access/src/testing/index.ts"],
       "@soccer-utilities/nest-auth0": ["libs/nest-auth0/src/index.ts"],

@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/dom';
-import { createTestingStore, ModelFactory, renderWithProviders } from '../../../testing';
+import { createTestingStore, WebUiModelFactory, renderWithProviders } from '../../../testing';
 import { CurrentSchedulePage } from './CurrentSchedulePage';
 import userEvent from '@testing-library/user-event';
 import { CurrentScheduleActions } from '../state/current-schedule-actions';
@@ -14,8 +14,8 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when current schedule is available then shows current schedule', () => {
-    const schedule = ModelFactory.createGameSchedule({
-      games: ModelFactory.createMany(ModelFactory.createGame, 4)
+    const schedule = WebUiModelFactory.createGameSchedule({
+      games: WebUiModelFactory.createMany(WebUiModelFactory.createGame, 4)
     });
     const store = createTestingStore(CurrentScheduleActions.load.success(schedule));
 
@@ -25,7 +25,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when current schedule is available then skips loading schedule', () => {
-    const store = createTestingStore(CurrentScheduleActions.load.success(ModelFactory.createGameSchedule()));
+    const store = createTestingStore(CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule()));
 
     renderWithProviders(<CurrentSchedulePage />, { store });
 
@@ -34,7 +34,7 @@ describe('CurrentSchedulePage', () => {
 
   test('when current schedule is loading then shows loading', () => {
     const store = createTestingStore(
-      CurrentScheduleActions.load.success(ModelFactory.createGameSchedule()),
+      CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule()),
       CurrentScheduleActions.load.request()
     );
 

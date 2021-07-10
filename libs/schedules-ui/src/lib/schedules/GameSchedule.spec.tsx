@@ -1,4 +1,4 @@
-import { ModelFactory } from '@soccer-utilities/core/testing';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 import { render, screen } from '@testing-library/react';
 import { GameSchedule } from './GameSchedule';
 import userEvent from '@testing-library/user-event';
