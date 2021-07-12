@@ -8,6 +8,25 @@ function changeDate(label: string, day: string) {
   removeDialogManuallySinceItDoesNotHappenLikeItDoesInABrowser();
 }
 
+function changeStart(day: string) {
+  changeDate('start date', day);
+}
+function changeEnd(day: string) {
+  changeDate('end date', day);
+}
+
+function clickSearch() {
+  userEvent.click(screen.getByRole('button', { name: 'search date range' }));
+}
+
+function getStartTextBox() {
+  return screen.getByRole('textbox', {name: 'start date'});
+}
+
+function getEndTextBox() {
+  return screen.getByRole('textbox', {name: 'end date'});
+}
+
 function removeDialogManuallySinceItDoesNotHappenLikeItDoesInABrowser() {
   /*
   I hate this as much as anyone, but it appears that the date picker doesn't close after clicking 'OK'
@@ -17,5 +36,9 @@ function removeDialogManuallySinceItDoesNotHappenLikeItDoesInABrowser() {
 }
 
 export const DatePickerTestingHarness = {
-  changeDate
+  changeStart,
+  changeEnd,
+  clickSearch,
+  getEndTextBox,
+  getStartTextBox
 }

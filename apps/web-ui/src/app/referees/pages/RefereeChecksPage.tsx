@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useEffect } from 'react';
+import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
 import { selectAllRefereeChecks, selectHaveRefereeChecksBeenLoaded } from '../state/referee-checks-selectors';
 import { RefereesActions } from '../state/referees-actions';
@@ -13,7 +13,11 @@ export const RefereeChecksPage: FunctionComponent = () => {
   const checks = useRootSelector(selectAllRefereeChecks);
   const hasPreviouslyLoadedChecks = useRootSelector(selectHaveRefereeChecksBeenLoaded);
   const isLoadingChecks = useRootSelector(selectIsLoading(RefereesActions.loadChecks.request));
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
   const handleDateRangeChanged = useCallback((range: DateRange) => {
+    setStartDate(range.start);
+    setEndDate(range.end);
     dispatch(RefereesActions.loadChecks.request(range));
   }, [dispatch]);
 
@@ -40,7 +44,7 @@ export const RefereeChecksPage: FunctionComponent = () => {
   return (
     <ColumnFlexBox>
       <Toolbar>
-        <DateRangeSelector onSearch={handleDateRangeChanged} />
+        <DateRangeSelector onSearch={handleDateRangeChanged} start={startDate} end={endDate} />
       </Toolbar>
       <RefereeChecks checks={checks} onCopyCheck={handleCheckCopied} />
     </ColumnFlexBox>

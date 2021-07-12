@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { DateRangeSelector } from './DateRangeSelector';
-import userEvent from '@testing-library/user-event';
 import { DatePickerTestingHarness } from '@soccer-utilities/testing-support';
 
 const CURRENT_DATE = new Date(2015, 3, 30);
@@ -42,9 +41,9 @@ describe('DateRangeSelector', () => {
     const onSearch = jest.fn();
     render(<DateRangeSelector onSearch={onSearch} />);
 
-    DatePickerTestingHarness.changeDate('start date', '22');
-    DatePickerTestingHarness.changeDate('end date', '23');
-    userEvent.click(screen.getByRole('button', { name: 'search date range' }));
+    DatePickerTestingHarness.changeStart('22');
+    DatePickerTestingHarness.changeEnd('23');
+    DatePickerTestingHarness.clickSearch();
 
     expect(onSearch).toHaveBeenCalledWith({ start: '2015-04-22', end: '2015-04-23' });
   });

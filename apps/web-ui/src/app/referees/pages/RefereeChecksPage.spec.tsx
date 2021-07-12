@@ -55,14 +55,27 @@ describe('RefereeChecksPage', () => {
     const store = createTestingStore(RefereesActions.loadChecks.success({ items: checks }));
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.changeDate('start date', '23');
-    DatePickerTestingHarness.changeDate('end date', '24');
-    userEvent.click(screen.getByRole('button', { name: 'search date range' }));
+    DatePickerTestingHarness.changeStart('23');
+    DatePickerTestingHarness.changeEnd('24');
+    DatePickerTestingHarness.clickSearch();
 
     expect(store.getActions()).toContainEqual(RefereesActions.loadChecks.request({
       start: '2021-07-23',
       end: '2021-07-24'
     }));
+  });
+
+  test('when date range selected then date range stays selected', () => {
+    const checks = ModelFactory.createMany(ModelFactory.createRefereeCheck, 3);
+    const store = createTestingStore(RefereesActions.loadChecks.success({ items: checks }));
+    renderWithProviders(<RefereeChecksPage />, { store });
+
+    DatePickerTestingHarness.changeStart('23');
+    DatePickerTestingHarness.changeEnd('24');
+    DatePickerTestingHarness.clickSearch();
+
+    expect(DatePickerTestingHarness.getStartTextBox()).toHaveValue('2021-07-23');
+    expect(DatePickerTestingHarness.getEndTextBox()).toHaveValue('2021-07-24');
   });
 
   test('when referee check copied then notifies referee check written', () => {
