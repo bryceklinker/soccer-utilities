@@ -23,6 +23,9 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({ isOpe
         <Divider />
         <ColumnFlexBox className={styles.drawer}>
           <List component={'nav'}>
+            <ListItem button component={Link} to={ROUTES.WELCOME} aria-label={'welcome'}>
+              Welcome
+            </ListItem>
             <ListItem button component={Link} to={ROUTES.CURRENT_SCHEDULE} aria-label={'current schedule'}>
               Current Schedule
             </ListItem>

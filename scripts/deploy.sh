@@ -40,7 +40,7 @@ function apply_terraform_plan() {
 }
 
 function warm_up_function_app() {
-  FUNCTION_APP_URL=$(terraform output -raw function_app_url)
+  FUNCTION_APP_URL="$(terraform output -raw function_app_url)"
   pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
   curl "${FUNCTION_APP_URL}/.health"
   curl "${FUNCTION_APP_URL}/.health"
