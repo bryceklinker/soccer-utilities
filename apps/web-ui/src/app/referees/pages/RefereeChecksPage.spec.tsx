@@ -78,6 +78,16 @@ describe('RefereeChecksPage', () => {
     expect(DatePickerTestingHarness.getEndTextBox()).toHaveValue('2021-07-24');
   });
 
+  test('when empty dates are searched then notifies to load referee checks', () => {
+    const checks = ModelFactory.createMany(ModelFactory.createRefereeCheck, 3);
+    const store = createTestingStore(RefereesActions.loadChecks.success({ items: checks }));
+    renderWithProviders(<RefereeChecksPage />, { store });
+
+    DatePickerTestingHarness.clickSearch();
+
+    expect(store.getActions()).toContainEqual(RefereesActions.loadChecks.request());
+  });
+
   test('when referee check copied then notifies referee check written', () => {
     const check = ModelFactory.createRefereeCheck();
     const store = createTestingStore(RefereesActions.loadChecks.success({ items: [check] }));

@@ -15,9 +15,11 @@ export const RefereeChecksPage: FunctionComponent = () => {
   const isLoadingChecks = useRootSelector(selectIsLoading(RefereesActions.loadChecks.request));
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const handleDateRangeChanged = useCallback((range: DateRange) => {
-    setStartDate(range.start);
-    setEndDate(range.end);
+  const handleDateRangeChanged = useCallback((range?: DateRange) => {
+    const start = range ? range.start : null;
+    const end = range ? range.end : null;
+    setStartDate(start);
+    setEndDate(end);
     dispatch(RefereesActions.loadChecks.request(range));
   }, [dispatch]);
 

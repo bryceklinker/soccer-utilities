@@ -48,6 +48,31 @@ describe('DateRangeSelector', () => {
     expect(onSearch).toHaveBeenCalledWith({ start: '2015-04-22', end: '2015-04-23' });
   });
 
+  test('when start date filled in without end date then search is disabled', () => {
+    render(<DateRangeSelector />);
+
+    DatePickerTestingHarness.changeStart('22');
+
+    expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
+  });
+
+  test('when end date filled in without start date then search is disabled', () => {
+    render(<DateRangeSelector />);
+
+    DatePickerTestingHarness.changeEnd('22');
+
+    expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
+  });
+
+  test('when searching without dates then notifies of search without range', () => {
+    const onSearch = jest.fn();
+    render(<DateRangeSelector onSearch={onSearch} />);
+
+    DatePickerTestingHarness.clickSearch();
+
+    expect(onSearch).toHaveBeenCalledWith(undefined);
+  });
+
   function getStartDateTextBox() {
     return screen.getByRole('textbox', { name: 'start date' });
   }

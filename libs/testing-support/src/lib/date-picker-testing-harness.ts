@@ -16,7 +16,7 @@ function changeEnd(day: string) {
 }
 
 function clickSearch() {
-  userEvent.click(screen.getByRole('button', { name: 'search date range' }));
+  userEvent.click(getSearchButton());
 }
 
 function getStartTextBox() {
@@ -25,6 +25,10 @@ function getStartTextBox() {
 
 function getEndTextBox() {
   return screen.getByRole('textbox', {name: 'end date'});
+}
+
+function getSearchButton() {
+  return screen.getByRole('button', {name: 'search date range'});
 }
 
 function removeDialogManuallySinceItDoesNotHappenLikeItDoesInABrowser() {
@@ -40,5 +44,6 @@ export const DatePickerTestingHarness = {
   changeEnd,
   clickSearch,
   getEndTextBox,
-  getStartTextBox
+  getStartTextBox,
+  getSearchButton
 }
