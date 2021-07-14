@@ -1,30 +1,26 @@
-import { INestApplication } from '@nestjs/common';
-import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
+import { TestingRepository } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
-import { startApp } from '../../testing/start-app';
-import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import axios from 'axios';
-import { List, RefereeCheckModel } from '@soccer-utilities/core';
+import { ListResult, RefereeCheckModel } from '@soccer-utilities/core';
 import { constants } from 'http2';
+import { ApiFixture } from '../../testing/api-fixture';
 
 describe('Referees Api', () => {
-  let app: INestApplication;
+  let fixture: ApiFixture;
   let repository: TestingRepository<GameScheduleEntity>;
-  let baseUrl: string;
 
   beforeEach(async () => {
-    app = await startApp();
+    fixture = new ApiFixture();
+    await fixture.start();
 
-    repository = (app.get(RepositoryFactory) as TestingRepositoryFactory)
-      .setupRepository(GameScheduleEntity);
-    baseUrl = await app.getUrl();
+    repository = fixture.repositoryFactory.setupRepository(GameScheduleEntity);
   });
 
   test('when getting referee checks then returns referee checks', async () => {
     await repository.create(GameScheduleEntity.fromModel(ModelFactory.createGameSchedule()));
 
-    const response = await axios.get<List<RefereeCheckModel>>('/referees/checks', {baseURL: baseUrl});
+    const response = await axios.get<ListResult<RefereeCheckModel>>('/referees/checks', { baseURL: fixture.baseUrl });
 
     expect(response.status).toEqual(constants.HTTP_STATUS_OK);
     expect(response.data.items.length).toBeGreaterThan(0);
@@ -40,17 +36,17 @@ describe('Referees Api', () => {
         ModelFactory.createGame({
           date: '2020-06-01',
           referees: [ModelFactory.createReferee()]
-        }),
+        })
       ]
     })));
 
-    const response = await axios.get<List<RefereeCheckModel>>('/referees/checks?start=2020-05-01&end=2020-05-31', {baseURL: baseUrl});
+    const response = await axios.get<ListResult<RefereeCheckModel>>('/referees/checks?start=2020-05-01&end=2020-05-31', { baseURL: fixture.baseUrl });
 
     expect(response.status).toEqual(constants.HTTP_STATUS_OK);
     expect(response.data.items).toHaveLength(1);
-  })
+  });
 
   afterEach(async () => {
-    await app.close();
-  })
+    await fixture.stop();
+  });
 });

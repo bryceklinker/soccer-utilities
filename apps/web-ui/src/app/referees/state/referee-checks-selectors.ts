@@ -4,9 +4,18 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const selectRefereeChecksState = (state: RootState) => state.refereeChecks;
 
-export const selectAllRefereeChecks = createSelector(
+export interface RefereeCheckFilters {
+  showAll: boolean;
+}
+
+export const selectAllRefereeChecks = ({showAll}: RefereeCheckFilters) => createSelector(
   selectRefereeChecksState,
-  refereeChecksSelectors.selectAll
+  state => {
+    const checks = refereeChecksSelectors.selectAll(state);
+    return showAll
+       ? checks
+       : checks.filter(c => !c.hasBeenWritten);
+  }
 )
 
 export const selectHaveRefereeChecksBeenLoaded = createSelector(

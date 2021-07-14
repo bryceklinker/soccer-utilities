@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { ApplicationUser } from '../app/auth/state/auth-models';
 import { SettingsModel } from '../app/settings/state/settings-model';
-import { createSagaTestingStore, TestingStore } from './create-testing-store';
+import { createSagaTestingStore, TestingStore } from './create-testing-store-from-state';
 import { AuthActions } from '../app/auth/state/auth-actions';
 import { SettingsActions } from '../app/settings/state/settings-actions';
 import { WebUiModelFactory } from './web-ui-model-factory';

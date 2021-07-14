@@ -1,5 +1,4 @@
 import { createEntityAdapter, createReducer } from '@reduxjs/toolkit';
-import { v4 as uuid } from 'uuid';
 import { RefereeChecksState } from './referee-checks-state';
 import { RefereesActions } from './referees-actions';
 import { ClientRefereeCheckModel } from '@soccer-utilities/schedules-ui';
@@ -13,7 +12,7 @@ export const refereeChecksReducer = createReducer<RefereeChecksState>(initialSta
   builder
     .addCase(RefereesActions.loadChecks.success, (state, { payload }) => {
       adapter.removeAll(state);
-      adapter.addMany(state, payload.items.map(c => ({ ...c, id: uuid(), hasBeenWritten: false })))
+      adapter.addMany(state, payload.items);
       state.hasBeenLoaded = true;
       return state;
     })

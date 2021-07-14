@@ -48,8 +48,9 @@ export interface RefereeCheckModel {
   amount: number;
 }
 
-export interface List<T> {
+export interface ListResult<T> {
   items: Array<T>;
+  count: number;
 }
 
 export interface RefereePayScaleModel {

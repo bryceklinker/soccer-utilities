@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { DateRange, List, RefereeCheckModel } from '@soccer-utilities/core';
+import { DateRange, ListResult, RefereeCheckModel } from '@soccer-utilities/core';
 import { GetRefereeChecksQuery } from '@soccer-utilities/schedules-api';
 
 @Controller('referees')
@@ -9,7 +9,7 @@ export class RefereesController {
   }
 
   @Get('checks')
-  async getChecks(@Query('start') start?: string, @Query('end') end?: string): Promise<List<RefereeCheckModel>> {
+  async getChecks(@Query('start') start?: string, @Query('end') end?: string): Promise<ListResult<RefereeCheckModel>> {
     const range: DateRange | undefined = start && end ? {start, end} : undefined;
     return await this.queryBus.execute(new GetRefereeChecksQuery(range));
   }

@@ -2,7 +2,7 @@ import {
   AgeGroupModel, DATE_FORMAT,
   GameModel,
   GameScheduleModel,
-  Genders,
+  Genders, List, ListResult,
   RefereeCheckModel,
   RefereeModel,
   RefereePayScaleModel,
@@ -96,6 +96,11 @@ function createMany<T>(factory: () => T, count: number): Array<T> {
   return items;
 }
 
+function createList<T>(factory: () => T, count: number): ListResult<T> {
+  const items = createMany(factory, count);
+  return List.fromArray(items);
+}
+
 export const ModelFactory = {
   createAgeGroup,
   createReferee,
@@ -104,5 +109,6 @@ export const ModelFactory = {
   createPayScale,
   createRefereeCheck,
   createClientRefereeCheckModel,
-  createMany
+  createMany,
+  createListResult: createList
 };

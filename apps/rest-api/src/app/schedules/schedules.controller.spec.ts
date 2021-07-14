@@ -1,30 +1,26 @@
-import { startApp } from '../../testing/start-app';
-import { INestApplication } from '@nestjs/common';
 import * as FormData from 'form-data';
 import axios from 'axios';
 import { constants } from 'http2';
 import { readSampleGameScheduleAsStream } from '@soccer-utilities/testing-support';
-import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
-import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GameScheduleModel } from '@soccer-utilities/core';
+import { ApiFixture } from '../../testing/api-fixture';
+import { TestingRepository } from '@soccer-utilities/data-access/testing';
 
 describe('Schedules Api', () => {
-  let app: INestApplication;
-  let repository: TestingRepository<GameScheduleEntity>
-  let baseUrl: string;
+  let fixture: ApiFixture;
+  let repository: TestingRepository<GameScheduleEntity>;
 
   beforeEach(async () => {
-    app = await startApp();
+    fixture = new ApiFixture();
+    await fixture.start();
 
-    repository = (app.get(RepositoryFactory) as TestingRepositoryFactory)
-      .setupRepository(GameScheduleEntity);
-    baseUrl = await app.getUrl();
+    repository = fixture.repositoryFactory.setupRepository(GameScheduleEntity);
   });
 
   test('when getting current schedule and current schedule missing then returns not found', async () => {
-    const response = await axios.get('/schedules/current', { baseURL: baseUrl });
+    const response = await axios.get('/schedules/current', { baseURL: fixture.baseUrl });
 
     expect(response.status).toEqual(constants.HTTP_STATUS_NOT_FOUND);
   });
@@ -33,7 +29,7 @@ describe('Schedules Api', () => {
     const form = new FormData();
     form.append('scheduleFile', readSampleGameScheduleAsStream());
 
-    const response = await axios.post('/schedules/current', form, {baseURL: baseUrl, headers: {...form.getHeaders(), 'Content-Type': 'multipart/form-data'}});
+    const response = await axios.post('/schedules/current', form, {baseURL: fixture.baseUrl, headers: {...form.getHeaders(), 'Content-Type': 'multipart/form-data'}});
 
     expect(response.status).toEqual(constants.HTTP_STATUS_CREATED);
     expect(await repository.getAll()).toHaveLength(1);
@@ -42,13 +38,13 @@ describe('Schedules Api', () => {
   test('when getting current schedule and current schedule exists then returns current schedule', async () => {
     const {id} = await repository.create(GameScheduleEntity.fromModel(ModelFactory.createGameSchedule()));
 
-    const response = await axios.get<GameScheduleModel>('/schedules/current', {baseURL: baseUrl});
+    const response = await axios.get<GameScheduleModel>('/schedules/current', {baseURL: fixture.baseUrl});
 
     expect(response.status).toEqual(constants.HTTP_STATUS_OK);
     expect(response.data.id).toEqual(id);
   });
 
   afterEach(async () => {
-    await app.close();
+    await fixture.stop();
   });
 });

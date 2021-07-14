@@ -10,11 +10,11 @@ import { DateRange } from '@soccer-utilities/core';
 
 export const RefereeChecksPage: FunctionComponent = () => {
   const dispatch = useRootDispatch();
-  const checks = useRootSelector(selectAllRefereeChecks);
   const hasPreviouslyLoadedChecks = useRootSelector(selectHaveRefereeChecksBeenLoaded);
   const isLoadingChecks = useRootSelector(selectIsLoading(RefereesActions.loadChecks.request));
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
+  const [showAll] = useState<boolean>(false);
   const handleDateRangeChanged = useCallback((range?: DateRange) => {
     const start = range ? range.start : null;
     const end = range ? range.end : null;
@@ -22,6 +22,7 @@ export const RefereeChecksPage: FunctionComponent = () => {
     setEndDate(end);
     dispatch(RefereesActions.loadChecks.request(range));
   }, [dispatch]);
+  const checks = useRootSelector(selectAllRefereeChecks({showAll}));
 
   const handleCheckCopied = useCallback((check: ClientRefereeCheckModel) => {
     dispatch(RefereesActions.checkWritten(check));
@@ -42,7 +43,6 @@ export const RefereeChecksPage: FunctionComponent = () => {
       </LoadingIndicator>
     );
   }
-
   return (
     <ColumnFlexBox>
       <Toolbar>

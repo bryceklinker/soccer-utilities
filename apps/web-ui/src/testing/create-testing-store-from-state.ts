@@ -9,8 +9,12 @@ export interface TestingStore extends MockStore<RootState> {
 
 }
 
-export function createTestingStore(...actions: Array<Action>): TestingStore {
+export function createTestingStoreFromActions(...actions: Array<Action>): TestingStore {
   const state = generateRootStateFromActions(...actions);
+  return createTestingStoreFromState(state);
+}
+
+export function createTestingStoreFromState(state: RootState): TestingStore {
   return createMockStore<RootState>([])(state);
 }
 

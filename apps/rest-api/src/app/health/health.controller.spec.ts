@@ -1,24 +1,22 @@
-import { INestApplication } from '@nestjs/common';
-import { startApp } from '../../testing/start-app';
 import axios from 'axios';
 import { constants } from 'http2';
+import { ApiFixture } from '../../testing/api-fixture';
 
 describe('Health Api', () => {
-  let app: INestApplication;
-  let baseUrl: string;
+  let fixture: ApiFixture;
 
   beforeEach(async () => {
-    app = await startApp();
-    baseUrl = await app.getUrl();
+    fixture = new ApiFixture();
+    await fixture.start();
   })
 
   test('when getting health then returns ok', async () => {
-    const response = await axios.get(`${baseUrl}/.health`);
+    const response = await axios.get(`/.health`, {baseURL: fixture.baseUrl});
 
     expect(response.status).toEqual(constants.HTTP_STATUS_OK);
   });
 
   afterEach(async () => {
-    await app.close();
+    await fixture.stop();
   })
 });

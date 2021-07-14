@@ -1,12 +1,12 @@
 import { screen, waitFor } from '@testing-library/dom';
-import { createTestingStore, WebUiModelFactory, renderWithProviders } from '../../../testing';
+import { createTestingStoreFromActions, WebUiModelFactory, renderWithProviders } from '../../../testing';
 import { CurrentSchedulePage } from './CurrentSchedulePage';
 import userEvent from '@testing-library/user-event';
 import { CurrentScheduleActions } from '../state/current-schedule-actions';
 
 describe('CurrentSchedulePage', () => {
   test('when current schedule is missing then requests to load current schedule', () => {
-    const store = createTestingStore();
+    const store = createTestingStoreFromActions();
 
     renderWithProviders(<CurrentSchedulePage />, { store });
 
@@ -17,7 +17,7 @@ describe('CurrentSchedulePage', () => {
     const schedule = WebUiModelFactory.createGameSchedule({
       games: WebUiModelFactory.createMany(WebUiModelFactory.createGame, 4)
     });
-    const store = createTestingStore(CurrentScheduleActions.load.success(schedule));
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.success(schedule));
 
     renderWithProviders(<CurrentSchedulePage />, { store });
 
@@ -25,7 +25,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when current schedule is available then skips loading schedule', () => {
-    const store = createTestingStore(CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule()));
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule()));
 
     renderWithProviders(<CurrentSchedulePage />, { store });
 
@@ -33,7 +33,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when current schedule is loading then shows loading', () => {
-    const store = createTestingStore(
+    const store = createTestingStoreFromActions(
       CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule()),
       CurrentScheduleActions.load.request()
     );
@@ -44,7 +44,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when current schedule is loading then skips loading schedule', () => {
-    const store = createTestingStore(
+    const store = createTestingStoreFromActions(
       CurrentScheduleActions.load.request()
     );
 
@@ -62,7 +62,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when schedule is uploaded then requests to upload schedule', async () => {
-    const store = createTestingStore();
+    const store = createTestingStoreFromActions();
     const form = new FormData();
     const file = new File([], 'schedule.csv');
     form.append('scheduleFile', file);
@@ -93,14 +93,14 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when schedule fails to load then shows failed to load schedule', async () => {
-    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.failed());
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     expect(screen.getByLabelText('errors')).toBeInTheDocument();
   });
 
   test('when schedule fails and load is retried then requests to load schedule', async () => {
-    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.failed());
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     store.clearActions();
@@ -110,7 +110,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when schedule refresh requested then requests to load schedule', async () => {
-    const store = createTestingStore();
+    const store = createTestingStoreFromActions();
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     store.clearActions();
@@ -120,7 +120,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when schedule failed to load then upload schedule is available', async () => {
-    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.failed());
     renderWithProviders(<CurrentSchedulePage />, { store });
     store.clearActions();
 
@@ -130,7 +130,7 @@ describe('CurrentSchedulePage', () => {
   });
 
   test('when schedule failed to load then skips loading schedule', async () => {
-    const store = createTestingStore(CurrentScheduleActions.load.failed());
+    const store = createTestingStoreFromActions(CurrentScheduleActions.load.failed());
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     expect(store.getActions()).not.toContainEqual(CurrentScheduleActions.load.request());
