@@ -4,8 +4,8 @@ import { selectAllRefereeChecks, selectHaveRefereeChecksBeenLoaded } from '../st
 import { RefereesActions } from '../state/referees-actions';
 import { ClientRefereeCheckModel, DateRangeSelector, RefereeChecks } from '@soccer-utilities/schedules-ui';
 import { selectIsLoading } from '../../loading/state/loading-selectors';
-import { Toolbar, Typography } from '@material-ui/core';
-import { ColumnFlexBox, LoadingIndicator } from '@soccer-utilities/common-ui';
+import { FormControlLabel, Switch, Toolbar, Typography } from '@material-ui/core';
+import { ColumnFlexBox, LoadingIndicator, RowFlexBox } from '@soccer-utilities/common-ui';
 import { DateRange } from '@soccer-utilities/core';
 
 export const RefereeChecksPage: FunctionComponent = () => {
@@ -14,7 +14,7 @@ export const RefereeChecksPage: FunctionComponent = () => {
   const isLoadingChecks = useRootSelector(selectIsLoading(RefereesActions.loadChecks.request));
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [showAll] = useState<boolean>(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
   const handleDateRangeChanged = useCallback((range?: DateRange) => {
     const start = range ? range.start : null;
     const end = range ? range.end : null;
@@ -27,6 +27,10 @@ export const RefereeChecksPage: FunctionComponent = () => {
   const handleCheckCopied = useCallback((check: ClientRefereeCheckModel) => {
     dispatch(RefereesActions.checkWritten(check));
   }, [dispatch])
+
+  const handleShowAllToggled = useCallback(() => {
+    setShowAll(!showAll);
+  }, [showAll, setShowAll])
 
   useEffect(() => {
     if (isLoadingChecks || hasPreviouslyLoadedChecks) {
@@ -46,6 +50,9 @@ export const RefereeChecksPage: FunctionComponent = () => {
   return (
     <ColumnFlexBox>
       <Toolbar>
+        <FormControlLabel label={'Show All'}
+                          control={<Switch checked={showAll} onChange={handleShowAllToggled} inputProps={{'aria-label': 'show all checks toggle'}}/>}/>
+        <RowFlexBox />
         <DateRangeSelector onSearch={handleDateRangeChanged} start={startDate} end={endDate} />
       </Toolbar>
       <RefereeChecks checks={checks} onCopyCheck={handleCheckCopied} />

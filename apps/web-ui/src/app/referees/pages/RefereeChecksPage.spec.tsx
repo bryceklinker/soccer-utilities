@@ -105,4 +105,17 @@ describe('RefereeChecksPage', () => {
 
     expect(screen.queryAllByLabelText('referee check')).toHaveLength(0);
   });
+
+  test('when all checks are shown then shows all checks', () => {
+    const checks = List.fromItems(
+      ModelFactory.createClientRefereeCheckModel({hasBeenWritten: true}),
+      ModelFactory.createClientRefereeCheckModel({hasBeenWritten: false}),
+    );
+    const store = createTestingStoreFromActions(RefereesActions.loadChecks.success(checks));
+    renderWithProviders(<RefereeChecksPage />, { store });
+
+    userEvent.click(screen.getByRole('checkbox', {name: 'show all checks toggle'}));
+
+    expect(screen.getAllByLabelText('referee check')).toHaveLength(2);
+  })
 });
