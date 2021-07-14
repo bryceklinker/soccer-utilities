@@ -4,7 +4,7 @@ import { RefereesActions } from './referees-actions';
 import { waitFor } from '@testing-library/dom';
 import { HttpStatusCodes, List } from '@soccer-utilities/core';
 import { RestRequest } from 'msw';
-import { refereeCheckMemo } from '../../../../../../libs/schedules-ui/src/lib/referees/referee-check-memo';
+import { refereeCheckMemo } from '@soccer-utilities/schedules-ui';
 
 describe('refereeChecksSaga', () => {
   describe('load', () => {

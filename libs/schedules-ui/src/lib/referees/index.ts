@@ -1,4 +1,5 @@
 export * from './models';
+export * from './referee-check-memo';
 export * from './EmptyRefereeCheckRow';
 export * from './RefereeCheckRow';
 export * from './RefereeChecksTable';
