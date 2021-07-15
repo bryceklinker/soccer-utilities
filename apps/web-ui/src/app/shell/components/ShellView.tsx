@@ -1,4 +1,4 @@
-import { Box, CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
+import { CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { WelcomePage } from '../../welcome/Welcome';
@@ -8,6 +8,7 @@ import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { CurrentSchedulePage } from '../../current-schedule/pages/CurrentSchedulePage';
 import { RefereeChecksPage } from '../../referees/pages/RefereeChecksPage';
+import { ShellNotificationsContainer } from './ShellNotificationsContainer';
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -48,8 +49,8 @@ export function ShellView() {
             </Switch>
           </ColumnFlexBox>
         </ColumnFlexBox>
-
       </RowFlexBox>
+      <ShellNotificationsContainer />
     </>
   );
 }

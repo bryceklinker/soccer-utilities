@@ -1,15 +1,17 @@
-import { call, takeEvery } from 'redux-saga/effects';
-import {v4 as uuid} from 'uuid';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { v4 as uuid } from 'uuid';
 import { RefereesActions } from './referees-actions';
 import { restApiEffect } from '../../state/rest-api-effect';
 import { List, ListResult, RefereeCheckModel } from '@soccer-utilities/core';
 import { ClientRefereeCheckModel, refereeCheckMemo } from '@soccer-utilities/schedules-ui';
+import { NotificationsActions } from '../../notifications/state/notifications-actions';
+import { NotificationType } from '@soccer-utilities/common-ui';
 
 function assignClientFieldsToChecks(list: ListResult<RefereeCheckModel>): ListResult<ClientRefereeCheckModel> {
-  return List.fromArray(list.items.map(check => ({...check, hasBeenWritten: false, id: uuid()})));
+  return List.fromArray(list.items.map(check => ({ ...check, hasBeenWritten: false, id: uuid() })));
 }
 
-function* loadRefereeChecks({payload}: ReturnType<typeof RefereesActions.loadChecks.request>) {
+function* loadRefereeChecks({ payload }: ReturnType<typeof RefereesActions.loadChecks.request>) {
   const queryParams = new URLSearchParams();
   if (payload) {
     queryParams.set('start', payload.start);
@@ -22,9 +24,14 @@ function* loadRefereeChecks({payload}: ReturnType<typeof RefereesActions.loadChe
   );
 }
 
-function* checkWritten({payload}: ReturnType<typeof RefereesActions.checkWritten>) {
+function* checkWritten({ payload }: ReturnType<typeof RefereesActions.checkWritten>) {
   const memo = refereeCheckMemo(payload);
-  yield call(navigator.clipboard.writeText, memo);
+  yield call(text => navigator.clipboard.writeText(text), memo);
+  yield put(NotificationsActions.publish({
+    id: uuid(),
+    message: `Copied "${memo}"`,
+    type: NotificationType.Success
+  }));
 }
 
 export function* refereeChecksSaga() {

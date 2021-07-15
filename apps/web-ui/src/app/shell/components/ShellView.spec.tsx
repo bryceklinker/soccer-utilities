@@ -1,7 +1,9 @@
-import { renderWithProviders } from '../../../testing';
+import { createTestingStoreFromActions, renderWithProviders } from '../../../testing';
 import { ShellView } from './ShellView';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
+import { NotificationsActions } from '../../notifications/state/notifications-actions';
+import { ModelFactory } from '@soccer-utilities/testing-support';
 
 describe('ShellView', () => {
   test('when side navigation is opened then side navigation is opened', async () => {
@@ -38,4 +40,11 @@ describe('ShellView', () => {
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
+
+  test('when rendered with notifications then shows notifications', () => {
+    const store = createTestingStoreFromActions(NotificationsActions.publish(ModelFactory.createNotificationModel()));
+    renderWithProviders(<ShellView />, {store});
+
+    expect(screen.getByLabelText('notification')).toBeInTheDocument();
+  })
 });

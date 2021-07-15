@@ -5,6 +5,8 @@ import { waitFor } from '@testing-library/dom';
 import { HttpStatusCodes, List } from '@soccer-utilities/core';
 import { RestRequest } from 'msw';
 import { refereeCheckMemo } from '@soccer-utilities/schedules-ui';
+import { NotificationsActions } from '../../notifications/state/notifications-actions';
+import { NotificationType } from '@soccer-utilities/common-ui';
 
 describe('refereeChecksSaga', () => {
   describe('load', () => {
@@ -66,13 +68,29 @@ describe('refereeChecksSaga', () => {
 
   describe('checkWritten', () => {
     test('when check written then copies memo to clipboard', async () => {
-      const {store} = setupSagaTest();
+      const { store } = setupSagaTest();
       const check = WebUiModelFactory.createClientRefereeCheckModel();
 
       store.dispatch(RefereesActions.checkWritten(check));
 
       const memo = refereeCheckMemo(check);
       await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(memo));
-    })
-  })
+    });
+
+    test('when check written then publishes notification', async () => {
+      const { store } = setupSagaTest();
+      const check = WebUiModelFactory.createClientRefereeCheckModel();
+
+      store.dispatch(RefereesActions.checkWritten(check));
+
+      const memo = refereeCheckMemo(check);
+      await waitFor(() => expect(store.getActions()).toContainEqual(expect.objectContaining({
+        type: NotificationsActions.publish.type,
+        payload: expect.objectContaining({
+          type: NotificationType.Success,
+          message: `Copied "${memo}"`
+        })
+      })));
+    });
+  });
 });

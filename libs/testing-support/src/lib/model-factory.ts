@@ -12,6 +12,7 @@ import {
 import { format } from 'date-fns';
 import * as faker from 'faker';
 import { ClientRefereeCheckModel } from '@soccer-utilities/schedules-ui';
+import { NotificationModel } from '@soccer-utilities/common-ui';
 
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
   return {
@@ -88,6 +89,14 @@ function createClientRefereeCheckModel(model: Partial<ClientRefereeCheckModel> =
   }
 }
 
+function createNotificationModel(model: Partial<NotificationModel> = {}): NotificationModel {
+  return {
+    id: faker.datatype.uuid(),
+    message: faker.lorem.sentence(),
+    ...model
+  };
+}
+
 function createMany<T>(factory: () => T, count: number): Array<T> {
   const items: Array<T> = [];
   for (let i = 0; i < count; i++) {
@@ -96,7 +105,7 @@ function createMany<T>(factory: () => T, count: number): Array<T> {
   return items;
 }
 
-function createList<T>(factory: () => T, count: number): ListResult<T> {
+function createListResult<T>(factory: () => T, count: number): ListResult<T> {
   const items = createMany(factory, count);
   return List.fromArray(items);
 }
@@ -109,6 +118,7 @@ export const ModelFactory = {
   createPayScale,
   createRefereeCheck,
   createClientRefereeCheckModel,
+  createNotificationModel,
   createMany,
-  createListResult: createList
+  createListResult
 };

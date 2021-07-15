@@ -6,6 +6,7 @@ import { settingsReducer } from '../settings/state/settings-reducer';
 import { currentScheduleReducer } from '../current-schedule/state/current-schedule-reducer';
 import { errorsReducer } from '../errors/state/errors-reducer';
 import { refereeChecksReducer } from '../referees/state/referee-checks-reducer';
+import { notificationsReducer } from '../notifications/state/notifications-reducer';
 
 export const rootReducer = combineReducers<RootState>({
   auth: authReducer,
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers<RootState>({
   settings: settingsReducer,
   currentSchedule: currentScheduleReducer,
   errors: errorsReducer,
-  refereeChecks: refereeChecksReducer
+  refereeChecks: refereeChecksReducer,
+  notifications: notificationsReducer
 });
