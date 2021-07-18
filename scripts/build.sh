@@ -15,7 +15,7 @@ function bump_version() {
 }
 
 function push_version_to_repo() {
-  git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}/bryceklinker/soccer-utilities"
+  git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/bryceklinker/soccer-utilities"
   git push origin main --tags
 }
 
