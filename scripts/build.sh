@@ -9,6 +9,8 @@ function run_tests() {
 }
 
 function bump_version() {
+  git config --global user.email "automation@github.com"
+  git config --global user.name "automation"
   npm run bump:version -- --version=patch
 }
 

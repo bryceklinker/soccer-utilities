@@ -4,20 +4,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "nx": "nx",
     "start": "nx run-many --target=serve --all --parallel",
     "build": "nx run-many --target=build --all --parallel --prod",
     "postbuild": "rimraf ./dist/apps/web-ui/assets/settings.json",
-    "test": "nx run-many --target=test --all",
-    "lint": "nx workspace-lint && nx lint",
+    "test": "nx run-many --target=test --all --no-cache",
     "e2e": "nx run-many --target=e2e --all",
-    "format": "nx format:write",
-    "format:write": "nx format:write",
-    "format:check": "nx format:check",
     "update": "nx migrate latest",
-    "workspace-generator": "nx workspace-generator",
-    "dep-graph": "nx dep-graph",
-    "help": "nx help",
     "bump:version": "nx run workspace:version --skip-root-changelog --skip-project-changelog"
   },
   "dependencies": {
