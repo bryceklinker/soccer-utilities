@@ -4,7 +4,7 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 export const EmptyRefereeCheckRow: FunctionComponent = () => {
   return (
     <TableRow aria-label={'empty'}>
-      <TableCell colSpan={5}>
+      <TableCell colSpan={6}>
         <Typography variant={'h3'}>
           No Referee Checks Found
         </Typography>

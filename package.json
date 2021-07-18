@@ -2,6 +2,7 @@
   "name": "soccer-utilities",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "nx": "nx",
     "start": "nx run-many --target=serve --all --parallel",
@@ -16,9 +17,9 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "bump:version": "nx run workspace:version --skip-root-changelog --skip-project-changelog"
   },
-  "private": true,
   "dependencies": {
     "@auth0/auth0-react": "1.6.0",
     "@azure/cosmos": "3.12.0",
@@ -35,6 +36,7 @@
     "@nestjs/cqrs": "7.0.1",
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.18",
+    "@nestjs/swagger": "5.0.4",
     "@reduxjs/toolkit": "1.6.0",
     "applicationinsights": "2.1.2",
     "axios": "0.21.1",
@@ -57,6 +59,7 @@
     "reflect-metadata": "0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "6.6.7",
+    "swagger-ui-express": "4.1.6",
     "tslib": "2.3.0",
     "uuid": "3.4.0",
     "winston": "3.3.3",
@@ -67,6 +70,7 @@
     "@babel/preset-env": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
+    "@jscutlery/semver": "2.4.0",
     "@nestjs/schematics": "7.3.1",
     "@nestjs/testing": "7.6.18",
     "@nrwl/cli": "12.4.0",

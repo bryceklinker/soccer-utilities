@@ -8,6 +8,15 @@ function run_tests() {
   npm test
 }
 
+function bump_version() {
+  npm run bump:version -- --version=patch
+}
+
+function push_version_to_repo() {
+  git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}/bryceklinker/soccer-utilities"
+  git push origin main --tags
+}
+
 function build_applications() {
   npm run build
 }
@@ -27,9 +36,11 @@ function archive_function_app() {
 function main() {
   install_npm_packages
   run_tests
+  bump_version
   build_applications
   install_function_app_packages
   archive_function_app
+  push_version_to_repo
 }
 
 main
