@@ -5,6 +5,7 @@ import { WinstonModule } from 'nest-winston';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import * as winston from 'winston';
 import { JwtGuard } from '@soccer-utilities/nest-auth0';
+import * as packageJson from '../package.json';
 
 export async function createApp(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule, {
@@ -26,10 +27,13 @@ export async function createApp(): Promise<INestApplication> {
   const config = new DocumentBuilder()
     .setTitle('Soccer Utilities Api')
     .setDescription('Utilities for Bondurant Soccer Club Treasurer')
-
+    .setVersion(packageJson.version)
+    .addTag('Schedules')
+    .addTag('Referees')
+    .addTag('Health')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   return app;
 }
