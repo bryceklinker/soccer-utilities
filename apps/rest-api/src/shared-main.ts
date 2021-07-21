@@ -33,7 +33,7 @@ export async function createApp(): Promise<INestApplication> {
     .addTag('Health')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('/api/docs', app, document);
 
   return app;
 }
