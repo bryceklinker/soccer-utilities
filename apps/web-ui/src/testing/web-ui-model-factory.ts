@@ -27,6 +27,9 @@ function createSettings(model: Partial<SettingsModel> = {}): SettingsModel {
       url: faker.internet.url(),
       ...model.api,
     },
+    logging: {
+      instrumentationKey: faker.datatype.uuid()
+    },
     ...model,
   };
 }

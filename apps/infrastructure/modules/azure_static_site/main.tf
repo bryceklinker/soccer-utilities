@@ -15,6 +15,15 @@ resource "azurerm_storage_account" "site_storage" {
   tags = var.tags
 }
 
+resource "azurerm_application_insights" "web_app_insights" {
+  location = var.location
+  name = "appi-${var.name}"
+  resource_group_name = var.resource_group_name
+  application_type = "other"
+
+  tags = var.tags
+}
+
 module "site_files" {
   source = "hashicorp/dir/template"
 
@@ -48,6 +57,9 @@ resource "azurerm_storage_blob" "settings_json" {
       "domain": var.auth0_domain
       "clientId": auth0_client.site_client.client_id,
       "audience": var.audience
+    },
+    "logging": {
+      "instrumentationKey": azurerm_application_insights.web_app_insights.instrumentation_key
     }
   })
   type = "Block"

@@ -6,5 +6,8 @@ export interface SettingsModel {
     domain: string;
     audience: string;
     clientId: string;
+  },
+  logging: {
+    instrumentationKey: string;
   }
 }

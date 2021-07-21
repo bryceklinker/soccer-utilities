@@ -6,5 +6,8 @@
   },
   "api": {
     "url": "http://localhost:3333"
+  },
+  "logging": {
+    "instrumentationKey": ""
   }
 }

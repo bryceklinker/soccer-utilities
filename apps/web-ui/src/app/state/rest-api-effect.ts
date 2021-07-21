@@ -3,6 +3,7 @@ import { Action } from 'redux';
 import { call, put, select } from 'redux-saga/effects';
 import { selectSettingsApiUrl } from '../settings/state/settings-selectors';
 import { selectUserAccessToken } from '../auth/state/auth-selectors';
+import { WebLogger } from '../logging/logger';
 
 export function* restApiEffect<TSuccess, TFailed = any>(
   http: (restApi: RestApi) => Promise<TSuccess>,
@@ -19,8 +20,11 @@ export function* restApiEffect<TSuccess, TFailed = any>(
 
       yield dispatchActions(success(result));
     } catch (error) {
+      WebLogger.error('Rest api failed', error, {apiUrl});
       yield dispatchActions(failed(error));
     }
+  } else {
+    WebLogger.warn('Rest api effect executed without api url', {apiUrl});
   }
 }
 

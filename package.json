@@ -25,6 +25,8 @@
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
     "@material-ui/pickers": "3.3.10",
+    "@microsoft/applicationinsights-react-js": "3.1.4",
+    "@microsoft/applicationinsights-web": "2.6.4",
     "@nestjs/azure-func-http": "0.7.0",
     "@nestjs/common": "8.0.4",
     "@nestjs/config": "1.0.0",

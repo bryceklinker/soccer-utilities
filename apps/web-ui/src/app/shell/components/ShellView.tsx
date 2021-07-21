@@ -1,14 +1,15 @@
 import { CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
-import { useCallback, useEffect, useState } from 'react';
+import { lazy, useCallback, useEffect, useState, Suspense } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { WelcomePage } from '../../welcome/Welcome';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
-import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
+import { ColumnFlexBox, LoadingIndicator, RowFlexBox } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
-import { CurrentSchedulePage } from '../../current-schedule/pages/CurrentSchedulePage';
-import { RefereeChecksPage } from '../../referees/pages/RefereeChecksPage';
 import { ShellNotificationsContainer } from './ShellNotificationsContainer';
+
+const WelcomePage = lazy(() => import('../../welcome/Welcome').then(c => ({ default: c.WelcomePage })));
+const CurrentSchedulePage = lazy(() => import('../../current-schedule/pages/CurrentSchedulePage').then(c => ({ default: c.CurrentSchedulePage })));
+const RefereeChecksPage = lazy(() => import('../../referees/pages/RefereeChecksPage').then(c => ({ default: c.RefereeChecksPage })));
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -22,7 +23,9 @@ export function ShellView() {
   const handleNavigationToggled = useCallback(() => setIsNavigationOpen(!isNavigationOpen), [isNavigationOpen, setIsNavigationOpen]);
   const handleNavigationClosed = useCallback(() => setIsNavigationOpen(false), [setIsNavigationOpen]);
 
-  useEffect(() => { handleNavigationClosed() }, [location, handleNavigationClosed])
+  useEffect(() => {
+    handleNavigationClosed();
+  }, [location, handleNavigationClosed]);
 
   const styles = useStyles();
   return (
@@ -37,13 +40,19 @@ export function ShellView() {
           <ColumnFlexBox className={styles.mainContent}>
             <Switch>
               <Route path={ROUTES.WELCOME}>
-                <WelcomePage />
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <WelcomePage />
+                </Suspense>
               </Route>
               <Route path={ROUTES.CURRENT_SCHEDULE}>
-                <CurrentSchedulePage />
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <CurrentSchedulePage />
+                </Suspense>
               </Route>
               <Route path={ROUTES.REFEREE_CHECKS}>
-                <RefereeChecksPage />
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <RefereeChecksPage />
+                </Suspense>
               </Route>
               <Redirect from={ROUTES.REDIRECT} to={ROUTES.WELCOME} />
             </Switch>
