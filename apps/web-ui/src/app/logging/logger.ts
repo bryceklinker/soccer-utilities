@@ -31,12 +31,12 @@ function configure(history: History, settings: SettingsModel) {
 
 function info(message: string, properties: Properties) {
   console.info(message, properties);
-  appInsights.trackTrace({message, severityLevel: SeverityLevel.Information, properties});
+  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Information, properties});
 }
 
 function error(message: string, error: Error, properties: Properties) {
   console.error(message, properties);
-  appInsights.trackException({
+  appInsights?.trackException({
     exception: error,
     severityLevel: SeverityLevel.Error,
     properties: {
@@ -44,22 +44,22 @@ function error(message: string, error: Error, properties: Properties) {
       ...properties
     }
   });
-  appInsights.trackTrace({message, severityLevel: SeverityLevel.Error, properties});
+  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Error, properties});
 }
 
 function warn(message: string, properties: Properties) {
   console.warn(message, properties);
-  appInsights.trackTrace({message, severityLevel: SeverityLevel.Warning, properties});
+  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Warning, properties});
 }
 
 function time(label: string) {
   console.time(label);
-  appInsights.startTrackEvent(label);
+  appInsights?.startTrackEvent(label);
 }
 
 function timeEnd(label: string, properties?: Properties) {
   console.timeEnd(label);
-  appInsights.stopTrackEvent(label, properties);
+  appInsights?.stopTrackEvent(label, properties);
 }
 
 export const WebLogger = {
