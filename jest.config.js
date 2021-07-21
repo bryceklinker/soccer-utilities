@@ -9,5 +9,6 @@ module.exports = {
     '<rootDir>/libs/schedules-ui',
     '<rootDir>/libs/schedules-api',
     '<rootDir>/libs/data-access',
+    '<rootDir>/tools/executors/version-bump'
   ],
 };

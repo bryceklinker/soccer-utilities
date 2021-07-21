@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "bump": {
+      "implementation": "./main",
+      "schema": "./schema.json",
+      "description": "Bumps version numbers for all packages"
+    }
+  }
+}

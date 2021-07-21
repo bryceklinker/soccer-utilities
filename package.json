@@ -5,11 +5,15 @@
   "private": true,
   "scripts": {
     "start": "nx run-many --target=serve --all --parallel",
+    "build:tools": "tsc --project ./tools/tsconfig.tools.json",
     "build": "nx run-many --target=build --all --parallel --prod",
     "postbuild": "rimraf ./dist/apps/web-ui/assets/settings.json",
+    "test:tools": "jest --projects ./tools/executors/version-bump",
     "test": "nx run-many --target=test --all --no-cache",
+    "posttest": "npm run test:tools",
     "e2e": "nx run-many --target=e2e --all",
     "update": "nx migrate latest",
+    "prebump:version": "npm run build:tools",
     "bump:version": "nx run workspace:version --skip-root-changelog --skip-project-changelog"
   },
   "dependencies": {
@@ -64,7 +68,6 @@
     "@babel/preset-env": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
-    "@jscutlery/semver": "2.4.0",
     "@nestjs/schematics": "8.0.2",
     "@nestjs/testing": "8.0.4",
     "@nrwl/cli": "12.5.8",
@@ -94,6 +97,7 @@
     "@types/react-redux": "7.1.16",
     "@types/react-router-dom": "5.1.7",
     "@types/redux-mock-store": "1.0.2",
+    "@types/standard-version": "7.0.1",
     "@types/uuid": "8.3.1",
     "@types/yup": "0.29.11",
     "@typescript-eslint/eslint-plugin": "4.19.0",
@@ -118,6 +122,7 @@
     "prettier": "2.3.2",
     "redux-mock-store": "1.5.4",
     "rimraf": "3.0.2",
+    "standard-version": "9.3.1",
     "ts-jest": "27.0.3",
     "ts-node": "9.1.1",
     "typescript": "4.3.5"
