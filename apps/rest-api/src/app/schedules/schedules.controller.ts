@@ -1,7 +1,7 @@
-import { Controller, Get, HttpException, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, HttpException, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { GetCurrentScheduleQuery, UpdateCurrentScheduleCommand } from '@soccer-utilities/schedules-api';
+import { GetCurrentScheduleQuery, UpdateCurrentScheduleCommand, GameScheduleDto } from '@soccer-utilities/schedules-api';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Readable } from 'stream';
 import { GameScheduleModel } from '@soccer-utilities/core';
@@ -25,7 +25,7 @@ export class SchedulesController {
   }
 
   @Get('current')
-  @ApiOkResponse({ type: GameScheduleModel })
+  @ApiOkResponse({ type: GameScheduleDto })
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   async getCurrentSchedule() {

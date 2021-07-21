@@ -1,13 +1,13 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import { DateSelector, RowFlexBox } from '@soccer-utilities/common-ui';
-import { DateRange } from '@soccer-utilities/core';
+import { DateRangeModel } from '@soccer-utilities/core';
 import { IconButton, makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 export interface DateRangeSelectorProps {
   start?: string | null;
   end?: string | null;
-  onSearch?: (range?: DateRange) => void;
+  onSearch?: (range?: DateRangeModel) => void;
 }
 
 const useStyles = makeStyles(theme => ({

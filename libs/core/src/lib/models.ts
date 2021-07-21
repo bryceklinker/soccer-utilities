@@ -1,6 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DATE_FORMAT, DATE_TIME_FORMAT, TIME_FORMAT } from './convert-string-to-date';
-import { format } from 'date-fns';
 
 export enum RefereeType {
   Center = 'Center',
@@ -16,85 +13,54 @@ export enum Gender {
 }
 export const Genders = Object.values(Gender);
 
-export class RefereeModel {
-  @ApiProperty()
-  name: string = '';
-
-  @ApiProperty({enum: RefereeType})
-  type: RefereeType = RefereeType.Center;
+export interface RefereeModel {
+  name: string;
+  type: RefereeType
 }
 
-export class AgeGroupModel {
-  @ApiProperty()
-  age: number = 0;
-  @ApiProperty({enum: Gender})
-  gender: Gender = Gender.Unknown;
+export interface AgeGroupModel {
+  age: number;
+  gender: Gender;
 }
 
-export class GameModel {
-  @ApiProperty({type: Date, format: DATE_FORMAT})
-  date: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({format: TIME_FORMAT})
-  time: string = format(new Date(), TIME_FORMAT);
-  @ApiProperty()
-  homeTeam: string = '';
-  @ApiProperty()
-  awayTeam: string = '';
-  @ApiProperty()
-  field: string = '';
-  @ApiProperty()
-  division: string = '';
-
-  @ApiProperty()
-  ageGroup: AgeGroupModel = new AgeGroupModel();
-
-  @ApiProperty({type: [RefereeModel]})
-  referees: Array<RefereeModel> = [];
+export interface GameModel {
+  date: string;
+  time: string;
+  homeTeam: string;
+  awayTeam: string;
+  field: string;
+  division: string;
+  ageGroup: AgeGroupModel;
+  referees: Array<RefereeModel>;
 }
 
-export class GameScheduleModel {
-  @ApiPropertyOptional()
+export interface GameScheduleModel {
   id?: string;
-  @ApiProperty({type: [GameModel]})
-  games: Array<GameModel> = [];
-  @ApiProperty({type: Date, format: DATE_TIME_FORMAT})
-  lastUpdated: string = format(new Date(), DATE_TIME_FORMAT);
+  games: Array<GameModel>;
+  lastUpdated: string;
 }
 
-export class RefereeCheckModel {
-  @ApiProperty({type: Date, format: DATE_FORMAT})
-  date: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({format: TIME_FORMAT})
-  time: string = format(new Date(), TIME_FORMAT);
-  @ApiProperty()
-  name: string = '';
-  @ApiProperty({enum: RefereeType})
-  type: RefereeType = RefereeType.Center;
-  @ApiProperty()
-  ageGroup: AgeGroupModel = new AgeGroupModel();
-  @ApiProperty()
-  amount: number = 0;
+export interface RefereeCheckModel {
+  date: string;
+  time: string;
+  name: string;
+  type: RefereeType;
+  ageGroup: AgeGroupModel;
+  amount: number;
 }
 
-export class ListResult<T> {
-  @ApiProperty({isArray: true})
-  items: Array<T> = [];
-  @ApiProperty()
-  count: number = 0;
+export interface ListResult<T> {
+  items: Array<T>;
+  count: number;
 }
 
-export class RefereePayScaleModel {
-  @ApiProperty({enum: RefereeType})
-  refereeType: RefereeType = RefereeType.Center;
-  @ApiProperty()
-  ageGroup: AgeGroupModel = new AgeGroupModel();
-  @ApiProperty()
-  amount: number = 0;
+export interface RefereePayScaleModel {
+  refereeType: RefereeType;
+  ageGroup: AgeGroupModel;
+  amount: number;
 }
 
-export class DateRange {
-  @ApiProperty({type: Date, format: DATE_FORMAT})
-  start: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({type: Date, format: DATE_FORMAT})
-  end: string = format(new Date(), DATE_FORMAT);
+export interface DateRangeModel {
+  start: string;
+  end: string;
 }

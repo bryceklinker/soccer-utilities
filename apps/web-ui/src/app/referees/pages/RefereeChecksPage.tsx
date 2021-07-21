@@ -6,7 +6,7 @@ import { ClientRefereeCheckModel, DateRangeSelector, RefereeChecks } from '@socc
 import { selectIsLoading } from '../../loading/state/loading-selectors';
 import { FormControlLabel, Switch, Toolbar, Typography } from '@material-ui/core';
 import { ColumnFlexBox, LoadingIndicator, RowFlexBox } from '@soccer-utilities/common-ui';
-import { DateRange } from '@soccer-utilities/core';
+import { DateRangeModel } from '@soccer-utilities/core';
 
 export const RefereeChecksPage: FunctionComponent = () => {
   const dispatch = useRootDispatch();
@@ -15,7 +15,7 @@ export const RefereeChecksPage: FunctionComponent = () => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [showAll, setShowAll] = useState<boolean>(false);
-  const handleDateRangeChanged = useCallback((range?: DateRange) => {
+  const handleDateRangeChanged = useCallback((range?: DateRangeModel) => {
     const start = range ? range.start : null;
     const end = range ? range.end : null;
     setStartDate(start);

@@ -1,7 +1,7 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GameScheduleEntity } from './game-schedule.entity';
 import * as faker from 'faker';
-import { DateRange, DEFAULT_REFEREE_PAY_SCALES, RefereeType } from '@soccer-utilities/core';
+import { DateRangeModel, DEFAULT_REFEREE_PAY_SCALES, RefereeType } from '@soccer-utilities/core';
 
 describe('GameScheduleEntity', () => {
   beforeEach(() => {
@@ -96,7 +96,7 @@ describe('GameScheduleEntity', () => {
       ]
     }));
 
-    const range: DateRange = {start: '2020-06-01', end: '2020-06-02'}
+    const range: DateRangeModel = {start: '2020-06-01', end: '2020-06-02'}
     const checks = schedule.getRefereeChecks(DEFAULT_REFEREE_PAY_SCALES, range);
 
     expect(checks).toHaveLength(2);

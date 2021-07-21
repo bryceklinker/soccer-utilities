@@ -1,5 +1,5 @@
 import {
-  DateRange,
+  DateRangeModel,
   GameScheduleModel, isDateInRange,
   RefereeCheckModel,
   RefereePayScaleModel
@@ -42,12 +42,12 @@ export class GameScheduleEntity implements GameScheduleModel {
     this.lastUpdated = new Date().toISOString();
   }
 
-  getRefereeChecks(refereePayScales: Array<RefereePayScaleModel>, range?: DateRange): Array<RefereeCheckModel> {
+  getRefereeChecks(refereePayScales: Array<RefereePayScaleModel>, range?: DateRangeModel): Array<RefereeCheckModel> {
 
     return RefereeChecksGenerator.generateFromGames(this.getGamesInRange(range), refereePayScales);
   }
 
-  getGamesInRange(range?: DateRange): Array<GameEntity> {
+  getGamesInRange(range?: DateRangeModel): Array<GameEntity> {
     if (!range) {
       return this.games;
     }

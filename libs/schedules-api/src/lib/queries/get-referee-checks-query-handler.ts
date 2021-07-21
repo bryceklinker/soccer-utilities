@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { DateRange, DEFAULT_REFEREE_PAY_SCALES, List, ListResult, RefereeCheckModel } from '@soccer-utilities/core';
+import { DateRangeModel, DEFAULT_REFEREE_PAY_SCALES, List, ListResult, RefereeCheckModel } from '@soccer-utilities/core';
 import { GameScheduleRepository } from '../repositories';
 
 export class GetRefereeChecksQuery {
-  constructor(public readonly range?: DateRange) {
+  constructor(public readonly range?: DateRangeModel) {
   }
 }
 
