@@ -7,7 +7,7 @@
     "start": "nx run-many --target=serve --all --parallel",
     "build": "nx run-many --target=build --all --parallel --prod",
     "postbuild": "rimraf ./dist/apps/web-ui/assets/settings.json",
-    "test": "nx run-many --target=test --all --no-cache --maxWorkers=50%",
+    "test": "nx run-many --skip-nx-cache --target=test --all --no-cache --maxWorkers=50%",
     "e2e": "nx run-many --target=e2e --all",
     "update": "nx migrate latest",
     "bump:version": "nx run workspace:version --skip-root-changelog --skip-project-changelog"

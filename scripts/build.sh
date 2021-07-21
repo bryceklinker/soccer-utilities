@@ -9,13 +9,13 @@ function run_tests() {
 }
 
 function bump_version() {
+  git remote add origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/bryceklinker/soccer-utilities"
   git config --global user.email "automation@github.com"
   git config --global user.name "automation"
   npm run bump:version -- --version=patch
 }
 
 function push_version_to_repo() {
-  git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/bryceklinker/soccer-utilities"
   git push origin main --tags
 }
 

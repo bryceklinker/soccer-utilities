@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { DATE_FORMAT, DATE_TIME_FORMAT, TIME_FORMAT } from './convert-string-to-date';
+import { format } from 'date-fns';
 
 export enum RefereeType {
   Center = 'Center',
@@ -17,81 +18,83 @@ export const Genders = Object.values(Gender);
 
 export class RefereeModel {
   @ApiProperty()
-  name: string;
+  name: string = '';
 
   @ApiProperty({enum: RefereeType})
-  type: RefereeType;
+  type: RefereeType = RefereeType.Center;
 }
 
 export class AgeGroupModel {
   @ApiProperty()
-  age: number;
+  age: number = 0;
   @ApiProperty({enum: Gender})
-  gender: Gender;
+  gender: Gender = Gender.Unknown;
 }
 
 export class GameModel {
   @ApiProperty({type: Date, format: DATE_FORMAT})
-  date: string;
+  date: string = format(new Date(), DATE_FORMAT);
   @ApiProperty({format: TIME_FORMAT})
-  time: string;
+  time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  homeTeam: string;
+  homeTeam: string = '';
   @ApiProperty()
-  awayTeam: string;
+  awayTeam: string = '';
   @ApiProperty()
-  field: string;
+  field: string = '';
   @ApiProperty()
-  division: string;
+  division: string = '';
 
   @ApiProperty()
-  ageGroup: AgeGroupModel;
+  ageGroup: AgeGroupModel = new AgeGroupModel();
 
   @ApiProperty({type: [RefereeModel]})
-  referees: Array<RefereeModel>;
+  referees: Array<RefereeModel> = [];
 }
 
 export class GameScheduleModel {
   @ApiPropertyOptional()
   id?: string;
   @ApiProperty({type: [GameModel]})
-  games: Array<GameModel>;
+  games: Array<GameModel> = [];
   @ApiProperty({type: Date, format: DATE_TIME_FORMAT})
-  lastUpdated: string;
+  lastUpdated: string = format(new Date(), DATE_TIME_FORMAT);
 }
 
 export class RefereeCheckModel {
   @ApiProperty({type: Date, format: DATE_FORMAT})
-  date: string;
+  date: string = format(new Date(), DATE_FORMAT);
   @ApiProperty({format: TIME_FORMAT})
-  time: string;
+  time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  name: string;
+  name: string = '';
   @ApiProperty({enum: RefereeType})
-  type: RefereeType;
+  type: RefereeType = RefereeType.Center;
   @ApiProperty()
-  ageGroup: AgeGroupModel;
+  ageGroup: AgeGroupModel = new AgeGroupModel();
   @ApiProperty()
-  amount: number;
+  amount: number = 0;
 }
 
 export class ListResult<T> {
   @ApiProperty({isArray: true})
-  items: Array<T>;
+  items: Array<T> = [];
   @ApiProperty()
-  count: number;
+  count: number = 0;
 }
 
 export class RefereePayScaleModel {
   @ApiProperty({enum: RefereeType})
-  refereeType: RefereeType;
+  refereeType: RefereeType = RefereeType.Center;
   @ApiProperty()
-  ageGroup: AgeGroupModel;
+  ageGroup: AgeGroupModel = new AgeGroupModel();
   @ApiProperty()
-  amount: number;
+  amount: number = 0;
 }
 
-export interface DateRange {
-  start: string;
-  end: string;
+export class DateRange {
+  @ApiProperty({type: Date, format: DATE_FORMAT})
+  start: string = format(new Date(), DATE_FORMAT);
+  @ApiProperty({type: Date, format: DATE_FORMAT})
+  end: string = format(new Date(), DATE_FORMAT);
 }

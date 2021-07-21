@@ -10,6 +10,7 @@ import {
   getSchemaPath
 } from '@nestjs/swagger';
 import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
+import { ApiListResponse } from '../swagger/api-list-response';
 
 @Controller('referees')
 @ApiTags('Referees')
@@ -19,21 +20,7 @@ export class RefereesController {
   }
 
   @Get('checks')
-  @ApiOkResponse({
-    schema: {
-      allOf: [
-        { $ref: getSchemaPath(ListResult) },
-        {
-          properties: {
-            items: {
-              type: 'array',
-              items: { $ref: getSchemaPath(RefereeCheckModel) }
-            }
-          }
-        }
-      ]
-    }
-  })
+  @ApiListResponse(RefereeCheckModel)
   @ApiImplicitQuery({
     name: 'start',
     required: false,
