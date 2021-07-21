@@ -42,7 +42,7 @@
     "date-fns": "2.22.1",
     "document-register-element": "1.13.1",
     "formik": "2.2.9",
-    "jwks-rsa": "2.0.3",
+    "jwks-rsa": "2.0.4",
     "material-ui-dropzone": "3.5.0",
     "nest-winston": "1.5.0",
     "passport": "0.4.1",
