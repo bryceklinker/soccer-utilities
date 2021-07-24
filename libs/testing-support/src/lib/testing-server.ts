@@ -1,10 +1,9 @@
 import { setupServer } from 'msw/node';
-import { rest, RestRequest } from 'msw';
+import { rest } from 'msw';
 import { TestingRequestOptions } from './testing-request-options';
-import { HttpStatusCodes } from '@soccer-utilities/core';
+import { HttpStatusCodes } from './http-status-codes';
 
-const DEFAULT_REQUEST_CAPTURE = (req: RestRequest) => {
-};
+const DEFAULT_REQUEST_CAPTURE = () => {};
 
 const server = setupServer();
 
@@ -20,11 +19,14 @@ function reset() {
   server.resetHandlers();
 }
 
-
-function setupGet<T>(url: string, response: T, options: TestingRequestOptions = {
-  status: HttpStatusCodes.OK,
-  captureRequest: DEFAULT_REQUEST_CAPTURE
-}): void {
+function setupGet<T>(
+  url: string,
+  response: T,
+  options: TestingRequestOptions = {
+    status: HttpStatusCodes.OK,
+    captureRequest: DEFAULT_REQUEST_CAPTURE,
+  }
+): void {
   server.use(
     rest.get(url, (req, res, ctx) => {
       options.captureRequest(req);
@@ -37,16 +39,20 @@ function setupGet<T>(url: string, response: T, options: TestingRequestOptions = 
   );
 }
 
-function setupPost<TResponse>(url: string, response?: TResponse, options: TestingRequestOptions = {
-  status: HttpStatusCodes.OK,
-  captureRequest: DEFAULT_REQUEST_CAPTURE
-}): void {
+function setupPost<TResponse>(
+  url: string,
+  response?: TResponse,
+  options: TestingRequestOptions = {
+    status: HttpStatusCodes.OK,
+    captureRequest: DEFAULT_REQUEST_CAPTURE,
+  }
+): void {
   server.use(
     rest.post(url, (req, res, ctx) => {
       const transformers = [
         ctx.status(response ? options.status : HttpStatusCodes.Created),
         ctx.delay(options.delay || 0),
-        ...(response ? [ctx.json(response)] : [])
+        ...(response ? [ctx.json(response)] : []),
       ];
       options.captureRequest(req);
       return res(...transformers);
@@ -59,5 +65,5 @@ export const TestingServer = {
   stop,
   reset,
   setupGet,
-  setupPost
+  setupPost,
 };

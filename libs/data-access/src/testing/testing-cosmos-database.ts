@@ -3,10 +3,11 @@ import {
   Containers,
   CosmosClient,
   Database,
-  DatabaseResponse, OfferResponse,
+  DatabaseResponse,
+  OfferResponse,
   RequestOptions,
   User,
-  Users
+  Users,
 } from '@azure/cosmos';
 import { TestingCosmosClient } from './testing-cosmos-client';
 import { TestingCosmosContainer } from './testing-cosmos-container';
@@ -29,7 +30,7 @@ export class TestingCosmosDatabase extends Database {
   }
 
   container(id: string): Container {
-    const container = this.configuredContainers.find(c => c.id === id);
+    const container = this.configuredContainers.find((c) => c.id === id);
     if (container) {
       return container;
     }
@@ -58,5 +59,4 @@ export class TestingCosmosDatabase extends Database {
   readOffer(options?: RequestOptions): Promise<OfferResponse> {
     throw new NotImplementedException();
   }
-
 }

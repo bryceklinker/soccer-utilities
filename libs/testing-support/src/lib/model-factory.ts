@@ -1,24 +1,26 @@
+import { format } from 'date-fns';
+import * as faker from 'faker';
 import {
-  AgeGroupModel, DATE_FORMAT,
+  AgeGroupModel,
+  ClientRefereeCheckModel, DATE_FORMAT,
   GameModel,
   GameScheduleModel,
-  Genders, List, ListResult,
+  Genders,
+  List,
+  ListResult,
+  NotificationModel,
   RefereeCheckModel,
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
   RefereeTypes, TIME_FORMAT
-} from '@soccer-utilities/core';
-import { format } from 'date-fns';
-import * as faker from 'faker';
-import { ClientRefereeCheckModel } from '@soccer-utilities/schedules-ui';
-import { NotificationModel } from '@soccer-utilities/common-ui';
+} from '@soccer-utilities/models';
 
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
   return {
     age: faker.datatype.number({ min: 5, max: 19 }),
     gender: faker.random.arrayElement(Genders),
-    ...ageGroup
+    ...ageGroup,
   };
 }
 
@@ -26,7 +28,7 @@ function createReferee(referee: Partial<RefereeModel> = {}): RefereeModel {
   return {
     name: faker.name.lastName(),
     type: faker.random.arrayElement(RefereeTypes),
-    ...referee
+    ...referee,
   };
 }
 
@@ -43,9 +45,9 @@ function createGame(game: Partial<GameModel> = {}): GameModel {
     referees: [
       createReferee({ type: RefereeType.Center }),
       createReferee({ type: RefereeType.Assistant }),
-      createReferee({ type: RefereeType.Assistant })
+      createReferee({ type: RefereeType.Assistant }),
     ],
-    ...game
+    ...game,
   };
 }
 
@@ -55,20 +57,24 @@ function createGameSchedule(
   return {
     lastUpdated: faker.date.recent().toISOString(),
     games: [createGame(), createGame(), createGame()],
-    ...schedule
+    ...schedule,
   };
 }
 
-function createPayScale(model: Partial<RefereePayScaleModel>): RefereePayScaleModel {
+function createPayScale(
+  model: Partial<RefereePayScaleModel>
+): RefereePayScaleModel {
   return {
     ageGroup: createAgeGroup(),
     amount: faker.datatype.number({ min: 15, max: 50 }),
     refereeType: faker.random.arrayElement(RefereeTypes),
-    ...model
+    ...model,
   };
 }
 
-function createRefereeCheck(model: Partial<RefereeCheckModel> = {}): RefereeCheckModel {
+function createRefereeCheck(
+  model: Partial<RefereeCheckModel> = {}
+): RefereeCheckModel {
   return {
     date: format(faker.date.soon(), DATE_FORMAT),
     time: format(faker.time.recent(), TIME_FORMAT),
@@ -76,24 +82,28 @@ function createRefereeCheck(model: Partial<RefereeCheckModel> = {}): RefereeChec
     type: faker.random.arrayElement(RefereeTypes),
     name: faker.name.firstName(),
     ageGroup: createAgeGroup(model.ageGroup),
-    ...model
+    ...model,
   };
 }
 
-function createClientRefereeCheckModel(model: Partial<ClientRefereeCheckModel> = {}): ClientRefereeCheckModel {
+function createClientRefereeCheckModel(
+  model: Partial<ClientRefereeCheckModel> = {}
+): ClientRefereeCheckModel {
   return {
     ...createRefereeCheck(model),
     id: faker.datatype.uuid(),
     hasBeenWritten: false,
-    ...model
-  }
+    ...model,
+  };
 }
 
-function createNotificationModel(model: Partial<NotificationModel> = {}): NotificationModel {
+function createNotificationModel(
+  model: Partial<NotificationModel> = {}
+): NotificationModel {
   return {
     id: faker.datatype.uuid(),
     message: faker.lorem.sentence(),
-    ...model
+    ...model,
   };
 }
 
@@ -120,5 +130,5 @@ export const ModelFactory = {
   createClientRefereeCheckModel,
   createNotificationModel,
   createMany,
-  createListResult
+  createListResult,
 };

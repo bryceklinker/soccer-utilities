@@ -5,32 +5,41 @@ const REQUEST_POSTFIX = ' Request';
 const SUCCESS_POSTFIX = ' Success';
 const FAILED_POSTFIX = ' Failed';
 
-export const isRequestAction = (action: AnyAction): boolean => action.type.endsWith(REQUEST_POSTFIX);
-export const isSuccessAction = (action: AnyAction): boolean => action.type.includes(SUCCESS_POSTFIX);
-export const isFailedAction = (action: AnyAction): boolean => action.type.includes(FAILED_POSTFIX);
+export const isRequestAction = (action: AnyAction): boolean =>
+  action.type.endsWith(REQUEST_POSTFIX);
+export const isSuccessAction = (action: AnyAction): boolean =>
+  action.type.includes(SUCCESS_POSTFIX);
+export const isFailedAction = (action: AnyAction): boolean =>
+  action.type.includes(FAILED_POSTFIX);
 
-export const getAsyncActionSetBaseType = (action: AnyAction): string => action.type
-  .replace(REQUEST_POSTFIX, '')
-  .replace(SUCCESS_POSTFIX, '')
-  .replace(FAILED_POSTFIX, '');
+export const getAsyncActionSetBaseType = (action: AnyAction): string =>
+  action.type
+    .replace(REQUEST_POSTFIX, '')
+    .replace(SUCCESS_POSTFIX, '')
+    .replace(FAILED_POSTFIX, '');
 
-export const emptyPrepare = () => ({payload: null});
+export const emptyPrepare = () => ({ payload: null });
 
 export function createAsyncActionSet<
-  TRequestPayloadCreator extends PrepareAction<any>,
-  TSuccessPayloadCreator extends PrepareAction<any>,
-  TFailedPayloadCreator extends PrepareAction<any>,
-  TType extends string = string
+  TRequestPayloadCreator extends PrepareAction<unknown>,
+  TSuccessPayloadCreator extends PrepareAction<unknown>,
+  TFailedPayloadCreator extends PrepareAction<unknown>
 >(
   baseActionType: string,
   prepareRequest: TRequestPayloadCreator,
   prepareSuccess: TSuccessPayloadCreator,
   prepareFailed: TFailedPayloadCreator
-  ) {
+) {
   return {
     baseType: baseActionType,
-    request: createAction(`${baseActionType}${REQUEST_POSTFIX}`, prepareRequest),
-    success: createAction(`${baseActionType}${SUCCESS_POSTFIX}`, prepareSuccess),
-    failed: createAction(`${baseActionType}${FAILED_POSTFIX}`, prepareFailed)
-  }
+    request: createAction(
+      `${baseActionType}${REQUEST_POSTFIX}`,
+      prepareRequest
+    ),
+    success: createAction(
+      `${baseActionType}${SUCCESS_POSTFIX}`,
+      prepareSuccess
+    ),
+    failed: createAction(`${baseActionType}${FAILED_POSTFIX}`, prepareFailed),
+  };
 }

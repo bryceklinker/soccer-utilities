@@ -28,7 +28,7 @@ function createSettings(model: Partial<SettingsModel> = {}): SettingsModel {
       ...model.api,
     },
     logging: {
-      instrumentationKey: faker.datatype.uuid()
+      instrumentationKey: faker.datatype.uuid(),
     },
     ...model,
   };

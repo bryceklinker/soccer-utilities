@@ -5,10 +5,8 @@ export const EmptyRefereeCheckRow: FunctionComponent = () => {
   return (
     <TableRow aria-label={'empty'}>
       <TableCell colSpan={6}>
-        <Typography variant={'h3'}>
-          No Referee Checks Found
-        </Typography>
+        <Typography variant={'h3'}>No Referee Checks Found</Typography>
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};

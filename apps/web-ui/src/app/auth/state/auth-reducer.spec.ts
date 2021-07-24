@@ -6,8 +6,11 @@ describe('authReducer', () => {
   test('when user loads successfully then state has user', () => {
     const user = WebUiModelFactory.createUser();
 
-    const state = generateStateFromActions(authReducer, AuthActions.loadUser.success(user));
+    const state = generateStateFromActions(
+      authReducer,
+      AuthActions.loadUser.success(user)
+    );
 
     expect(state.user).toEqual(user);
-  })
-})
+  });
+});

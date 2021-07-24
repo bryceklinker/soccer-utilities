@@ -7,7 +7,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 export class HealthController {
   @Get()
   @AllowAnonymous()
-  @ApiOkResponse({type: Object})
+  @ApiOkResponse({ type: Object })
   health() {
     return {};
   }

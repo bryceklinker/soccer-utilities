@@ -1,4 +1,7 @@
-import { generateRootStateFromActions, WebUiModelFactory } from '../../../testing';
+import {
+  generateRootStateFromActions,
+  WebUiModelFactory,
+} from '../../../testing';
 import { selectIsLoading } from './loading-selectors';
 import { AuthActions } from '../../auth/state/auth-actions';
 
@@ -7,13 +10,13 @@ describe('loading selectors', () => {
     const state = generateRootStateFromActions(AuthActions.loadUser.request());
 
     expect(selectIsLoading(AuthActions.loadUser.request)(state)).toEqual(true);
-  })
+  });
 
   test('when no requests have been made then is loading is false for action type', () => {
     const state = generateRootStateFromActions();
 
     expect(selectIsLoading(AuthActions.loadUser.request)(state)).toEqual(false);
-  })
+  });
 
   test('when some requests are still unfinished then is loading is true for action type', () => {
     const state = generateRootStateFromActions(
@@ -24,5 +27,5 @@ describe('loading selectors', () => {
     );
 
     expect(selectIsLoading(AuthActions.loadUser.success)(state)).toEqual(true);
-  })
-})
+  });
+});

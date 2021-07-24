@@ -15,5 +15,5 @@ export const rootReducer = combineReducers<RootState>({
   currentSchedule: currentScheduleReducer,
   errors: errorsReducer,
   refereeChecks: refereeChecksReducer,
-  notifications: notificationsReducer
+  notifications: notificationsReducer,
 });

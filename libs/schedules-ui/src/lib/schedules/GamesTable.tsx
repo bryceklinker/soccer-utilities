@@ -1,17 +1,28 @@
-import { GameModel } from '@soccer-utilities/core';
+import { GameModel } from '@soccer-utilities/models';
 import { FunctionComponent } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
 import { GameRow } from './GameRow';
 
 export type GameProps = {
   games: Array<GameModel>;
-}
+};
 
-export const GamesTable: FunctionComponent<GameProps> = ({games}) => {
+export const GamesTable: FunctionComponent<GameProps> = ({ games }) => {
   const rows = games.map((game, i) => <GameRow key={i} game={game} />);
 
   if (rows.length === 0) {
-    return <Typography aria-label={'no games'} variant={'h3'}>No Games Available</Typography>
+    return (
+      <Typography aria-label={'no games'} variant={'h3'}>
+        No Games Available
+      </Typography>
+    );
   }
 
   return (
@@ -27,11 +38,7 @@ export const GamesTable: FunctionComponent<GameProps> = ({games}) => {
           <TableCell>Referees</TableCell>
         </TableRow>
       </TableHead>
-      <TableBody>
-        {rows}
-      </TableBody>
+      <TableBody>{rows}</TableBody>
     </Table>
-  )
-}
-
-
+  );
+};

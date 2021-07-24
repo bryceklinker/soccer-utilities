@@ -1,4 +1,4 @@
-import { AgeGroupModel, Gender } from '@soccer-utilities/core';
+import { AgeGroupModel, Gender } from '@soccer-utilities/models';
 
 export class AgeGroupEntity implements AgeGroupModel {
   age: number;

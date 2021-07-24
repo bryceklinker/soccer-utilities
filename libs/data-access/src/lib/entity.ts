@@ -4,7 +4,6 @@ export interface Entity {
   id?: string;
   ttl?: number;
   type: string;
-  [key: string]: any;
 }
 
-export type EntityType<T> = Type<T> & {type: string};
+export type EntityType<T> = Type<T> & { type: string };

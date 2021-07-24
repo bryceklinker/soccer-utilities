@@ -1,0 +1,5 @@
+libs/data-access/src/testing/testing-cosmos-container.ts
+libs/data-access/src/testing/testing-cosmos-database.ts
+libs/data-access/src/testing/testing-cosmos-item.ts
+libs/data-access/src/testing/testing-cosmos-items.ts
+libs/data-access/src/testing/testing-cosmos-client.ts

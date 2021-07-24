@@ -1,7 +1,7 @@
 import { generateStateFromActions, WebUiModelFactory } from '../../../testing';
 import { RefereesActions } from './referees-actions';
 import { refereeChecksReducer } from './referee-checks-reducer';
-import { List } from '@soccer-utilities/core';
+import { List } from '@soccer-utilities/models';
 
 describe('refereeChecksReducer', () => {
   test('when initialized then has been loaded is false', () => {
@@ -11,9 +11,13 @@ describe('refereeChecksReducer', () => {
   });
 
   test('when referee checks are loaded successfully then state has referee checks', () => {
-    const checks = WebUiModelFactory.createListResult(WebUiModelFactory.createClientRefereeCheckModel, 5);
+    const checks = WebUiModelFactory.createListResult(
+      WebUiModelFactory.createClientRefereeCheckModel,
+      5
+    );
 
-    const state = generateStateFromActions(refereeChecksReducer,
+    const state = generateStateFromActions(
+      refereeChecksReducer,
       RefereesActions.loadChecks.success(checks)
     );
 
@@ -21,9 +25,18 @@ describe('refereeChecksReducer', () => {
   });
 
   test('when referee checks are loaded successfully multiple times then state is only has latest checks', () => {
-    const checks = WebUiModelFactory.createListResult(WebUiModelFactory.createClientRefereeCheckModel, 5);
-    const state = generateStateFromActions(refereeChecksReducer,
-      RefereesActions.loadChecks.success(WebUiModelFactory.createListResult(WebUiModelFactory.createClientRefereeCheckModel, 3)),
+    const checks = WebUiModelFactory.createListResult(
+      WebUiModelFactory.createClientRefereeCheckModel,
+      5
+    );
+    const state = generateStateFromActions(
+      refereeChecksReducer,
+      RefereesActions.loadChecks.success(
+        WebUiModelFactory.createListResult(
+          WebUiModelFactory.createClientRefereeCheckModel,
+          3
+        )
+      ),
       RefereesActions.loadChecks.success(checks)
     );
 
@@ -31,9 +44,13 @@ describe('refereeChecksReducer', () => {
   });
 
   test('when referee checks loaded successfully then has been loaded is true', () => {
-    const checks = WebUiModelFactory.createListResult(WebUiModelFactory.createClientRefereeCheckModel, 5);
+    const checks = WebUiModelFactory.createListResult(
+      WebUiModelFactory.createClientRefereeCheckModel,
+      5
+    );
 
-    const state = generateStateFromActions(refereeChecksReducer,
+    const state = generateStateFromActions(
+      refereeChecksReducer,
       RefereesActions.loadChecks.success(checks)
     );
 
@@ -41,7 +58,8 @@ describe('refereeChecksReducer', () => {
   });
 
   test('when referee checks load failed then has been loaded is true', () => {
-    const state = generateStateFromActions(refereeChecksReducer,
+    const state = generateStateFromActions(
+      refereeChecksReducer,
       RefereesActions.loadChecks.failed()
     );
 
@@ -50,7 +68,8 @@ describe('refereeChecksReducer', () => {
 
   test('when check is written then check has been written is true', () => {
     const check = WebUiModelFactory.createClientRefereeCheckModel();
-    const state = generateStateFromActions(refereeChecksReducer,
+    const state = generateStateFromActions(
+      refereeChecksReducer,
       RefereesActions.loadChecks.success(List.fromItems(check)),
       RefereesActions.checkWritten(check)
     );

@@ -1,12 +1,12 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { render, screen, within } from '@testing-library/react';
-import { GamesTable } from '@soccer-utilities/schedules-ui';
-import { Gender, RefereeType } from '@soccer-utilities/core';
+import { GamesTable } from './GamesTable';
+import { Gender, RefereeType } from '@soccer-utilities/models';
 
 describe('GameRow', () => {
   test('when game is rendered then shows game details', () => {
     const game = ModelFactory.createGame({
-      ageGroup: ModelFactory.createAgeGroup({ age: 14, gender: Gender.Boys })
+      ageGroup: ModelFactory.createAgeGroup({ age: 14, gender: Gender.Boys }),
     });
 
     render(<GamesTable games={[game]} />);
@@ -24,8 +24,11 @@ describe('GameRow', () => {
     const game = ModelFactory.createGame({
       referees: [
         ModelFactory.createReferee({ type: RefereeType.Center, name: 'John' }),
-        ModelFactory.createReferee({ type: RefereeType.Assistant, name: 'Jim' })
-      ]
+        ModelFactory.createReferee({
+          type: RefereeType.Assistant,
+          name: 'Jim',
+        }),
+      ],
     });
 
     render(<GamesTable games={[game]} />);

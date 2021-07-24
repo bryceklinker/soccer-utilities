@@ -1,5 +1,5 @@
 import { format, parse } from 'date-fns';
-import { TIME_FORMAT } from '@soccer-utilities/core';
+import { TIME_FORMAT } from '@soccer-utilities/models';
 
 export function convertCsvTimeToTimeString(csvTime: string): string {
   const time = parse(csvTime, 'h:mm:ss a', new Date());

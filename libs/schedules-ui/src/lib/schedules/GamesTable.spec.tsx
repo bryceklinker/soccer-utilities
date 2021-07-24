@@ -1,6 +1,6 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { render, screen } from '@testing-library/react';
-import { GamesTable } from '@soccer-utilities/schedules-ui';
+import { GamesTable } from './GamesTable';
 
 describe('GamesTable', () => {
   test('when games are rendered then shows each game', () => {
@@ -15,5 +15,5 @@ describe('GamesTable', () => {
     render(<GamesTable games={[]} />);
 
     expect(screen.getByLabelText('no games')).toBeInTheDocument();
-  })
+  });
 });

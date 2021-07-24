@@ -1,40 +1,63 @@
 import { FunctionComponent } from 'react';
-import { Divider, Drawer, List, ListItem, makeStyles, Toolbar } from '@material-ui/core';
+import {
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  makeStyles,
+  Toolbar,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ColumnFlexBox } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 
 const useStyles = makeStyles(() => ({
   drawer: {
-    width: 240
-  }
+    width: 240,
+  },
 }));
 
 export type ShellNavigationProps = {
   isOpen: boolean;
   onClose: () => void;
-}
-export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({ isOpen, onClose }) => {
+};
+export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const styles = useStyles();
   return (
-    <>
-      <Drawer open={isOpen} onClose={onClose}>
-        <Toolbar />
-        <Divider />
-        <ColumnFlexBox className={styles.drawer}>
-          <List component={'nav'}>
-            <ListItem button component={Link} to={ROUTES.WELCOME} aria-label={'welcome'}>
-              Welcome
-            </ListItem>
-            <ListItem button component={Link} to={ROUTES.CURRENT_SCHEDULE} aria-label={'current schedule'}>
-              Current Schedule
-            </ListItem>
-            <ListItem button component={Link} to={ROUTES.REFEREE_CHECKS} aria-label={'referee checks'}>
-              Referee Checks
-            </ListItem>
-          </List>
-        </ColumnFlexBox>
-      </Drawer>
-    </>
+    <Drawer open={isOpen} onClose={onClose}>
+      <Toolbar />
+      <Divider />
+      <ColumnFlexBox className={styles.drawer}>
+        <List component={'nav'}>
+          <ListItem
+            button
+            component={Link}
+            to={ROUTES.WELCOME}
+            aria-label={'welcome'}
+          >
+            Welcome
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to={ROUTES.CURRENT_SCHEDULE}
+            aria-label={'current schedule'}
+          >
+            Current Schedule
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to={ROUTES.REFEREE_CHECKS}
+            aria-label={'referee checks'}
+          >
+            Referee Checks
+          </ListItem>
+        </List>
+      </ColumnFlexBox>
+    </Drawer>
   );
 };

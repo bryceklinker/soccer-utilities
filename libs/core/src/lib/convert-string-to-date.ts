@@ -1,8 +1,6 @@
 import { parse } from 'date-fns';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from '@soccer-utilities/models';
 
-export const DATE_FORMAT = 'yyyy-MM-dd';
-export const TIME_FORMAT = 'hh:mm a';
-export const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
 export function convertStringToDate(value: string): Date {
   return parse(value, DATE_FORMAT, new Date());
 }

@@ -1,4 +1,4 @@
-import { configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { rootReducer } from './root-reducer';
 import { rootSaga } from './root-saga';
@@ -9,16 +9,15 @@ export function configureRootStore() {
   const store = configureStore({
     devTools: true,
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-      [
-        ...getDefaultMiddleware({
-          thunk: false,
-          serializableCheck: {
-            ignoredActions: [CurrentScheduleActions.upload.request.type]
-          }
-        }),
-        sagaMiddleware
-      ]
+    middleware: (getDefaultMiddleware) => [
+      ...getDefaultMiddleware({
+        thunk: false,
+        serializableCheck: {
+          ignoredActions: [CurrentScheduleActions.upload.request.type],
+        },
+      }),
+      sagaMiddleware,
+    ],
   });
   sagaMiddleware.run(rootSaga);
   return store;

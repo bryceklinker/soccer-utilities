@@ -2,7 +2,6 @@ import { FeedResponse } from '@azure/cosmos';
 import { NotImplementedException } from '@nestjs/common';
 
 export class TestingFeedResponse<T> extends FeedResponse<T> {
-
   readonly resources: T[];
   readonly hasMoreResults: boolean;
 

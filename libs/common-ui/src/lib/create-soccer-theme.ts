@@ -6,7 +6,7 @@ export function createSoccerTheme(type: PaletteType = 'dark'): Theme {
     palette: {
       type,
       primary: blue,
-      secondary: yellow
-    }
-  })
+      secondary: yellow,
+    },
+  });
 }

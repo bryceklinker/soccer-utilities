@@ -5,19 +5,27 @@ import { getAsyncActionSetBaseType } from '../../state/create-async-action-set';
 
 describe('errorsReducer', () => {
   test('when failed action received then adds payload to errors', () => {
-    const state = generateStateFromActions(errorsReducer,
+    const state = generateStateFromActions(
+      errorsReducer,
       CurrentScheduleActions.load.failed()
     );
 
-    expect(state[getAsyncActionSetBaseType(CurrentScheduleActions.load.failed)]).toHaveLength(1);
+    expect(
+      state[getAsyncActionSetBaseType(CurrentScheduleActions.load.failed)]
+    ).toHaveLength(1);
   });
 
   test('when success action received then clears errors', () => {
-    const state = generateStateFromActions(errorsReducer,
+    const state = generateStateFromActions(
+      errorsReducer,
       CurrentScheduleActions.load.failed(),
-      CurrentScheduleActions.load.success(WebUiModelFactory.createGameSchedule())
+      CurrentScheduleActions.load.success(
+        WebUiModelFactory.createGameSchedule()
+      )
     );
 
-    expect(state[getAsyncActionSetBaseType(CurrentScheduleActions.load.failed)]).toHaveLength(0);
+    expect(
+      state[getAsyncActionSetBaseType(CurrentScheduleActions.load.failed)]
+    ).toHaveLength(0);
   });
 });

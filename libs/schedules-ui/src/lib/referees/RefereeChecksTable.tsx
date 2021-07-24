@@ -1,16 +1,32 @@
 import { FunctionComponent } from 'react';
-import { ClientRefereeCheckModel } from '@soccer-utilities/schedules-ui';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
 import { EmptyRefereeCheckRow } from './EmptyRefereeCheckRow';
 import { RefereeCheckRow } from './RefereeCheckRow';
+import { ClientRefereeCheckModel } from '@soccer-utilities/models';
 
 export interface RefereeChecksTableProps {
   checks: Array<ClientRefereeCheckModel>;
   onCopyCheck?: (check: ClientRefereeCheckModel) => void;
 }
 
-export const RefereeChecksTable: FunctionComponent<RefereeChecksTableProps> = ({checks, onCopyCheck}) => {
-  const rows = checks.length === 0 ? <EmptyRefereeCheckRow /> : checks.map(c => <RefereeCheckRow key={c.id} check={c} onCopy={onCopyCheck} />);
+export const RefereeChecksTable: FunctionComponent<RefereeChecksTableProps> = ({
+  checks,
+  onCopyCheck,
+}) => {
+  const rows =
+    checks.length === 0 ? (
+      <EmptyRefereeCheckRow />
+    ) : (
+      checks.map((c) => (
+        <RefereeCheckRow key={c.id} check={c} onCopy={onCopyCheck} />
+      ))
+    );
   return (
     <Table>
       <TableHead>
@@ -23,9 +39,7 @@ export const RefereeChecksTable: FunctionComponent<RefereeChecksTableProps> = ({
           <TableCell />
         </TableRow>
       </TableHead>
-      <TableBody>
-        {rows}
-      </TableBody>
+      <TableBody>{rows}</TableBody>
     </Table>
   );
 };

@@ -4,15 +4,12 @@ import { GameScheduleEntity } from '../entities';
 
 @Injectable()
 export class GameScheduleRepository {
-  constructor(private readonly factory: RepositoryFactory) {
-  }
+  constructor(private readonly factory: RepositoryFactory) {}
 
   async getCurrent(): Promise<GameScheduleEntity | null> {
     const schedules = await this.repository().getAll();
     const schedule = schedules[0] || null;
-    return schedule
-      ? GameScheduleEntity.fromEntity(schedule)
-      : null;
+    return schedule ? GameScheduleEntity.fromEntity(schedule) : null;
   }
 
   async create(entity: GameScheduleEntity): Promise<GameScheduleEntity> {

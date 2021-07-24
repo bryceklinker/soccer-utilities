@@ -1,9 +1,7 @@
 module.exports = {
   displayName: 'rest-api',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: [
-    '<rootDir>/src/testing/setup-tests.ts'
-  ],
+  setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

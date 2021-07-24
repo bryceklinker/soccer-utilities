@@ -1,1 +1,1 @@
-export * from './setup-testing-module'
+export * from './setup-testing-module';

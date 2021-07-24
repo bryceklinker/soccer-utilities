@@ -17,11 +17,11 @@ export class CosmosRepository<T extends Entity> implements Repository<T> {
     return this.entityClass.type;
   }
 
-  constructor(private readonly client: CosmosClient,
-              private readonly options: DataAccessOptions,
-              private readonly entityClass: EntityType<T>) {
-
-  }
+  constructor(
+    private readonly client: CosmosClient,
+    private readonly options: DataAccessOptions,
+    private readonly entityClass: EntityType<T>
+  ) {}
 
   async getAll(): Promise<Array<T>> {
     const container = this.getContainer();

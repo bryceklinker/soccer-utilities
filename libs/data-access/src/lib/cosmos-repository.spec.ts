@@ -16,7 +16,8 @@ describe('CosmosRepository', () => {
     repository = new CosmosRepository<TestingEntity>(
       client,
       options,
-      TestingEntity);
+      TestingEntity
+    );
   });
 
   test('when getting all from repository then reads all entities from cosmos', async () => {

@@ -1,4 +1,4 @@
-import { Gender } from '@soccer-utilities/core';
+import { Gender } from '@soccer-utilities/models';
 import { convertDivisionToAgeGroup } from './convert-division-to-age-group';
 
 describe('convertDivisionToAgeGroup', () => {

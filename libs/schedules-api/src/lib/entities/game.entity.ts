@@ -1,4 +1,4 @@
-import { GameModel } from '@soccer-utilities/core';
+import { GameModel } from '@soccer-utilities/models';
 import { AgeGroupEntity } from './age-group.entity';
 import { RefereeEntity } from './referee.entity';
 
@@ -28,8 +28,8 @@ export class GameEntity implements GameModel {
   toModel(): GameModel {
     return {
       ...this,
-      referees: this.referees.map(r => r.toModel()),
-      ageGroup: this.ageGroup.toModel()
+      referees: this.referees.map((r) => r.toModel()),
+      ageGroup: this.ageGroup.toModel(),
     };
   }
 }

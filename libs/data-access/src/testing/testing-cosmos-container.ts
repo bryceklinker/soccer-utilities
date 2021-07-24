@@ -4,7 +4,8 @@ import {
   Container,
   ContainerDefinition,
   ContainerResponse,
-  Database, FeedOptions,
+  Database,
+  FeedOptions,
   Item,
   Items,
   OfferResponse,
@@ -17,13 +18,13 @@ import {
   ResourceResponse,
   Response,
   Scripts,
-  SqlQuerySpec
+  SqlQuerySpec,
 } from '@azure/cosmos';
 import { TestingCosmosDatabase } from './testing-cosmos-database';
 import { NotImplementedException } from '@nestjs/common';
 import { TestingCosmosItems } from './testing-cosmos-items';
 import { TestingCosmosItem } from './testing-cosmos-item';
-import { Entity } from '@soccer-utilities/data-access';
+import { Entity } from '../lib';
 
 export class TestingCosmosContainer extends Container {
   private readonly testingItems: TestingCosmosItems;
@@ -52,7 +53,7 @@ export class TestingCosmosContainer extends Container {
   }
 
   item(id: string, partitionKeyValue?: PartitionKey): Item {
-    const item = this.testingItems.getAll().find(i => i.id === id);
+    const item = this.testingItems.getAll().find((i) => i.id === id);
     return new TestingCosmosItem(this, id, item.resource);
   }
 
@@ -61,7 +62,7 @@ export class TestingCosmosContainer extends Container {
   }
 
   getAllEntities<T extends Entity>() {
-    return this.testingItems.getAll().map(i => i.resource);
+    return this.testingItems.getAll().map((i) => i.resource);
   }
 
   conflict(id: string, partitionKey?: PartitionKey): Conflict {
@@ -83,11 +84,15 @@ export class TestingCosmosContainer extends Container {
     throw new NotImplementedException();
   }
 
-  getPartitionKeyDefinition(): Promise<ResourceResponse<PartitionKeyDefinition>> {
+  getPartitionKeyDefinition(): Promise<
+    ResourceResponse<PartitionKeyDefinition>
+  > {
     throw new NotImplementedException();
   }
 
-  readPartitionKeyDefinition(): Promise<ResourceResponse<PartitionKeyDefinition>> {
+  readPartitionKeyDefinition(): Promise<
+    ResourceResponse<PartitionKeyDefinition>
+  > {
     throw new NotImplementedException();
   }
 

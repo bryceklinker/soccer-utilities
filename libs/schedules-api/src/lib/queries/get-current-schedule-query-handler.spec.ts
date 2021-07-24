@@ -1,6 +1,9 @@
 import { setupTestingModule } from '../../testing';
 import { QueryBus } from '@nestjs/cqrs';
-import { TestingRepository, TestingRepositoryFactory } from '@soccer-utilities/data-access/testing';
+import {
+  TestingRepository,
+  TestingRepositoryFactory,
+} from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '../entities';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GetCurrentScheduleQuery } from './get-current-schedule-query-handler';
@@ -13,7 +16,9 @@ describe('GetCurrentScheduleQueryHandler', () => {
   beforeEach(async () => {
     const app = await setupTestingModule();
 
-    const repositoryFactory = app.get(RepositoryFactory) as TestingRepositoryFactory;
+    const repositoryFactory = app.get(
+      RepositoryFactory
+    ) as TestingRepositoryFactory;
 
     repository = repositoryFactory.setupRepository(GameScheduleEntity);
     queryBus = app.get<QueryBus>(QueryBus);
@@ -28,7 +33,7 @@ describe('GetCurrentScheduleQueryHandler', () => {
     expect(actual).toEqual({
       ...model,
       id: entity.id,
-      type: entity.type
+      type: entity.type,
     });
   });
 
@@ -36,5 +41,5 @@ describe('GetCurrentScheduleQueryHandler', () => {
     const actual = await queryBus.execute(new GetCurrentScheduleQuery());
 
     expect(actual).toEqual(null);
-  })
+  });
 });

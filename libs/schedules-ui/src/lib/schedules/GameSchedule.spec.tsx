@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 describe('GameSchedule', () => {
   test('when schedule is rendered then shows each game', () => {
     const schedule = ModelFactory.createGameSchedule({
-      games: ModelFactory.createMany(ModelFactory.createGame, 6)
+      games: ModelFactory.createMany(ModelFactory.createGame, 6),
     });
 
     render(<GameSchedule schedule={schedule} />);
@@ -16,17 +16,24 @@ describe('GameSchedule', () => {
 
   test('when schedule is rendered then shows last updated date', () => {
     const schedule = ModelFactory.createGameSchedule({
-      lastUpdated: '2021-09-23'
+      lastUpdated: '2021-09-23',
     });
 
     render(<GameSchedule schedule={schedule} />);
 
-    expect(screen.getByLabelText('last updated')).toHaveTextContent('2021-09-23');
+    expect(screen.getByLabelText('last updated')).toHaveTextContent(
+      '2021-09-23'
+    );
   });
 
   test('when refresh schedule triggered then notifies for refresh', () => {
     const onRefresh = jest.fn();
-    render(<GameSchedule schedule={ModelFactory.createGameSchedule()} onRefresh={onRefresh} />);
+    render(
+      <GameSchedule
+        schedule={ModelFactory.createGameSchedule()}
+        onRefresh={onRefresh}
+      />
+    );
 
     userEvent.click(screen.getByLabelText('refresh schedule'));
 
@@ -35,7 +42,12 @@ describe('GameSchedule', () => {
 
   test('when upload schedule triggered then notifies upload schedule', () => {
     const onUpload = jest.fn();
-    render(<GameSchedule schedule={ModelFactory.createGameSchedule()} onUpload={onUpload} />);
+    render(
+      <GameSchedule
+        schedule={ModelFactory.createGameSchedule()}
+        onUpload={onUpload}
+      />
+    );
 
     userEvent.click(screen.getByLabelText('upload schedule'));
 
@@ -46,6 +58,8 @@ describe('GameSchedule', () => {
     render(<GameSchedule schedule={null} />);
 
     expect(screen.getByLabelText('no games')).toBeInTheDocument();
-    expect(screen.getByLabelText('last updated')).toHaveTextContent('No Schedule');
-  })
+    expect(screen.getByLabelText('last updated')).toHaveTextContent(
+      'No Schedule'
+    );
+  });
 });

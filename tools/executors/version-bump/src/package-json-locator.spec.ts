@@ -12,15 +12,19 @@ describe('package-json-locator', () => {
       cwd: '.',
       root: REPO_ROOT_PATH,
       isVerbose: false,
-      workspace: readWorkspaceJson()
+      workspace: readWorkspaceJson(),
     };
   });
 
   test('when getting package jsons then returns all package json paths', () => {
     const paths = PackageJsonLocator.getAll(context);
 
-    expect(paths).toContainEqual(path.resolve(REPO_ROOT_PATH, 'libs', 'common-ui', 'package.json'));
-    expect(paths).toContainEqual(path.resolve(REPO_ROOT_PATH, 'apps', 'rest-api', 'package.json'));
+    expect(paths).toContainEqual(
+      path.resolve(REPO_ROOT_PATH, 'libs', 'common-ui', 'package.json')
+    );
+    expect(paths).toContainEqual(
+      path.resolve(REPO_ROOT_PATH, 'apps', 'rest-api', 'package.json')
+    );
   });
 
   test('when getting package jsons then returns root package json first', () => {

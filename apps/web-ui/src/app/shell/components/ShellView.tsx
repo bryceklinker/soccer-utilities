@@ -3,25 +3,45 @@ import { lazy, useCallback, useEffect, useState, Suspense } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
-import { ColumnFlexBox, LoadingIndicator, RowFlexBox } from '@soccer-utilities/common-ui';
+import {
+  ColumnFlexBox,
+  LoadingIndicator,
+  RowFlexBox,
+} from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { ShellNotificationsContainer } from './ShellNotificationsContainer';
 
-const WelcomePage = lazy(() => import('../../welcome/Welcome').then(c => ({ default: c.WelcomePage })));
-const CurrentSchedulePage = lazy(() => import('../../current-schedule/pages/CurrentSchedulePage').then(c => ({ default: c.CurrentSchedulePage })));
-const RefereeChecksPage = lazy(() => import('../../referees/pages/RefereeChecksPage').then(c => ({ default: c.RefereeChecksPage })));
+const WelcomePage = lazy(() =>
+  import('../../welcome/Welcome').then((c) => ({ default: c.WelcomePage }))
+);
+const CurrentSchedulePage = lazy(() =>
+  import('../../current-schedule/pages/CurrentSchedulePage').then((c) => ({
+    default: c.CurrentSchedulePage,
+  }))
+);
+const RefereeChecksPage = lazy(() =>
+  import('../../referees/pages/RefereeChecksPage').then((c) => ({
+    default: c.RefereeChecksPage,
+  }))
+);
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
-    padding: theme.spacing(3)
-  }
+    padding: theme.spacing(3),
+  },
 }));
 
 export function ShellView() {
   const location = useLocation();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
-  const handleNavigationToggled = useCallback(() => setIsNavigationOpen(!isNavigationOpen), [isNavigationOpen, setIsNavigationOpen]);
-  const handleNavigationClosed = useCallback(() => setIsNavigationOpen(false), [setIsNavigationOpen]);
+  const handleNavigationToggled = useCallback(
+    () => setIsNavigationOpen(!isNavigationOpen),
+    [isNavigationOpen, setIsNavigationOpen]
+  );
+  const handleNavigationClosed = useCallback(
+    () => setIsNavigationOpen(false),
+    [setIsNavigationOpen]
+  );
 
   useEffect(() => {
     handleNavigationClosed();
@@ -33,7 +53,10 @@ export function ShellView() {
       <CssBaseline />
       <RowFlexBox>
         <ShellAppBar onNavigationToggle={handleNavigationToggled} />
-        <ShellNavigation isOpen={isNavigationOpen} onClose={handleNavigationClosed} />
+        <ShellNavigation
+          isOpen={isNavigationOpen}
+          onClose={handleNavigationClosed}
+        />
 
         <ColumnFlexBox display={'flex'} flex={1} flexDirection={'column'}>
           <Toolbar />

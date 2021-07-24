@@ -1,4 +1,4 @@
-import { RefereeModel, RefereeType } from '@soccer-utilities/core';
+import { RefereeModel, RefereeType } from '@soccer-utilities/models';
 
 export class RefereeEntity implements RefereeModel {
   name: string;
@@ -13,7 +13,7 @@ export class RefereeEntity implements RefereeModel {
 
   toModel(): RefereeModel {
     return {
-      ...this
-    }
+      ...this,
+    };
   }
 }

@@ -7,11 +7,11 @@ import { RefereeChecksState } from '../referees/state/referee-checks-state';
 import { NotificationsState } from '../notifications/state/notifications-state';
 
 export type RootState = {
-  auth: AuthState,
-  loading: LoadingState,
-  errors: ErrorsState,
-  settings: SettingsState,
+  auth: AuthState;
+  loading: LoadingState;
+  errors: ErrorsState;
+  settings: SettingsState;
   currentSchedule: CurrentScheduleState;
   refereeChecks: RefereeChecksState;
   notifications: NotificationsState;
-}
+};

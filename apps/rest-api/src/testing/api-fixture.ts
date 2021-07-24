@@ -1,4 +1,7 @@
-import { TestingRepositoryFactory, useTestingDataAccess } from '@soccer-utilities/data-access/testing';
+import {
+  TestingRepositoryFactory,
+  useTestingDataAccess,
+} from '@soccer-utilities/data-access/testing';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../app/app.module';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
@@ -25,10 +28,11 @@ export class ApiFixture {
       return;
     }
 
-
     this._app = await ApiFixture.startNestApp();
     this._baseUrl = await this._app.getUrl();
-    this._repositoryFactory = this._app.get(RepositoryFactory) as TestingRepositoryFactory;
+    this._repositoryFactory = this._app.get(
+      RepositoryFactory
+    ) as TestingRepositoryFactory;
     this._isStarted = true;
   }
 
@@ -46,9 +50,11 @@ export class ApiFixture {
   }
 
   private static async startNestApp(): Promise<INestApplication> {
-    const testingModule = await useTestingDataAccess(Test.createTestingModule({
-      imports: [AppModule]
-    })).compile();
+    const testingModule = await useTestingDataAccess(
+      Test.createTestingModule({
+        imports: [AppModule],
+      })
+    ).compile();
     const app = testingModule.createNestApplication();
     await app.listen(0);
     return app;

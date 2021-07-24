@@ -1,4 +1,3 @@
-
 export enum RefereeType {
   Center = 'Center',
   Assistant = 'Assistant',
@@ -15,7 +14,7 @@ export const Genders = Object.values(Gender);
 
 export interface RefereeModel {
   name: string;
-  type: RefereeType
+  type: RefereeType;
 }
 
 export interface AgeGroupModel {
@@ -63,4 +62,22 @@ export interface RefereePayScaleModel {
 export interface DateRangeModel {
   start: string;
   end: string;
+}
+
+export interface ClientRefereeCheckModel extends RefereeCheckModel {
+  id: string;
+  hasBeenWritten: boolean;
+}
+
+export enum NotificationType {
+  Error = 'Error',
+  Success = 'Success',
+  Default = 'Default',
+}
+
+export interface NotificationModel {
+  id: string;
+  message: string;
+  duration?: number;
+  type?: NotificationType;
 }

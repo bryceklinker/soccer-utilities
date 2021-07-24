@@ -8,15 +8,15 @@ describe('Health Api', () => {
   beforeEach(async () => {
     fixture = new ApiFixture();
     await fixture.start();
-  })
+  });
 
   test('when getting health then returns ok', async () => {
-    const response = await axios.get(`/.health`, {baseURL: fixture.baseUrl});
+    const response = await axios.get(`/.health`, { baseURL: fixture.baseUrl });
 
     expect(response.status).toEqual(constants.HTTP_STATUS_OK);
   });
 
   afterEach(async () => {
     await fixture.stop();
-  })
+  });
 });

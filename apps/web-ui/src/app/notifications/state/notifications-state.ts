@@ -1,6 +1,4 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { NotificationModel } from '@soccer-utilities/common-ui';
+import { NotificationModel } from '@soccer-utilities/models';
 
-export interface NotificationsState extends EntityState<NotificationModel>  {
-
-}
+export type NotificationsState = EntityState<NotificationModel>;

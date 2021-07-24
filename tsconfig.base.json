@@ -21,9 +21,13 @@
       "@soccer-utilities/data-access/testing": [
         "libs/data-access/src/testing/index.ts"
       ],
+      "@soccer-utilities/models": ["libs/models/src/index.ts"],
       "@soccer-utilities/nest-auth0": ["libs/nest-auth0/src/index.ts"],
       "@soccer-utilities/schedules-api": ["libs/schedules-api/src/index.ts"],
       "@soccer-utilities/schedules-ui": ["libs/schedules-ui/src/index.ts"],
+      "@soccer-utilities/schedules-ui/testing": [
+        "libs/schedules-ui/src/testing/index.ts"
+      ],
       "@soccer-utilities/testing-support": ["libs/testing-support/src/index.ts"]
     }
   },

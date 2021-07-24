@@ -1,4 +1,7 @@
-import { createTestingStoreFromActions, renderWithProviders } from '../../../testing';
+import {
+  createTestingStoreFromActions,
+  renderWithProviders,
+} from '../../../testing';
 import { ShellView } from './ShellView';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
@@ -42,9 +45,11 @@ describe('ShellView', () => {
   });
 
   test('when rendered with notifications then shows notifications', () => {
-    const store = createTestingStoreFromActions(NotificationsActions.publish(ModelFactory.createNotificationModel()));
-    renderWithProviders(<ShellView />, {store});
+    const store = createTestingStoreFromActions(
+      NotificationsActions.publish(ModelFactory.createNotificationModel())
+    );
+    renderWithProviders(<ShellView />, { store });
 
     expect(screen.getByLabelText('notification')).toBeInTheDocument();
-  })
+  });
 });

@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { DateRangeSelector } from './DateRangeSelector';
-import { DatePickerTestingHarness } from '@soccer-utilities/testing-support';
+import { DatePickerTestingHarness } from '../../testing/date-picker-testing-harness';
 
 const CURRENT_DATE = new Date(2015, 3, 30);
 describe('DateRangeSelector', () => {
   beforeEach(() => {
-    jest.useFakeTimers('modern')
-      .setSystemTime(CURRENT_DATE);
+    jest.useFakeTimers('modern').setSystemTime(CURRENT_DATE);
   });
 
   test('when no dates provided then no dates are selected', () => {
@@ -45,7 +44,10 @@ describe('DateRangeSelector', () => {
     DatePickerTestingHarness.changeEnd('23');
     DatePickerTestingHarness.clickSearch();
 
-    expect(onSearch).toHaveBeenCalledWith({ start: '2015-04-22', end: '2015-04-23' });
+    expect(onSearch).toHaveBeenCalledWith({
+      start: '2015-04-22',
+      end: '2015-04-23',
+    });
   });
 
   test('when start date filled in without end date then search is disabled', () => {

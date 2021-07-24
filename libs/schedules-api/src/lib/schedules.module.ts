@@ -10,17 +10,11 @@ import { REPOSITORIES } from './repositories';
     CqrsModule,
     DataAccessModule.forCosmos({
       collection: 'entities',
-      database: 'bsc'
+      database: 'bsc',
     }),
   ],
   controllers: [],
-  providers: [
-    ...REPOSITORIES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS
-  ],
-  exports: [
-    CqrsModule
-  ],
+  providers: [...REPOSITORIES, ...QUERY_HANDLERS, ...COMMAND_HANDLERS],
+  exports: [CqrsModule],
 })
 export class SchedulesModule {}

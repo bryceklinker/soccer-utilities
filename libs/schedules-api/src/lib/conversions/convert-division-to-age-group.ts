@@ -1,8 +1,11 @@
-import { AgeGroupModel, Gender } from '@soccer-utilities/core';
+import { AgeGroupModel, Gender } from '@soccer-utilities/models';
 
 function getGenderFromDivision(division: string): Gender {
-  const genderPart = division.split(' ')
-    .find(part => part.includes('G') || part.includes('B') || part.includes('C'));
+  const genderPart = division
+    .split(' ')
+    .find(
+      (part) => part.includes('G') || part.includes('B') || part.includes('C')
+    );
 
   if (genderPart.includes('G')) {
     return Gender.Girls;
@@ -16,8 +19,7 @@ function getGenderFromDivision(division: string): Gender {
 }
 
 function getAgeFromDivision(division: string): number {
-  const agePart = division.split(' ')
-    .find(part => part.includes('U'));
+  const agePart = division.split(' ').find((part) => part.includes('U'));
 
   return parseInt(agePart.replace('U', ''));
 }
@@ -25,6 +27,6 @@ function getAgeFromDivision(division: string): number {
 export function convertDivisionToAgeGroup(division: string): AgeGroupModel {
   return {
     age: getAgeFromDivision(division),
-    gender: getGenderFromDivision(division)
-  }
+    gender: getGenderFromDivision(division),
+  };
 }

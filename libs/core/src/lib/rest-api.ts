@@ -8,12 +8,15 @@ export interface RestApi {
   postForm<T = void>(path: string, body?: FormData): Promise<T>;
 }
 
-function createRequestConfig(baseUrl: string, accessToken?: string): AxiosRequestConfig {
+function createRequestConfig(
+  baseUrl: string,
+  accessToken?: string
+): AxiosRequestConfig {
   return {
     baseURL: baseUrl,
     headers: {
-      Authorization: accessToken ? `Bearer ${accessToken}` : undefined
-    }
+      Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+    },
   };
 }
 
@@ -33,10 +36,10 @@ export function createRestApi(baseUrl: string, accessToken?: string): RestApi {
         ...requestConfig,
         headers: {
           ...requestConfig.headers,
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
       return response.data;
-    }
+    },
   };
 }

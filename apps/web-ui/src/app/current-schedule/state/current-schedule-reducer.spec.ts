@@ -6,7 +6,8 @@ describe('currentScheduleReducer', () => {
   test('when schedule loaded successfully then state has game schedule', () => {
     const schedule = WebUiModelFactory.createGameSchedule();
 
-    const state = generateStateFromActions(currentScheduleReducer,
+    const state = generateStateFromActions(
+      currentScheduleReducer,
       CurrentScheduleActions.load.success(schedule)
     );
 

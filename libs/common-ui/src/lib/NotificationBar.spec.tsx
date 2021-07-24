@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { NotificationBar } from './NotificationBar';
-import { NotificationType } from './notification-model';
+import { NotificationType } from '@soccer-utilities/models';
 import userEvent from '@testing-library/user-event';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 
@@ -16,13 +16,20 @@ describe('NotificationBar', () => {
 
     render(<NotificationBar notifications={[notification]} />);
 
-    expect(screen.getByLabelText('notification')).toHaveTextContent(notification.message);
+    expect(screen.getByLabelText('notification')).toHaveTextContent(
+      notification.message
+    );
   });
 
   test('when notification closed then notifies that notification was closed', () => {
     const notification = ModelFactory.createNotificationModel();
     const onCloseNotification = jest.fn();
-    render(<NotificationBar notifications={[notification]} onCloseNotification={onCloseNotification} />);
+    render(
+      <NotificationBar
+        notifications={[notification]}
+        onCloseNotification={onCloseNotification}
+      />
+    );
 
     userEvent.click(screen.getByLabelText('notification'));
 
@@ -33,7 +40,12 @@ describe('NotificationBar', () => {
     jest.useFakeTimers('modern');
     const notification = ModelFactory.createNotificationModel();
     const onCloseNotification = jest.fn();
-    render(<NotificationBar notifications={[notification]} onCloseNotification={onCloseNotification} />);
+    render(
+      <NotificationBar
+        notifications={[notification]}
+        onCloseNotification={onCloseNotification}
+      />
+    );
 
     jest.advanceTimersByTime(5000);
 
@@ -41,9 +53,13 @@ describe('NotificationBar', () => {
   });
 
   test('when success notification then shows success notification', () => {
-    const notification = ModelFactory.createNotificationModel({type: NotificationType.Success});
+    const notification = ModelFactory.createNotificationModel({
+      type: NotificationType.Success,
+    });
     render(<NotificationBar notifications={[notification]} />);
 
-    expect(screen.getByLabelText('notification').getAttribute('class')).toMatch(/success/i);
+    expect(screen.getByLabelText('notification').getAttribute('class')).toMatch(
+      /success/i
+    );
   });
 });

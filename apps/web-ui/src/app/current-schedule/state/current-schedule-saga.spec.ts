@@ -1,43 +1,64 @@
 import { waitFor } from '@testing-library/dom';
-import { WebUiModelFactory, TestingRestApiServer, TestingStore } from '../../../testing';
+import {
+  WebUiModelFactory,
+  TestingRestApiServer,
+  TestingStore,
+} from '../../../testing';
 import { CurrentScheduleActions } from './current-schedule-actions';
 import { RestRequest } from 'msw';
-import { HttpStatusCodes } from '@soccer-utilities/core';
+import { HttpStatusCodes } from '@soccer-utilities/testing-support';
 import { ApplicationUser } from '../../auth/state/auth-models';
 import { setupSagaTest } from '../../../testing/setup-saga-test';
 
 describe('Current Schedule Saga', () => {
-
   describe('Load Current Schedule', () => {
     test('when load current schedule requested and succeeds then notifies load schedule success', async () => {
-      const {store, apiUrl} = setupSagaTest();
+      const { store, apiUrl } = setupSagaTest();
       const schedule = WebUiModelFactory.createGameSchedule();
       TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, schedule);
 
       store.dispatch(CurrentScheduleActions.load.request());
 
-      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.success(schedule)));
+      await waitFor(() =>
+        expect(store.getActions()).toContainEqual(
+          CurrentScheduleActions.load.success(schedule)
+        )
+      );
     });
 
     test('when load current schedule requested and fails then notifies load schedule failed', async () => {
-      const {store, apiUrl} = setupSagaTest();
-      TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, undefined, { status: HttpStatusCodes.NotFound });
-
-      store.dispatch(CurrentScheduleActions.load.request());
-
-      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.failed()));
-    });
-
-    test('when load current schedule requested then uses user access token', async () => {
-      const {store, apiUrl, user} = setupSagaTest();
-      let request: RestRequest | null = null;
-      TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, WebUiModelFactory.createGameSchedule(), {
-        captureRequest: req => request = req
+      const { store, apiUrl } = setupSagaTest();
+      TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, undefined, {
+        status: HttpStatusCodes.NotFound,
       });
 
       store.dispatch(CurrentScheduleActions.load.request());
 
-      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`));
+      await waitFor(() =>
+        expect(store.getActions()).toContainEqual(
+          CurrentScheduleActions.load.failed()
+        )
+      );
+    });
+
+    test('when load current schedule requested then uses user access token', async () => {
+      const { store, apiUrl, user } = setupSagaTest();
+      let request: RestRequest | null = null;
+      TestingRestApiServer.setupGet(
+        `${apiUrl}/schedules/current`,
+        WebUiModelFactory.createGameSchedule(),
+        {
+          captureRequest: (req) => (request = req),
+        }
+      );
+
+      store.dispatch(CurrentScheduleActions.load.request());
+
+      await waitFor(() =>
+        expect(request?.headers?.get('Authorization')).toEqual(
+          `Bearer ${user.accessToken}`
+        )
+      );
     });
   });
 
@@ -51,7 +72,10 @@ describe('Current Schedule Saga', () => {
       store = result.store;
       apiUrl = result.apiUrl;
       user = result.user;
-      TestingRestApiServer.setupGet(`${apiUrl}/schedules/current`, WebUiModelFactory.createGameSchedule());
+      TestingRestApiServer.setupGet(
+        `${apiUrl}/schedules/current`,
+        WebUiModelFactory.createGameSchedule()
+      );
     });
 
     test('when upload schedule requested then dispatches upload success', async () => {
@@ -60,14 +84,18 @@ describe('Current Schedule Saga', () => {
 
       store.dispatch(CurrentScheduleActions.upload.request(form));
 
-      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.upload.success()));
+      await waitFor(() =>
+        expect(store.getActions()).toContainEqual(
+          CurrentScheduleActions.upload.success()
+        )
+      );
     });
 
     test('when upload schedule requested then uploads form to api', async () => {
       const form = new FormData();
       let request: RestRequest | null = null;
       TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`, undefined, {
-        captureRequest: req => request = req
+        captureRequest: (req) => (request = req),
       });
 
       store.dispatch(CurrentScheduleActions.upload.request(form));
@@ -76,22 +104,32 @@ describe('Current Schedule Saga', () => {
     });
 
     test('when upload schedule fails then notifies of upload failure', async () => {
-      TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`, undefined, { status: HttpStatusCodes.NotFound });
+      TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`, undefined, {
+        status: HttpStatusCodes.NotFound,
+      });
 
       store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
 
-      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.upload.failed()));
+      await waitFor(() =>
+        expect(store.getActions()).toContainEqual(
+          CurrentScheduleActions.upload.failed()
+        )
+      );
     });
 
     test('when uploading schedule then uses user token', async () => {
       let request: RestRequest | null = null;
       TestingRestApiServer.setupPost(`${apiUrl}/schedules/current`, undefined, {
-        captureRequest: req => request = req
+        captureRequest: (req) => (request = req),
       });
 
       store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
 
-      await waitFor(() => expect(request?.headers?.get('Authorization')).toEqual(`Bearer ${user.accessToken}`));
+      await waitFor(() =>
+        expect(request?.headers?.get('Authorization')).toEqual(
+          `Bearer ${user.accessToken}`
+        )
+      );
     });
 
     test('when uploading schedule then notifies requests to load schedule once upload is successful', async () => {
@@ -99,7 +137,11 @@ describe('Current Schedule Saga', () => {
 
       store.dispatch(CurrentScheduleActions.upload.request(new FormData()));
 
-      await waitFor(() => expect(store.getActions()).toContainEqual(CurrentScheduleActions.load.request()));
+      await waitFor(() =>
+        expect(store.getActions()).toContainEqual(
+          CurrentScheduleActions.load.request()
+        )
+      );
     });
   });
 });

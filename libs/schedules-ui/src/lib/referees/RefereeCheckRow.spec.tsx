@@ -1,7 +1,7 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { RefereeChecksTable } from './RefereeChecksTable';
 import { render, screen, within } from '@testing-library/react';
-import { Gender, RefereeType } from '@soccer-utilities/core';
+import { Gender, RefereeType } from '@soccer-utilities/models';
 import userEvent from '@testing-library/user-event';
 
 describe('RefereeCheckRow', () => {
@@ -10,7 +10,7 @@ describe('RefereeCheckRow', () => {
       date: '2020-03-26',
       time: '12:34 PM',
       name: 'Bill',
-      amount: 35
+      amount: 35,
     });
 
     render(<RefereeChecksTable checks={[check]} />);
@@ -29,13 +29,15 @@ describe('RefereeCheckRow', () => {
       name: 'Bill',
       amount: 35,
       type: RefereeType.Center,
-      ageGroup: ModelFactory.createAgeGroup({ age: 14, gender: Gender.Girls })
+      ageGroup: ModelFactory.createAgeGroup({ age: 14, gender: Gender.Girls }),
     });
 
     render(<RefereeChecksTable checks={[check]} />);
 
     const row = screen.getByLabelText('referee check');
-    expect(within(row).getByLabelText('memo')).toHaveTextContent('U14 Girls 03/26 12:34 PM Center');
+    expect(within(row).getByLabelText('memo')).toHaveTextContent(
+      'U14 Girls 03/26 12:34 PM Center'
+    );
   });
 
   test('when check copied then notifies of copy', () => {

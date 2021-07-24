@@ -1,9 +1,10 @@
-import { convertToColor, NotificationType } from './notification-model';
+import { convertToColor } from './notification-model';
+import { NotificationType } from '@soccer-utilities/models';
 
 describe('NotificationType', () => {
   test('when undefined then returns info', () => {
     expect(convertToColor()).toEqual('info');
-  })
+  });
 
   test('when Success converted to severity then returns success', () => {
     expect(convertToColor(NotificationType.Success)).toEqual('success');
@@ -11,9 +12,9 @@ describe('NotificationType', () => {
 
   test('when Default then returns info', () => {
     expect(convertToColor(NotificationType.Default)).toEqual('info');
-  })
+  });
 
   test('when Error then returns error', () => {
     expect(convertToColor(NotificationType.Error)).toEqual('error');
-  })
+  });
 });

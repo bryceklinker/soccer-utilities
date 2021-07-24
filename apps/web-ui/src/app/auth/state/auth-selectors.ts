@@ -11,11 +11,13 @@ function selectAuthState(state: RootState): AuthState {
 
 export const selectApplicationUser = createSelector(
   selectAuthState,
-  s => s.user
+  (s) => s.user
 );
 
-export const selectIsApplicationUserLoading = selectIsLoading(AuthActions.loadUser.request);
+export const selectIsApplicationUserLoading = selectIsLoading(
+  AuthActions.loadUser.request
+);
 export const selectUserAccessToken = createSelector(
   selectApplicationUser,
-  state => state?.accessToken
-)
+  (state) => state?.accessToken
+);

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { GameScheduleModel } from '@soccer-utilities/core';
+import { GameScheduleModel } from '@soccer-utilities/models';
 import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
 import { GamesTable } from './GamesTable';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -10,8 +10,12 @@ export type GameScheduleProps = {
   schedule?: GameScheduleModel | null;
   onRefresh?: () => void;
   onUpload?: () => void;
-}
-export const GameSchedule: FunctionComponent<GameScheduleProps> = ({ schedule, onRefresh, onUpload }) => {
+};
+export const GameSchedule: FunctionComponent<GameScheduleProps> = ({
+  schedule,
+  onRefresh,
+  onUpload,
+}) => {
   return (
     <ColumnFlexBox>
       <Toolbar>

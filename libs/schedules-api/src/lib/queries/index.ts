@@ -6,5 +6,5 @@ export * from './get-referee-checks-query-handler';
 
 export const QUERY_HANDLERS = [
   GetCurrentScheduleQueryHandler,
-  GetRefereeChecksQueryHandler
-]
+  GetRefereeChecksQueryHandler,
+];

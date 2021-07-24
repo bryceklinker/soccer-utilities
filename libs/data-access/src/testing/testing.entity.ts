@@ -1,4 +1,4 @@
-import { Entity } from '@soccer-utilities/data-access';
+import { Entity } from '../lib';
 
 export class TestingEntity implements Entity {
   static type = 'testing';

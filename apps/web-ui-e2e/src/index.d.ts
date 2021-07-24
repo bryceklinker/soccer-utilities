@@ -12,12 +12,15 @@ declare namespace Cypress {
     method?: string;
     headers?: {
       [key: string]: string;
-    }
+    };
   }
 
-  interface Chainable<Subject> {
+  interface Chainable {
     login(username?: string, password?: string): void;
-    getToken(username?: string, password?: string): Chainable<Cypress.Response<TokenResponse>>;
+    getToken(
+      username?: string,
+      password?: string
+    ): Chainable<Cypress.Response<TokenResponse>>;
     form_request(url: string, options: FormRequestOptions): Promise<void>;
   }
 }

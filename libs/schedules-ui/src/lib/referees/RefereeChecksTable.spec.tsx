@@ -10,7 +10,10 @@ describe('RefereeChecksTable', () => {
   });
 
   test('when rendered with checks then shows all checks', () => {
-    const checks = ModelFactory.createMany(ModelFactory.createClientRefereeCheckModel, 4);
+    const checks = ModelFactory.createMany(
+      ModelFactory.createClientRefereeCheckModel,
+      4
+    );
 
     render(<RefereeChecksTable checks={checks} />);
 

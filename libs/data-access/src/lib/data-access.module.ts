@@ -1,5 +1,9 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { CosmosOptions, DATA_ACCESS_OPTIONS_TOKEN, DataAccessOptions } from './data-access-options';
+import {
+  CosmosOptions,
+  DATA_ACCESS_OPTIONS_TOKEN,
+  DataAccessOptions,
+} from './data-access-options';
 import { CosmosClient } from '@azure/cosmos';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RepositoryFactory } from './repository-factory';
@@ -9,9 +13,7 @@ export class DataAccessModule {
   static forCosmos(options: DataAccessOptions): DynamicModule {
     return {
       module: DataAccessModule,
-      imports: [
-        ConfigModule
-      ],
+      imports: [ConfigModule],
       providers: [
         RepositoryFactory,
         { provide: DATA_ACCESS_OPTIONS_TOKEN, useValue: options },
@@ -21,12 +23,10 @@ export class DataAccessModule {
             const { endpoint, key } = config.get<CosmosOptions>('cosmos');
             return new CosmosClient({ endpoint, key });
           },
-          inject: [ConfigService]
-        }
+          inject: [ConfigService],
+        },
       ],
-      exports: [
-        RepositoryFactory
-      ]
+      exports: [RepositoryFactory],
     };
   }
 }

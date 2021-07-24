@@ -5,8 +5,7 @@ const CURRENT_TIME = Date.UTC(2021, 6, 3, 14, 12, 56, 123);
 
 describe('convertStreamToGameSchedule', () => {
   beforeEach(() => {
-    jest.useFakeTimers('modern')
-      .setSystemTime(CURRENT_TIME);
+    jest.useFakeTimers('modern').setSystemTime(CURRENT_TIME);
   });
 
   test('when stream is csv then returns games from csv', async () => {
@@ -18,7 +17,9 @@ describe('convertStreamToGameSchedule', () => {
   });
 
   test('when stream is csv then returns last updated as now', async () => {
-    const model = await convertStreamToGameSchedule(readSampleGameScheduleAsStream());
+    const model = await convertStreamToGameSchedule(
+      readSampleGameScheduleAsStream()
+    );
 
     expect(model.lastUpdated).toEqual('2021-07-03T14:12:56.123Z');
   });

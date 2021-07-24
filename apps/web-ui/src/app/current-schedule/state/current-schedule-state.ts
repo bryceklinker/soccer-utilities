@@ -1,4 +1,4 @@
-import { GameModel } from '@soccer-utilities/core';
+import { GameModel } from '@soccer-utilities/models';
 
 export interface CurrentScheduleState {
   games: Array<GameModel>;

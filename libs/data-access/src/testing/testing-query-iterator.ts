@@ -3,11 +3,9 @@ import { NotImplementedException } from '@nestjs/common';
 import { TestingFeedResponse } from './testing-feed-response';
 
 export class TestingQueryIterator<T> extends QueryIterator<T> {
-
   constructor(private readonly items: Array<T>, query: string | SqlQuerySpec) {
     super(null, query, null, null);
   }
-
 
   fetchAll(): Promise<FeedResponse<T>> {
     return Promise.resolve(new TestingFeedResponse(this.items));
@@ -25,7 +23,5 @@ export class TestingQueryIterator<T> extends QueryIterator<T> {
     throw new NotImplementedException();
   }
 
-  reset() {
-
-  }
+  reset() {}
 }

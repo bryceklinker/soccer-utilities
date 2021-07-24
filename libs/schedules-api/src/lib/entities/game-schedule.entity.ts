@@ -1,13 +1,15 @@
-import {
-  DateRangeModel,
-  GameScheduleModel, isDateInRange,
-  RefereeCheckModel,
-  RefereePayScaleModel
-} from '@soccer-utilities/core';
+import { isDateInRange } from '@soccer-utilities/core';
 import { GameEntity } from './game.entity';
 import { RefereeChecksGenerator } from './referee-checks-generator';
+import { Entity } from '@soccer-utilities/data-access';
+import {
+  DateRangeModel,
+  GameScheduleModel,
+  RefereeCheckModel,
+  RefereePayScaleModel,
+} from '@soccer-utilities/models';
 
-export class GameScheduleEntity implements GameScheduleModel {
+export class GameScheduleEntity implements GameScheduleModel, Entity {
   static type = 'game-schedule';
   id?: string;
   readonly type: string = GameScheduleEntity.type;
@@ -33,7 +35,7 @@ export class GameScheduleEntity implements GameScheduleModel {
   toModel(): GameScheduleModel {
     return {
       ...this,
-      games: this.games.map(g => g.toModel())
+      games: this.games.map((g) => g.toModel()),
     };
   }
 
@@ -42,9 +44,14 @@ export class GameScheduleEntity implements GameScheduleModel {
     this.lastUpdated = new Date().toISOString();
   }
 
-  getRefereeChecks(refereePayScales: Array<RefereePayScaleModel>, range?: DateRangeModel): Array<RefereeCheckModel> {
-
-    return RefereeChecksGenerator.generateFromGames(this.getGamesInRange(range), refereePayScales);
+  getRefereeChecks(
+    refereePayScales: Array<RefereePayScaleModel>,
+    range?: DateRangeModel
+  ): Array<RefereeCheckModel> {
+    return RefereeChecksGenerator.generateFromGames(
+      this.getGamesInRange(range),
+      refereePayScales
+    );
   }
 
   getGamesInRange(range?: DateRangeModel): Array<GameEntity> {
@@ -52,7 +59,6 @@ export class GameScheduleEntity implements GameScheduleModel {
       return this.games;
     }
 
-    return this.games.filter(g => isDateInRange(g.date, range));
+    return this.games.filter((g) => isDateInRange(g.date, range));
   }
 }
-

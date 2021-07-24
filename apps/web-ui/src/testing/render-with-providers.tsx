@@ -1,32 +1,31 @@
 import { Store } from 'redux';
 import { render } from '@testing-library/react';
 import { FunctionComponent } from 'react';
-import { Router, MemoryRouter, MemoryRouterProps, RouterProps } from 'react-router-dom';
+import {
+  Router,
+  MemoryRouter,
+  MemoryRouterProps,
+  RouterProps,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createTestingStoreFromActions } from './create-testing-store-from-state';
 import { RootState } from '../app/state/root-state';
 
-export type RenderWithProvidersOptions =
-  Partial<MemoryRouterProps>
-  & Partial<RouterProps>
-  & {
-  store?: Store<RootState>;
-  currentRoute?: string;
-}
+export type RenderWithProvidersOptions = Partial<MemoryRouterProps> &
+  Partial<RouterProps> & {
+    store?: Store<RootState>;
+    currentRoute?: string;
+  };
 
 const TestingRouter: FunctionComponent<RenderWithProvidersOptions> = ({
-                                                                        currentRoute,
-                                                                        initialEntries,
-                                                                        initialIndex,
-                                                                        history,
-                                                                        children
-                                                                      }) => {
+  currentRoute,
+  initialEntries,
+  initialIndex,
+  history,
+  children,
+}) => {
   if (history) {
-    return (
-      <Router history={history}>
-        {children}
-      </Router>
-    );
+    return <Router history={history}>{children}</Router>;
   }
 
   let entries = ['/'];
@@ -42,13 +41,14 @@ const TestingRouter: FunctionComponent<RenderWithProvidersOptions> = ({
   );
 };
 
-export function renderWithProviders(component: JSX.Element, options: RenderWithProvidersOptions = {}) {
+export function renderWithProviders(
+  component: JSX.Element,
+  options: RenderWithProvidersOptions = {}
+) {
   const store = options.store || createTestingStoreFromActions();
   return render(
     <Provider store={store}>
-      <TestingRouter {...options}>
-        {component}
-      </TestingRouter>
+      <TestingRouter {...options}>{component}</TestingRouter>
     </Provider>
   );
 }

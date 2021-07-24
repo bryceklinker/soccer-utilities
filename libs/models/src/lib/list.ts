@@ -1,9 +1,9 @@
-import {ListResult} from './models';
+import { ListResult } from './models';
 
 function fromArray<T>(array: Array<T>): ListResult<T> {
   return {
     items: array,
-    count: array.length
+    count: array.length,
   };
 }
 
@@ -13,5 +13,5 @@ function fromItems<T>(...items: Array<T>): ListResult<T> {
 
 export const List = {
   fromItems,
-  fromArray
-}
+  fromArray,
+};

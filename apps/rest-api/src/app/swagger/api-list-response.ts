@@ -12,12 +12,12 @@ export const ApiListResponse = <TModel extends Type>(model: TModel) => {
             properties: {
               items: {
                 type: 'array',
-                items: { $ref: getSchemaPath(model) }
-              }
-            }
-          }
-        ]
-      }
+                items: { $ref: getSchemaPath(model) },
+              },
+            },
+          },
+        ],
+      },
     })
   );
 };

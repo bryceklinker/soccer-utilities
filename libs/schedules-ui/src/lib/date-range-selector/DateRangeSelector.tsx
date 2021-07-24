@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import { DateSelector, RowFlexBox } from '@soccer-utilities/common-ui';
-import { DateRangeModel } from '@soccer-utilities/core';
+import { DateRangeModel } from '@soccer-utilities/models';
 import { IconButton, makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -10,12 +10,16 @@ export interface DateRangeSelectorProps {
   onSearch?: (range?: DateRangeModel) => void;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   spacer: {
-    marginRight: theme.spacing(2)
-  }
+    marginRight: theme.spacing(2),
+  },
 }));
-export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({ start, end, onSearch }) => {
+export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({
+  start,
+  end,
+  onSearch,
+}) => {
   const [startDate, setStartDate] = useState(start);
   const [endDate, setEndDate] = useState(end);
 
@@ -34,20 +38,27 @@ export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({ s
   const disableSearch = (startDate && !endDate) || (endDate && !startDate);
   return (
     <RowFlexBox alignItems={'center'} justifyContent={'end'}>
-      <DateSelector value={startDate || null}
-                    onChange={setStartDate}
-                    placeholder={'Select Start Date'}
-                    aria-label={'start date'} />
+      <DateSelector
+        value={startDate || null}
+        onChange={setStartDate}
+        placeholder={'Select Start Date'}
+        aria-label={'start date'}
+      />
       <div className={styles.spacer} />
-      <DateSelector value={endDate || null}
-                    onChange={setEndDate}
-                    placeholder={'Select End Date'}
-                    aria-label={'end date'} />
+      <DateSelector
+        value={endDate || null}
+        onChange={setEndDate}
+        placeholder={'Select End Date'}
+        aria-label={'end date'}
+      />
       <div className={styles.spacer} />
-      <IconButton aria-label={'search date range'} onClick={handleSearchDateRange} disabled={!!disableSearch}>
+      <IconButton
+        aria-label={'search date range'}
+        onClick={handleSearchDateRange}
+        disabled={!!disableSearch}
+      >
         <SearchIcon />
       </IconButton>
     </RowFlexBox>
   );
 };
-

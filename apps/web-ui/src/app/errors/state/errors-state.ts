@@ -1,3 +1,3 @@
 export interface ErrorsState {
-  [key: string]: Array<any>;
+  [key: string]: Array<unknown>;
 }

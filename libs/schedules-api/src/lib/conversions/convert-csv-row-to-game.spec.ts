@@ -1,5 +1,5 @@
 import { convertCsvRowToGame } from './convert-csv-row-to-game';
-import { Gender, RefereeType } from '@soccer-utilities/core';
+import { Gender, RefereeType } from '@soccer-utilities/models';
 
 describe('convertCsvRowToGame', () => {
   test('when row is converted to game then game is populated from row', () => {
@@ -12,7 +12,7 @@ describe('convertCsvRowToGame', () => {
       Division: 'U8 Girls',
       Center: 'Bill',
       AR1: 'John',
-      AR2: 'Jim'
+      AR2: 'Jim',
     };
 
     const game = convertCsvRowToGame(row);
@@ -28,8 +28,8 @@ describe('convertCsvRowToGame', () => {
       referees: [
         { type: RefereeType.Center, name: 'Bill' },
         { type: RefereeType.Assistant, name: 'John' },
-        { type: RefereeType.Assistant, name: 'Jim' }
-      ]
+        { type: RefereeType.Assistant, name: 'Jim' },
+      ],
     });
   });
 
@@ -43,7 +43,7 @@ describe('convertCsvRowToGame', () => {
       Division: '',
       Center: '',
       AR1: '',
-      AR2: ''
+      AR2: '',
     };
 
     const game = convertCsvRowToGame(row);

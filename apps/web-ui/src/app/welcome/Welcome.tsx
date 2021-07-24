@@ -3,8 +3,13 @@ import { Box, Typography } from '@material-ui/core';
 
 export const WelcomePage: FunctionComponent = () => {
   return (
-    <Box flex={1} display={'flex'} flexDirection={'column'} aria-label={'welcome message'}>
+    <Box
+      flex={1}
+      display={'flex'}
+      flexDirection={'column'}
+      aria-label={'welcome message'}
+    >
       <Typography variant={'h3'}>Welcome to Soccer Utilities</Typography>
     </Box>
-  )
-}
+  );
+};

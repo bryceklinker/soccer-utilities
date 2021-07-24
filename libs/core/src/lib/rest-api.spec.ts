@@ -24,7 +24,7 @@ describe('RestApi', () => {
   test('when rest api used to post then sends body to api', async () => {
     let request: RestRequest | null = null;
     TestingServer.setupPost('https://bill.com/my/post', undefined, {
-      captureRequest: req => request = req
+      captureRequest: (req) => (request = req),
     });
 
     const restApi = createRestApi('https://bill.com');
@@ -36,7 +36,7 @@ describe('RestApi', () => {
   test('when rest api used to post with access token then uses access token in authorization', async () => {
     let request: RestRequest | null = null;
     TestingServer.setupPost('https://sue.com/my/post', undefined, {
-      captureRequest: req => request = req
+      captureRequest: (req) => (request = req),
     });
 
     const restApi = createRestApi('https://sue.com', 'my-token');
@@ -48,7 +48,7 @@ describe('RestApi', () => {
   test('when rest api used to get with access token then uses access token in authorization', async () => {
     let request: RestRequest | null = null;
     TestingServer.setupGet('https://sue.com/my/resource', undefined, {
-      captureRequest: req => request = req
+      captureRequest: (req) => (request = req),
     });
 
     const restApi = createRestApi('https://sue.com', 'other-token');

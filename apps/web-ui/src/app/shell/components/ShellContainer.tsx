@@ -7,12 +7,24 @@ import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
 import { selectApplicationUser } from '../../auth/state/auth-selectors';
 import { AuthActions } from '../../auth/state/auth-actions';
 
-const isCypressTest = !!(window as any).Cypress;
+declare global {
+  interface Window {
+    Cypress?: unknown;
+  }
+}
+
+const isCypressTest = !!window.Cypress;
 
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
   const applicationUser = useRootSelector(selectApplicationUser);
-  const { isLoading, handleRedirectCallback, user, loginWithRedirect, getAccessTokenSilently } = useAuth0();
+  const {
+    isLoading,
+    handleRedirectCallback,
+    user,
+    loginWithRedirect,
+    getAccessTokenSilently,
+  } = useAuth0();
 
   useEffect(() => {
     if (isLoading || user) {
@@ -21,9 +33,9 @@ export const ShellContainer: FunctionComponent = () => {
 
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has('code')) {
-      handleRedirectCallback().catch(err => console.error(err));
+      handleRedirectCallback().catch((err) => console.error(err));
     } else if (!isCypressTest) {
-      loginWithRedirect().catch(err => console.error(err));
+      loginWithRedirect().catch((err) => console.error(err));
     }
   }, [isLoading, handleRedirectCallback, user, loginWithRedirect]);
 
@@ -41,19 +53,20 @@ export const ShellContainer: FunctionComponent = () => {
       }
 
       const storedUser = JSON.parse(cypressUser);
-      dispatch(AuthActions.loadUser.success({
-        ...storedUser.body.decodedToken.user,
-        accessToken: storedUser.body.access_token
-      }));
+      dispatch(
+        AuthActions.loadUser.success({
+          ...storedUser.body.decodedToken.user,
+          accessToken: storedUser.body.access_token,
+        })
+      );
     }
 
     if (isCypressTest) {
       syncCypressUserWithState();
     } else {
-      syncUserWithState().catch(err => console.error(err));
+      syncUserWithState().catch((err) => console.error(err));
     }
-
-  }, [user, dispatch]);
+  }, [user, dispatch, getAccessTokenSilently]);
 
   if (!applicationUser) {
     return (
@@ -64,5 +77,4 @@ export const ShellContainer: FunctionComponent = () => {
   }
 
   return <ShellView />;
-}
-;
+};

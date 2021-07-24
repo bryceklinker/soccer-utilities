@@ -3,9 +3,9 @@ import { Action } from 'redux';
 import { call, put, select } from 'redux-saga/effects';
 import { selectSettingsApiUrl } from '../settings/state/settings-selectors';
 import { selectUserAccessToken } from '../auth/state/auth-selectors';
-import { WebLogger } from '../logging/logger';
+import { WebLogger } from '../logging/web-logger';
 
-export function* restApiEffect<TSuccess, TFailed = any>(
+export function* restApiEffect<TSuccess, TFailed = unknown>(
   http: (restApi: RestApi) => Promise<TSuccess>,
   success: (input: TSuccess) => Action | Action[],
   failed: (error: TFailed) => Action | Action[]
@@ -20,14 +20,15 @@ export function* restApiEffect<TSuccess, TFailed = any>(
 
       yield dispatchActions(success(result));
     } catch (error) {
-      WebLogger.error('Rest api failed', error, {apiUrl});
+      WebLogger.error('Rest api failed', error, { apiUrl });
       yield dispatchActions(failed(error));
     }
   } else {
-    WebLogger.warn('Rest api effect executed without api url', {apiUrl});
+    WebLogger.warn('Rest api effect executed without api url', {
+      apiUrl: apiUrl || '',
+    });
   }
 }
-
 
 function* dispatchActions(actions: Action | Action[]) {
   const actionsToPut = Array.isArray(actions) ? actions : [actions];

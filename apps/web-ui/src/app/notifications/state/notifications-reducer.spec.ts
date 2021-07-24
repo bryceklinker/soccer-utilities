@@ -7,7 +7,8 @@ describe('notificationsReducer', () => {
   test('when notification published then notification is added to state', () => {
     const notification = ModelFactory.createNotificationModel();
 
-    const state = generateStateFromActions(notificationsReducer,
+    const state = generateStateFromActions(
+      notificationsReducer,
       NotificationsActions.publish(notification)
     );
 
@@ -17,12 +18,13 @@ describe('notificationsReducer', () => {
   test('when notification removed then notification is removed from state', () => {
     const notification = ModelFactory.createNotificationModel();
 
-    const state = generateStateFromActions(notificationsReducer,
+    const state = generateStateFromActions(
+      notificationsReducer,
       NotificationsActions.publish(notification),
       NotificationsActions.remove(notification)
     );
 
     expect(state.ids).toHaveLength(0);
     expect(state.entities).toEqual({});
-  })
+  });
 });

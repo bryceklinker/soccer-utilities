@@ -6,19 +6,27 @@ describe('UploadScheduleDialog', () => {
   test('when open then shows dialog', async () => {
     render(<UploadScheduleDialog open={true} />);
 
-    expect(await screen.findByLabelText('upload schedule dialog')).toBeInTheDocument();
+    expect(
+      await screen.findByLabelText('upload schedule dialog')
+    ).toBeInTheDocument();
   });
 
   test('when dialog closed then dialog is hidden', async () => {
     render(<UploadScheduleDialog open={false} />);
 
-    await waitFor(() => expect(screen.queryByLabelText('upload schedule dialog')).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(
+        screen.queryByLabelText('upload schedule dialog')
+      ).not.toBeInTheDocument()
+    );
   });
 
   test('when file missing then upload is disabled', async () => {
     render(<UploadScheduleDialog open={true} />);
 
-    expect(await screen.findByLabelText('upload schedule button')).toBeDisabled();
+    expect(
+      await screen.findByLabelText('upload schedule button')
+    ).toBeDisabled();
   });
 
   test('when file uploaded then notifies file upload', async () => {
@@ -27,7 +35,9 @@ describe('UploadScheduleDialog', () => {
     render(<UploadScheduleDialog open={true} onUpload={onUpload} />);
 
     userEvent.upload(await screen.findByLabelText('schedule file'), file);
-    await waitFor(() => expect(screen.getByLabelText('upload schedule button')).toBeEnabled());
+    await waitFor(() =>
+      expect(screen.getByLabelText('upload schedule button')).toBeEnabled()
+    );
 
     userEvent.click(await screen.findByLabelText('upload schedule button'));
 
@@ -43,5 +53,5 @@ describe('UploadScheduleDialog', () => {
     userEvent.click(await screen.findByLabelText('cancel upload button'));
 
     await waitFor(() => expect(onCancel).toHaveBeenCalled());
-  })
+  });
 });

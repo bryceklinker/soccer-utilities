@@ -10,7 +10,7 @@ import axios from 'axios';
 import { SettingsModel } from './app/settings/state/settings-model';
 import { configureRootStore } from './app/state/configure-root-store';
 import { SettingsActions } from './app/settings/state/settings-actions';
-import { WebLogger } from './app/logging/logger';
+import { WebLogger } from './app/logging/web-logger';
 
 const history = createBrowserHistory({ basename: '' });
 
@@ -28,11 +28,13 @@ function renderWithSettings(settings: SettingsModel) {
     <Provider store={store}>
       <SoccerThemeProvider>
         <Router history={history}>
-          <Auth0Provider domain={auth.domain}
-                         clientId={auth.clientId}
-                         audience={auth.audience}
-                         scope={'openid profile'}
-                         redirectUri={window.location.origin}>
+          <Auth0Provider
+            domain={auth.domain}
+            clientId={auth.clientId}
+            audience={auth.audience}
+            scope={'openid profile'}
+            redirectUri={window.location.origin}
+          >
             <ShellContainer />
           </Auth0Provider>
         </Router>
@@ -44,8 +46,6 @@ function renderWithSettings(settings: SettingsModel) {
 
 loadSettings()
   .then(renderWithSettings)
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
   });
-
-

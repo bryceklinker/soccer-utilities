@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import { DATA_ACCESS_OPTIONS_TOKEN, RepositoryFactory } from '../lib';
 import { TestingRepositoryFactory } from './testing-repository-factory';
 import { CosmosClient } from '@azure/cosmos';
@@ -9,20 +9,26 @@ import { TestingModuleBuilder } from '@nestjs/testing';
   imports: [
     ConfigModule.forRoot({
       load: [
-        () => ({cosmos: {endpoint: 'https://accountname.documents.azure.com:443/', key: ''}})
-      ]
+        () => ({
+          cosmos: {
+            endpoint: 'https://accountname.documents.azure.com:443/',
+            key: '',
+          },
+        }),
+      ],
     }),
   ],
   providers: [
-    {provide: DATA_ACCESS_OPTIONS_TOKEN, useValue: {}},
-    {provide: CosmosClient, useValue: null}
-  ]
+    { provide: DATA_ACCESS_OPTIONS_TOKEN, useValue: {} },
+    { provide: CosmosClient, useValue: null },
+  ],
 })
-export class TestingDataAccessModule {
+export class TestingDataAccessModule {}
 
-}
-
-export function useTestingDataAccess(builder: TestingModuleBuilder): TestingModuleBuilder {
+export function useTestingDataAccess(
+  builder: TestingModuleBuilder
+): TestingModuleBuilder {
   return builder
-    .overrideProvider(RepositoryFactory).useClass(TestingRepositoryFactory);
+    .overrideProvider(RepositoryFactory)
+    .useClass(TestingRepositoryFactory);
 }

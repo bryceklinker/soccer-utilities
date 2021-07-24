@@ -1,9 +1,6 @@
-import { RefereeModel, RefereeType } from '@soccer-utilities/core';
+import { RefereeModel, RefereeType } from '@soccer-utilities/models';
 
-const MISSING_REFEREE_MARKERS = [
-  'X',
-  'x'
-]
+const MISSING_REFEREE_MARKERS = ['X', 'x'];
 
 function getRefereeFromValue(value: string): string | null {
   if (MISSING_REFEREE_MARKERS.includes(value)) {
@@ -13,7 +10,9 @@ function getRefereeFromValue(value: string): string | null {
   return value;
 }
 
-export function convertCsvRowToReferees(row: any): Array<RefereeModel> {
+export function convertCsvRowToReferees(
+  row: Record<string, string>
+): Array<RefereeModel> {
   const center = getRefereeFromValue(row['Center']);
   const ar1 = getRefereeFromValue(row['AR1']);
   const ar2 = getRefereeFromValue(row['AR2']);
@@ -21,6 +20,6 @@ export function convertCsvRowToReferees(row: any): Array<RefereeModel> {
   return [
     center ? { name: center, type: RefereeType.Center } : null,
     ar1 ? { name: ar1, type: RefereeType.Assistant } : null,
-    ar2 ? { name: ar2, type: RefereeType.Assistant } : null
-  ].filter(r => r);
+    ar2 ? { name: ar2, type: RefereeType.Assistant } : null,
+  ].filter((r) => r);
 }

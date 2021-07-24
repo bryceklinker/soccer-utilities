@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { RefereeChecks } from './RefereeChecks';
-import { RefereeChecksTable } from '@soccer-utilities/schedules-ui';
+import { RefereeChecksTable } from './RefereeChecksTable';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import userEvent from '@testing-library/user-event';
 
@@ -12,7 +12,10 @@ describe('RefereeChecks', () => {
   });
 
   test('when checks rendered then shows checks', () => {
-    const checks = ModelFactory.createMany(ModelFactory.createClientRefereeCheckModel, 5);
+    const checks = ModelFactory.createMany(
+      ModelFactory.createClientRefereeCheckModel,
+      5
+    );
     render(<RefereeChecksTable checks={checks} />);
 
     expect(screen.getAllByLabelText('referee check')).toHaveLength(5);
@@ -24,8 +27,8 @@ describe('RefereeChecks', () => {
 
     render(<RefereeChecks checks={[check]} onCopyCheck={onCopy} />);
 
-    userEvent.click(screen.getByRole('button', {name: 'copy check'}));
+    userEvent.click(screen.getByRole('button', { name: 'copy check' }));
 
     expect(onCopy).toHaveBeenCalledWith(check);
-  })
+  });
 });

@@ -1,80 +1,80 @@
-  on: [push]
-  jobs:
-    verify:
-      name: Verify
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/checkout@v2
-          name: Checkout
+on: [push]
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
 
-        - uses: actions/setup-node@v2
-          name: Setup Node
-          with:
-            node-version: '14'
+      - uses: actions/setup-node@v2
+        name: Setup Node
+        with:
+          node-version: '14'
 
-        - run: ./scripts/build.sh
-          name: Run Build Script
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GITHUB_USER_NAME: ${{ github.actor }}
+      - run: ./scripts/build.sh
+        name: Run Build Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER_NAME: ${{ github.actor }}
 
-        - uses: actions/upload-artifact@v2
-          with:
-            name: rest-api
-            path: |
-              dist/apps/rest-api.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: rest-api
+          path: |
+            dist/apps/rest-api.zip
 
-        - uses: actions/upload-artifact@v2
-          with:
-            name: web-ui
-            path: |
-              dist/apps/web-ui/**/*.*
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-ui
+          path: |
+            dist/apps/web-ui/**/*.*
 
-    deploy:
-      name: Deploy
-      runs-on: ubuntu-20.04
-      needs: [verify]
-      environment: prod
-      steps:
-        - uses: actions/checkout@v2
-          name: Checkout
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    needs: [verify]
+    environment: prod
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
 
-        - uses: actions/setup-node@v2
-          name: Setup Node
-          with:
-            node-version: '14'
+      - uses: actions/setup-node@v2
+        name: Setup Node
+        with:
+          node-version: '14'
 
-        - uses: actions/download-artifact@v2
-          id: rest-api
-          with:
-            name: rest-api
+      - uses: actions/download-artifact@v2
+        id: rest-api
+        with:
+          name: rest-api
 
-        - uses: actions/download-artifact@v2
-          with:
-            name: web-ui
-            path: dist/apps/web-ui
+      - uses: actions/download-artifact@v2
+        with:
+          name: web-ui
+          path: dist/apps/web-ui
 
-        - run: ./scripts/deploy.sh
-          name: Deploy Application
-          env:
-            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-            ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-            AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-            AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-            AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-            CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.CYPRESS_AUTH0_CLIENT_ID }}
-            CYPRESS_AUTH0_CLIENT_SECRET: ${{ secrets.CYPRESS_AUTH0_CLIENT_SECRET }}
-            CYPRESS_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-            CYPRESS_AUTH0_USERNAME: ${{ secrets.CYPRESS_AUTH0_USERNAME }}
-            CYPRESS_AUTH0_PASSWORD: ${{ secrets.CYPRESS_AUTH0_PASSWORD }}
-            CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
+      - run: ./scripts/deploy.sh
+        name: Deploy Application
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.CYPRESS_AUTH0_CLIENT_ID }}
+          CYPRESS_AUTH0_CLIENT_SECRET: ${{ secrets.CYPRESS_AUTH0_CLIENT_SECRET }}
+          CYPRESS_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          CYPRESS_AUTH0_USERNAME: ${{ secrets.CYPRESS_AUTH0_USERNAME }}
+          CYPRESS_AUTH0_PASSWORD: ${{ secrets.CYPRESS_AUTH0_PASSWORD }}
+          CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
 
-        - uses: actions/upload-artifact@v2
-          if: failure()
-          with:
-            name: cypress
-            path: |
-              dist/cypress/apps/web-ui-e2e/screenshots/**/*.*
-              dist/cypress/apps/web-ui-e2e/videos/**/*.*
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress
+          path: |
+            dist/cypress/apps/web-ui-e2e/screenshots/**/*.*
+            dist/cypress/apps/web-ui-e2e/videos/**/*.*

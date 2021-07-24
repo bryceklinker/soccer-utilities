@@ -1,17 +1,5 @@
 import { Color } from '@material-ui/lab';
-
-export enum NotificationType {
-  Error = 'Error',
-  Success = 'Success',
-  Default = 'Default'
-}
-
-export interface NotificationModel {
-  id: string;
-  message: string;
-  duration?: number;
-  type?: NotificationType
-}
+import { NotificationType } from '@soccer-utilities/models';
 
 export function convertToColor(type?: NotificationType): Color {
   switch (type) {

@@ -1,4 +1,4 @@
-import { HttpStatusCodes } from '@soccer-utilities/core';
+import { HttpStatusCodes } from './http-status-codes';
 import { RestRequest } from 'msw';
 
 export interface TestingRequestOptions {

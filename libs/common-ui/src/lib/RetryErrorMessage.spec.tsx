@@ -27,5 +27,5 @@ describe('RetryErrorMessage', () => {
     userEvent.click(screen.getByLabelText('retry button'));
 
     expect(onRetry).toHaveBeenCalled();
-  })
+  });
 });

@@ -3,7 +3,6 @@ import { Api } from '../support/api.commands';
 import { format } from 'date-fns';
 
 describe('Referee Checks', () => {
-
   it('should show referee checks', () => {
     Api.uploadSchedule();
 
@@ -23,7 +22,13 @@ describe('Referee Checks', () => {
     RefereeChecksPage.search();
 
     const currentYearAndMonth = format(new Date(), 'yyyy-MM');
-    RefereeChecksPage.findStartDate().should('have.value', `${currentYearAndMonth}-22`);
-    RefereeChecksPage.findEndDate().should('have.value', `${currentYearAndMonth}-23`);
+    RefereeChecksPage.findStartDate().should(
+      'have.value',
+      `${currentYearAndMonth}-22`
+    );
+    RefereeChecksPage.findEndDate().should(
+      'have.value',
+      `${currentYearAndMonth}-23`
+    );
   });
 });

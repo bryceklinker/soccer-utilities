@@ -1,100 +1,97 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { format } from 'date-fns';
 import {
-  RefereeModel,
-  DATE_FORMAT,
-  TIME_FORMAT,
-  DATE_TIME_FORMAT,
-  RefereeType,
-  AgeGroupModel,
-  Gender,
+  AgeGroupModel, DATE_FORMAT, DATE_TIME_FORMAT,
+  DateRangeModel,
   GameModel,
   GameScheduleModel,
-  RefereeCheckModel,
+  Gender,
   ListResult,
+  RefereeCheckModel,
+  RefereeModel,
   RefereePayScaleModel,
-  DateRangeModel
-} from '@soccer-utilities/core';
-import { format } from 'date-fns';
+  RefereeType, TIME_FORMAT
+} from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
   @ApiProperty()
-  name: string = '';
+  name = '';
 
-  @ApiProperty({enum: RefereeType})
+  @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
 }
 
-export class AgeGroupDto implements AgeGroupModel{
+export class AgeGroupDto implements AgeGroupModel {
   @ApiProperty()
-  age: number = 0;
-  @ApiProperty({enum: Gender})
+  age = 0;
+  @ApiProperty({ enum: Gender })
   gender: Gender = Gender.Unknown;
 }
 
-export class GameDto implements GameModel{
-  @ApiProperty({type: Date, format: DATE_FORMAT})
+export class GameDto implements GameModel {
+  @ApiProperty({ type: Date, format: DATE_FORMAT })
   date: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({format: TIME_FORMAT})
+  @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  homeTeam: string = '';
+  homeTeam = '';
   @ApiProperty()
-  awayTeam: string = '';
+  awayTeam = '';
   @ApiProperty()
-  field: string = '';
+  field = '';
   @ApiProperty()
-  division: string = '';
+  division = '';
 
   @ApiProperty()
   ageGroup: AgeGroupModel = new AgeGroupDto();
 
-  @ApiProperty({type: [RefereeDto]})
+  @ApiProperty({ type: [RefereeDto] })
   referees: Array<RefereeDto> = [];
 }
 
 export class GameScheduleDto implements GameScheduleModel {
   @ApiPropertyOptional()
   id?: string;
-  @ApiProperty({type: [GameDto]})
+  @ApiProperty({ type: [GameDto] })
   games: Array<GameDto> = [];
-  @ApiProperty({type: Date, format: DATE_TIME_FORMAT})
+  @ApiProperty({ type: Date, format: DATE_TIME_FORMAT })
   lastUpdated: string = format(new Date(), DATE_TIME_FORMAT);
 }
 
 export class RefereeCheckDto implements RefereeCheckModel {
-  @ApiProperty({type: Date, format: DATE_FORMAT})
+  @ApiProperty({ type: Date, format: DATE_FORMAT })
   date: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({format: TIME_FORMAT})
+  @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  name: string = '';
-  @ApiProperty({enum: RefereeType})
+  name = '';
+  @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
   @ApiProperty()
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount: number = 0;
+  amount = 0;
 }
 
 export class ListResultDto<T> implements ListResult<T> {
-  @ApiProperty({isArray: true})
+  @ApiProperty({ isArray: true })
   items: Array<T> = [];
   @ApiProperty()
-  count: number = 0;
+  count = 0;
 }
 
 export class RefereePayScaleDto implements RefereePayScaleModel {
-  @ApiProperty({enum: RefereeType})
+  @ApiProperty({ enum: RefereeType })
   refereeType: RefereeType = RefereeType.Center;
   @ApiProperty()
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount: number = 0;
+  amount = 0;
 }
 
 export class DateRangeDto implements DateRangeModel {
-  @ApiProperty({type: Date, format: DATE_FORMAT})
+  @ApiProperty({ type: Date, format: DATE_FORMAT })
   start: string = format(new Date(), DATE_FORMAT);
-  @ApiProperty({type: Date, format: DATE_FORMAT})
+  @ApiProperty({ type: Date, format: DATE_FORMAT })
   end: string = format(new Date(), DATE_FORMAT);
 }

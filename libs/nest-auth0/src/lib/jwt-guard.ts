@@ -10,9 +10,15 @@ export class JwtGuard extends AuthGuard('jwt') {
     super();
   }
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    const isAnonymousAllowed = this.reflector.get<boolean>(ALLOW_ANONYMOUS_META_KEY, context.getHandler())
-      || this.reflector.get<boolean>(ALLOW_ANONYMOUS_META_KEY, context.getClass());
+  canActivate(
+    context: ExecutionContext
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const isAnonymousAllowed =
+      this.reflector.get<boolean>(
+        ALLOW_ANONYMOUS_META_KEY,
+        context.getHandler()
+      ) ||
+      this.reflector.get<boolean>(ALLOW_ANONYMOUS_META_KEY, context.getClass());
 
     if (isAnonymousAllowed) {
       return true;

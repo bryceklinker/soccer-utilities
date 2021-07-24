@@ -1,4 +1,7 @@
-import { ApplicationInsights, SeverityLevel } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights,
+  SeverityLevel,
+} from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
 import { History } from 'history';
 import { SettingsModel } from '../settings/state/settings-model';
@@ -7,7 +10,7 @@ let appInsights: ApplicationInsights;
 let reactPlugin: ReactPlugin;
 
 interface Properties {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 function configure(history: History, settings: SettingsModel) {
@@ -17,21 +20,25 @@ function configure(history: History, settings: SettingsModel) {
       instrumentationKey: settings.logging.instrumentationKey,
       extensions: [reactPlugin],
       extensionConfig: {
-        [reactPlugin.identifier]: { history: history }
+        [reactPlugin.identifier]: { history: history },
       },
       autoTrackPageVisitTime: true,
       enableAutoRouteTracking: true,
       enableAjaxErrorStatusText: true,
       enableAjaxPerfTracking: true,
       enableUnhandledPromiseRejectionTracking: true,
-    }
+    },
   });
   appInsights.loadAppInsights();
 }
 
 function info(message: string, properties: Properties) {
   console.info(message, properties);
-  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Information, properties});
+  appInsights?.trackTrace({
+    message,
+    severityLevel: SeverityLevel.Information,
+    properties,
+  });
 }
 
 function error(message: string, error: Error, properties: Properties) {
@@ -41,15 +48,23 @@ function error(message: string, error: Error, properties: Properties) {
     severityLevel: SeverityLevel.Error,
     properties: {
       message,
-      ...properties
-    }
+      ...properties,
+    },
   });
-  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Error, properties});
+  appInsights?.trackTrace({
+    message,
+    severityLevel: SeverityLevel.Error,
+    properties,
+  });
 }
 
 function warn(message: string, properties: Properties) {
   console.warn(message, properties);
-  appInsights?.trackTrace({message, severityLevel: SeverityLevel.Warning, properties});
+  appInsights?.trackTrace({
+    message,
+    severityLevel: SeverityLevel.Warning,
+    properties,
+  });
 }
 
 function time(label: string) {
@@ -68,5 +83,5 @@ export const WebLogger = {
   error,
   warn,
   time,
-  timeEnd
+  timeEnd,
 };
