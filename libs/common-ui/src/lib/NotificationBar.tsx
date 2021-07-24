@@ -16,24 +16,25 @@ export const NotificationBar: FunctionComponent<NotificationBarProps> = ({
   notifications = [],
   onCloseNotification = EMPTY_OPERATION,
 }) => {
-  const snackBars = notifications?.map((n) => (
-    <Snackbar
-      key={n.id}
-      autoHideDuration={n.duration || DEFAULT_DURATION}
-      onClose={() => onCloseNotification(n)}
-      onClick={() => onCloseNotification(n)}
-      anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-      open={true}
-    >
-      <Alert
+  const snackBars =
+    notifications?.map((n) => (
+      <Snackbar
+        key={n.id}
+        autoHideDuration={n.duration || DEFAULT_DURATION}
         onClose={() => onCloseNotification(n)}
-        aria-label={'notification'}
-        severity={convertToColor(n.type)}
+        onClick={() => onCloseNotification(n)}
+        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+        open={true}
       >
-        {n.message}
-      </Alert>
-    </Snackbar>
-  ));
+        <Alert
+          onClose={() => onCloseNotification(n)}
+          aria-label={'notification'}
+          severity={convertToColor(n.type)}
+        >
+          {n.message}
+        </Alert>
+      </Snackbar>
+    )) || [];
 
-  return <>{snackBars}</>;
+  return <div>{snackBars}</div>;
 };

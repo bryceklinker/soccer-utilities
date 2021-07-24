@@ -17,7 +17,7 @@ import {
   DATE_FORMAT,
   DateRangeModel,
   ListResult,
-  RefereeCheckModel
+  RefereeCheckModel,
 } from '@soccer-utilities/models';
 
 @Controller('referees')

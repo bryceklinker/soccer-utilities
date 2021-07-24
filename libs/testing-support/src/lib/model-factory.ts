@@ -2,7 +2,8 @@ import { format } from 'date-fns';
 import * as faker from 'faker';
 import {
   AgeGroupModel,
-  ClientRefereeCheckModel, DATE_FORMAT,
+  ClientRefereeCheckModel,
+  DATE_FORMAT,
   GameModel,
   GameScheduleModel,
   Genders,
@@ -13,7 +14,8 @@ import {
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
-  RefereeTypes, TIME_FORMAT
+  RefereeTypes,
+  TIME_FORMAT,
 } from '@soccer-utilities/models';
 
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {

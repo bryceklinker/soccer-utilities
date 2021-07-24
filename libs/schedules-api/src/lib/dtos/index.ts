@@ -1,7 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { format } from 'date-fns';
 import {
-  AgeGroupModel, DATE_FORMAT, DATE_TIME_FORMAT,
+  AgeGroupModel,
+  DATE_FORMAT,
+  DATE_TIME_FORMAT,
   DateRangeModel,
   GameModel,
   GameScheduleModel,
@@ -10,7 +12,8 @@ import {
   RefereeCheckModel,
   RefereeModel,
   RefereePayScaleModel,
-  RefereeType, TIME_FORMAT
+  RefereeType,
+  TIME_FORMAT,
 } from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
