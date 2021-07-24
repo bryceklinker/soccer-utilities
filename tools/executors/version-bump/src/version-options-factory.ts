@@ -8,6 +8,7 @@ function create(
   return {
     commitAll: true,
     packageFiles: packageJsons,
+    noVerify: true,
     bumpFiles: packageJsons,
     releaseAs: options.bump,
     releaseCommitMessageFormat:

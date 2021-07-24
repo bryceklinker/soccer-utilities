@@ -10,6 +10,7 @@ describe('create-version-options', () => {
     expect(options.bumpFiles).toEqual(['one', 'two']);
     expect(options.commitAll).toEqual(true);
     expect(options.skip.changelog).toEqual(true);
+    expect(options.noVerify).toEqual(true);
     expect(options.releaseCommitMessageFormat).toMatch(
       'chore(release): Bumping version to {{currentTag}}'
     );
