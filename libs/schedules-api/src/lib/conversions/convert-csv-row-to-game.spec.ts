@@ -50,4 +50,35 @@ describe('convertCsvRowToGame', () => {
 
     expect(game).toEqual(null);
   });
+
+  test('when game has different column names then returns values from alternative columns', () => {
+    const row = {
+      Date: '4/10/2021',
+      Time: '9:00:00 AM',
+      Home: 'Bad News Bears',
+      Away: 'Honkies',
+      Field: 'Field 1',
+      Division: 'U8 Girls',
+      Center: 'Bill',
+      AR1: 'John',
+      AR2: 'Jim',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual({
+      date: '2021-04-10',
+      time: '09:00 AM',
+      homeTeam: 'Bad News Bears',
+      awayTeam: 'Honkies',
+      field: 'Field 1',
+      division: 'U8 Girls',
+      ageGroup: { gender: Gender.Girls, age: 8 },
+      referees: [
+        { type: RefereeType.Center, name: 'Bill' },
+        { type: RefereeType.Assistant, name: 'John' },
+        { type: RefereeType.Assistant, name: 'Jim' },
+      ],
+    });
+  })
 });

@@ -12,10 +12,10 @@ export function convertCsvRowToGame(
     return null;
   }
   return {
-    date: convertCsvDateToDateString(row['Game Date']),
-    time: convertCsvTimeToTimeString(row['Game Time']),
-    homeTeam: row['Home Team'],
-    awayTeam: row['Away Team'],
+    date: convertCsvDateToDateString(row['Game Date'] || row['Date']),
+    time: convertCsvTimeToTimeString(row['Game Time'] || row['Time']),
+    homeTeam: row['Home Team'] || row['Home'],
+    awayTeam: row['Away Team'] || row['Away'],
     field: row['Field'],
     division,
     ageGroup: convertDivisionToAgeGroup(division),
