@@ -11,5 +11,5 @@ describe('convert csv time to time string', () => {
 
   test('when time is unknown format then throws error', () => {
     expect(() => convertCsvTimeToTimeString('10 AM')).toThrowError();
-  })
+  });
 });

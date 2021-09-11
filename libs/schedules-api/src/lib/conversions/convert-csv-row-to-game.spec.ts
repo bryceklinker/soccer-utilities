@@ -80,5 +80,5 @@ describe('convertCsvRowToGame', () => {
         { type: RefereeType.Assistant, name: 'Jim' },
       ],
     });
-  })
+  });
 });
