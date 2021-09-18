@@ -16,9 +16,21 @@ describe('RefereeChecks', () => {
       ModelFactory.createClientRefereeCheckModel,
       5
     );
-    render(<RefereeChecksTable checks={checks} />);
+    render(<RefereeChecks checks={checks} />);
 
     expect(screen.getAllByLabelText('referee check')).toHaveLength(5);
+  });
+
+  test('when rendered then shows number of checks', () => {
+    const checks = ModelFactory.createMany(
+      ModelFactory.createClientRefereeCheckModel,
+      54
+    );
+    render(<RefereeChecks checks={checks} />);
+
+    expect(screen.getByLabelText('referee check count')).toHaveTextContent(
+      '54'
+    );
   });
 
   test('when check copied then notifies of copy', () => {

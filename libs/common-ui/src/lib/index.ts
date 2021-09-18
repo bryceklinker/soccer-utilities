@@ -1,5 +1,6 @@
 export * from './create-soccer-theme';
 export * from './soccer-theme-provider';
+export * from './Spacer';
 export * from './ColumnFlexBox';
 export * from './RowFlexBox';
 export * from './LoadingIndicator';
