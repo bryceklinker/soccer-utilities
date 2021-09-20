@@ -3,6 +3,8 @@ jobs:
   verify:
     name: Verify
     runs-on: ubuntu-20.04
+    env:
+      REST_API_OUTPUT_DIRECTORY: ${{ github.workspace }}/dist/apps/rest-api
     steps:
       - uses: actions/checkout@v2
         name: Checkout
@@ -12,8 +14,36 @@ jobs:
         with:
           node-version: '14'
 
-      - run: ./scripts/build.sh
-        name: Run Build Script
+      - run: npm ci
+        name: Install Dependencies
+
+      - run: npm test
+        name: Run Unit Tests
+
+      - run: |
+          git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/bryceklinker/soccer-utilities"
+          git config --global user.email "automation@github.com"
+          git config --global user.name "automation"
+          npm run bump:version -- --version=patch
+        name: Bump Version
+
+      - run: npm run build
+        name: Build Applications
+
+      - run: |
+          pushd "${REST_API_OUTPUT_DIRECTORY}" || exit 1
+          npm install --production
+          popd || exit 1
+        name: Install Function App Packages
+
+      - run: |
+          pushd "${REST_API_OUTPUT_DIRECTORY}" || exit 1
+          zip -qq -rm "${REST_API_ARCHIVE_PATH}" -- *
+          popd || exit 1
+        name: Create Function App Archive
+
+      - run: git push origin main --tags
+        name: Push Version to Repo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USER_NAME: ${{ github.actor }}
