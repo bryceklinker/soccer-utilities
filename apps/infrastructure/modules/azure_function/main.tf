@@ -8,7 +8,7 @@ data "azurerm_storage_account_sas" "function_app_sas" {
   connection_string = azurerm_storage_account.function_app_storage.primary_connection_string
   https_only = true
   start = "2021-06-20"
-  expiry = "2021-09-20"
+  expiry = "9999-12-31T23:59:59Z"
 
 
   resource_types {
