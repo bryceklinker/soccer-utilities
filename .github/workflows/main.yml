@@ -3,9 +3,6 @@ env:
   REST_API_OUTPUT_DIRECTORY: ${{ github.workspace }}/dist/apps/rest-api
   REST_API_ARCHIVE_PATH: ${{ github.workspace }}/dist/apps/rest-api.zip
   TERRAFORM_VERSION: 1.0.1
-  TARGET_ENVIRONMENT: prod
-  TARGET_ENVIRONMENT_DIRECTORY: ${{ github.workspace }}/apps/infrastructure/environments/prod
-  PLAN_PATH: ${{ github.workspace }}/apps/infrastructure/environments/prod.tfplan
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
@@ -83,6 +80,10 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [verify]
     environment: prod
+    env:
+      TARGET_ENVIRONMENT: prod
+      TARGET_ENVIRONMENT_DIRECTORY: ${{ github.workspace }}/apps/infrastructure/environments/prod
+      TARGET_ENVIRONMENT_PLAN_PATH: ${{ github.workspace }}/apps/infrastructure/environments/prod.tfplan
     steps:
       - uses: actions/checkout@v2
         name: Checkout
@@ -111,7 +112,7 @@ jobs:
 
       - run: |
           mkdir -p "${REST_API_OUTPUT_DIRECTORY}"
-          unzip -qq "${WORKING_DIRECTORY}/rest-api.zip" -d "${REST_API_OUTPUT_DIRECTORY}"
+          unzip -qq "${{ github.workspace }}/rest-api.zip" -d "${REST_API_OUTPUT_DIRECTORY}"
         name: Extract Rest Api
 
       - run: npm ci
@@ -125,13 +126,13 @@ jobs:
 
       - run: |
           pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
-          terraform plan -var="auth0_domain=${AUTH0_DOMAIN}" -out "${PLAN_PATH}"
+          terraform plan -var="auth0_domain=${AUTH0_DOMAIN}" -out "${TARGET_ENVIRONMENT_PLAN_PATH}"
           popd || exit 1
         name: Create Terraform Plan
 
       - run: |
           pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
-          terraform apply "${PLAN_PATH}"
+          terraform apply "${TARGET_ENVIRONMENT_PLAN_PATH}"
           popd || exit 1
         name: Apply Terraform Plan
 
