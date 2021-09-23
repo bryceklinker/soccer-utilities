@@ -23,7 +23,7 @@ export class TestingRepositoryFactory extends RepositoryFactory {
   setupRepository<T extends Entity>(
     entity: EntityType<T>
   ): TestingRepository<T> {
-    const repository = new TestingRepository<T>();
+    const repository = new TestingRepository<T>(entity);
     this.repositories.set(entity, repository);
     return repository;
   }

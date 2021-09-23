@@ -3,6 +3,7 @@ import {
   QueryBuilder,
   Repository,
   RepositoryFactory,
+  RepositoryQuery,
 } from '@soccer-utilities/data-access';
 import { UserTimesheetEntity } from '../entities/user-timesheet.entity';
 import { TimesheetStatus } from '@soccer-utilities/models';
@@ -38,6 +39,10 @@ export class UserTimesheetRepository {
   async getById(id: string): Promise<UserTimesheetEntity | null> {
     const timesheet = await this.repository().getById(id);
     return timesheet ? UserTimesheetEntity.fromEntity(timesheet) : null;
+  }
+
+  async query(query: RepositoryQuery): Promise<UserTimesheetEntity[]> {
+    return await this.repository().query(query);
   }
 
   private repository(): Repository<UserTimesheetEntity> {

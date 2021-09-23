@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { DataAccessModule } from '@soccer-utilities/data-access';
 import { TIMESHEETS_COMMANDS } from './commands';
 import { TIMESHEET_REPOSITORIES } from './repositories';
+import { TIMESHEET_QUERY_HANDLERS } from './queries';
 
 @Module({
   imports: [
@@ -13,7 +14,11 @@ import { TIMESHEET_REPOSITORIES } from './repositories';
     }),
   ],
   controllers: [],
-  providers: [...TIMESHEETS_COMMANDS, ...TIMESHEET_REPOSITORIES],
+  providers: [
+    ...TIMESHEETS_COMMANDS,
+    ...TIMESHEET_QUERY_HANDLERS,
+    ...TIMESHEET_REPOSITORIES,
+  ],
   exports: [CqrsModule],
 })
 export class TimesheetsApiModule {}

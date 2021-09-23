@@ -1,7 +1,10 @@
-import { Entity, Repository, RepositoryQuery } from '../lib';
+import { Entity, EntityType, Repository, RepositoryQuery } from '../lib';
 import * as faker from 'faker';
+import { selectAllQuery } from '../lib/standard-queries';
 
 export class TestingRepository<T extends Entity> implements Repository<T> {
+  constructor(private readonly entityType: EntityType<T>) {}
+
   private readonly entities: Array<T> = [];
   private readonly queries: Array<RepositoryQuery> = [];
 
@@ -9,8 +12,8 @@ export class TestingRepository<T extends Entity> implements Repository<T> {
     return this.queries;
   }
 
-  getAll(): Promise<Array<T>> {
-    return Promise.resolve(this.entities);
+  async getAll(): Promise<Array<T>> {
+    return await this.query(selectAllQuery(this.entityType));
   }
 
   query(query: RepositoryQuery): Promise<Array<T>> {
