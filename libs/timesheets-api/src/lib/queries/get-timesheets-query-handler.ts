@@ -18,9 +18,12 @@ export class GetTimesheetsQuery {
     return this.options.username;
   }
 
-  constructor(private readonly options: Partial<{status: TimesheetStatus, username: string}> = {}) {
-
-  }
+  constructor(
+    private readonly options: Partial<{
+      status: TimesheetStatus;
+      username: string;
+    }> = {}
+  ) {}
 }
 
 @QueryHandler(GetTimesheetsQuery)

@@ -41,7 +41,9 @@ describe('GetTimesheetsQueryHandler', () => {
   });
 
   test('when query includes a status then returns all timesheets with status', async () => {
-    await queryBus.execute(new GetTimesheetsQuery({status: TimesheetStatus.Complete}));
+    await queryBus.execute(
+      new GetTimesheetsQuery({ status: TimesheetStatus.Complete })
+    );
 
     const queries = repository.getExecutedQueries();
     expect(queries).toHaveLength(1);
@@ -52,12 +54,12 @@ describe('GetTimesheetsQueryHandler', () => {
   });
 
   test('when query includes username then returns all timesheets for user', async () => {
-    await queryBus.execute(new GetTimesheetsQuery({username: 'bill'}));
+    await queryBus.execute(new GetTimesheetsQuery({ username: 'bill' }));
 
     const queries = repository.getExecutedQueries();
     expect(queries[0]).toHaveQueryParameter({
       name: 'username',
-      value: 'bill'
-    })
-  })
+      value: 'bill',
+    });
+  });
 });
