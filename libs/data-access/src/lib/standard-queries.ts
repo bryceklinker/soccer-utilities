@@ -1,8 +1,9 @@
-import { SqlQuerySpec } from '@azure/cosmos';
+import { Entity, EntityType } from '../lib/entity';
+import { QueryBuilder } from './query-builder';
+import { RepositoryQuery } from './repository-query';
 
-export function selectAllQuery(type: string): SqlQuerySpec {
-  return {
-    query: 'select * from c where c.type = @type',
-    parameters: [{ name: '@type', value: type }],
-  };
+export function selectAllQuery<T extends Entity>(
+  entityType: EntityType<T>
+): RepositoryQuery {
+  return new QueryBuilder(entityType).build();
 }

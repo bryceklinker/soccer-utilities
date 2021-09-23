@@ -1,4 +1,4 @@
-import { ListResult } from './models';
+import { ListResult } from './list-result';
 
 function fromArray<T>(array: Array<T>): ListResult<T> {
   return {

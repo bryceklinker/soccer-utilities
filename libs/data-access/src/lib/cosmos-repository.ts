@@ -1,8 +1,14 @@
-import { Container, CosmosClient } from '@azure/cosmos';
+import { Container, CosmosClient, SqlQuerySpec } from '@azure/cosmos';
 import { DataAccessOptions } from './data-access-options';
 import { Repository } from './repository';
 import { Entity, EntityType } from './entity';
 import { selectAllQuery } from './standard-queries';
+import { RepositoryQuery } from './repository-query';
+
+const convertQueryToSqlQuery = (query: RepositoryQuery): SqlQuerySpec => ({
+  query: query.text,
+  parameters: query.parameters,
+});
 
 export class CosmosRepository<T extends Entity> implements Repository<T> {
   private get databaseName(): string {
@@ -13,10 +19,6 @@ export class CosmosRepository<T extends Entity> implements Repository<T> {
     return this.options.collection;
   }
 
-  private get entityType(): string {
-    return this.entityClass.type;
-  }
-
   constructor(
     private readonly client: CosmosClient,
     private readonly options: DataAccessOptions,
@@ -24,9 +26,13 @@ export class CosmosRepository<T extends Entity> implements Repository<T> {
   ) {}
 
   async getAll(): Promise<Array<T>> {
+    return await this.query(selectAllQuery(this.entityClass));
+  }
+
+  async query(query: RepositoryQuery): Promise<Array<T>> {
     const container = this.getContainer();
     const response = await container.items
-      .query<T>(selectAllQuery(this.entityType))
+      .query<T>(convertQueryToSqlQuery(query))
       .fetchAll();
     return response.resources;
   }

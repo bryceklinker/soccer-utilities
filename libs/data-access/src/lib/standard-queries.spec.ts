@@ -1,11 +1,17 @@
 import { selectAllQuery } from './standard-queries';
+import { TestingEntity } from '../testing';
+import { QueryOperator } from './query-operator';
 
 describe('standardQueries', () => {
   test('when doing a select all then uses type as filter', () => {
-    const { query, parameters } = selectAllQuery('jimbo');
+    const { text, parameters } = selectAllQuery(TestingEntity);
 
-    expect(query).toEqual('select * from c where c.type = @type');
+    expect(text).toEqual('select * from c where c.type = @type');
     expect(parameters).toHaveLength(1);
-    expect(parameters).toContainEqual({ name: '@type', value: 'jimbo' });
+    expect(parameters).toContainEqual({
+      name: '@type',
+      value: 'testing',
+      operator: QueryOperator.Equal,
+    });
   });
 });

@@ -21,7 +21,7 @@ describe('GetCurrentScheduleQueryHandler', () => {
     ) as TestingRepositoryFactory;
 
     repository = repositoryFactory.setupRepository(GameScheduleEntity);
-    queryBus = app.get<QueryBus>(QueryBus);
+    queryBus = app.get(QueryBus);
   });
 
   test('when getting current schedule then returns first game schedule', async () => {

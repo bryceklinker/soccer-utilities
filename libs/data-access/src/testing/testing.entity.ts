@@ -5,6 +5,7 @@ export class TestingEntity implements Entity {
   readonly type = 'testing';
   id?: string;
   name?: string;
+  amount?: number;
 
   constructor(id?: string, name?: string) {
     this.id = id;

@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'data-access',
+  displayName: 'timesheets-api',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,6 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/data-access',
+  coverageDirectory: '../../coverage/libs/timesheets-api',
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-jest.ts'],
 };

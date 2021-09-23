@@ -18,6 +18,9 @@
       "@soccer-utilities/common-ui": ["libs/common-ui/src/index.ts"],
       "@soccer-utilities/core": ["libs/core/src/index.ts"],
       "@soccer-utilities/data-access": ["libs/data-access/src/index.ts"],
+      "@soccer-utilities/data-access/matchers": [
+        "libs/data-access/src/matchers.ts"
+      ],
       "@soccer-utilities/data-access/testing": [
         "libs/data-access/src/testing/index.ts"
       ],
@@ -28,7 +31,10 @@
       "@soccer-utilities/schedules-ui/testing": [
         "libs/schedules-ui/src/testing/index.ts"
       ],
-      "@soccer-utilities/testing-support": ["libs/testing-support/src/index.ts"]
+      "@soccer-utilities/testing-support": [
+        "libs/testing-support/src/index.ts"
+      ],
+      "@soccer-utilities/timesheets-api": ["libs/timesheets-api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

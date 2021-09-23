@@ -46,6 +46,9 @@
     "testing-support": {
       "tags": []
     },
+    "timesheets-api": {
+      "tags": []
+    },
     "web-ui": {
       "tags": [],
       "implicitDependencies": ["rest-api"]

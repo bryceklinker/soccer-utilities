@@ -16,6 +16,8 @@ import {
   RefereeType,
   RefereeTypes,
   TIME_FORMAT,
+  TimesheetStatus,
+  UserTimesheetModel,
 } from '@soccer-utilities/models';
 
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
@@ -109,6 +111,19 @@ function createNotificationModel(
   };
 }
 
+function createUserTimesheetModel(
+  model: Partial<UserTimesheetModel> = {}
+): UserTimesheetModel {
+  return {
+    id: faker.datatype.uuid(),
+    username: faker.internet.userName(),
+    rate: faker.datatype.number(20),
+    status: TimesheetStatus.Incomplete,
+    amount: 0,
+    ...model,
+  };
+}
+
 function createMany<T>(factory: () => T, count: number): Array<T> {
   const items: Array<T> = [];
   for (let i = 0; i < count; i++) {
@@ -131,6 +146,7 @@ export const ModelFactory = {
   createRefereeCheck,
   createClientRefereeCheckModel,
   createNotificationModel,
+  createUserTimesheetModel,
   createMany,
   createListResult,
 };
