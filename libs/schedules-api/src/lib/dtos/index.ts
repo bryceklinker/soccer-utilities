@@ -13,7 +13,7 @@ import {
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
-  TIME_FORMAT,
+  TIME_FORMAT
 } from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
