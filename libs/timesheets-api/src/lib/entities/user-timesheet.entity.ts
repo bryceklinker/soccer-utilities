@@ -10,7 +10,7 @@ export class UserTimesheetEntity implements UserTimesheetModel, Entity {
 
   constructor(
     public readonly username: string,
-    public readonly rate: number,
+    public readonly rate: number = 12,
     public id?: string,
     public timeIn?: string,
     public timeOut?: string,

@@ -6,7 +6,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { NestAuth0Module } from '@soccer-utilities/nest-auth0';
+import { JwtGuard, NestAuth0Module } from '@soccer-utilities/nest-auth0';
 import { SchedulesModule } from '@soccer-utilities/schedules-api';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -17,6 +17,9 @@ import { SchedulesController } from './schedules/schedules.controller';
 import { LoggingMiddleware } from './middleware';
 import { HealthController } from './health/health.controller';
 import { RefereesController } from './referees/referees.controller';
+import { TimesheetsApiModule } from '@soccer-utilities/timesheets-api';
+import { TimesheetsController } from './timesheets/timesheets.controller';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -31,9 +34,22 @@ import { RefereesController } from './referees/referees.controller';
     }),
     NestAuth0Module,
     SchedulesModule,
+    TimesheetsApiModule,
   ],
-  controllers: [SchedulesController, HealthController, RefereesController],
-  providers: [Logger],
+  controllers: [
+    SchedulesController,
+    HealthController,
+    RefereesController,
+    TimesheetsController,
+  ],
+  providers: [
+    Logger,
+    {
+      provide: APP_GUARD,
+      useExisting: JwtGuard,
+    },
+    JwtGuard,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

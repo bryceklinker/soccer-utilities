@@ -1,18 +1,20 @@
 import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
 import { ALLOW_ANONYMOUS_META_KEY } from './allow-anonymous';
+import { AuthService } from './auth-service';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {
-  constructor(private readonly reflector: Reflector) {
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly authService: AuthService
+  ) {
     super();
   }
 
-  canActivate(
-    context: ExecutionContext
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const isAnonymousAllowed =
       this.reflector.get<boolean>(
         ALLOW_ANONYMOUS_META_KEY,
@@ -24,6 +26,16 @@ export class JwtGuard extends AuthGuard('jwt') {
       return true;
     }
 
-    return super.canActivate(context);
+    const result = (await super.canActivate(context)) as boolean;
+    const request = context.switchToHttp().getRequest<Request>();
+    if (!result) {
+      return false;
+    }
+
+    request.user = {
+      ...request.user,
+      ...(await this.authService.getUser(request.user['sub'])),
+    };
+    return true;
   }
 }

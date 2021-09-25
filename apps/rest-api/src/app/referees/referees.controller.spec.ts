@@ -1,12 +1,14 @@
 import { TestingRepository } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { ModelFactory } from '@soccer-utilities/testing-support';
-import axios from 'axios';
 import { ListResult, RefereeCheckModel } from '@soccer-utilities/models';
-import { constants } from 'http2';
 import { ApiFixture } from '../../testing/api-fixture';
+import { RestApi } from '@soccer-utilities/core';
+import { ADMIN_USER, CONCESSIONS_USER } from '../../testing/users';
+import { constants } from 'http2';
 
 describe('Referees Api', () => {
+  let restApi: RestApi;
   let fixture: ApiFixture;
   let repository: TestingRepository<GameScheduleEntity>;
 
@@ -15,6 +17,15 @@ describe('Referees Api', () => {
     await fixture.start();
 
     repository = fixture.repositoryFactory.setupRepository(GameScheduleEntity);
+    restApi = fixture.createRestApi(ADMIN_USER);
+  });
+
+  test('when non-admin gets referee checks then returns unauthorized', async () => {
+    const response = await fixture
+      .createRestApi(CONCESSIONS_USER)
+      .getResponse('/referees/checks');
+
+    expect(response.status).toEqual(constants.HTTP_STATUS_FORBIDDEN);
   });
 
   test('when getting referee checks then returns referee checks', async () => {
@@ -22,13 +33,11 @@ describe('Referees Api', () => {
       GameScheduleEntity.fromModel(ModelFactory.createGameSchedule())
     );
 
-    const response = await axios.get<ListResult<RefereeCheckModel>>(
-      '/referees/checks',
-      { baseURL: fixture.baseUrl }
+    const result = await restApi.get<ListResult<RefereeCheckModel>>(
+      '/referees/checks'
     );
 
-    expect(response.status).toEqual(constants.HTTP_STATUS_OK);
-    expect(response.data.items.length).toBeGreaterThan(0);
+    expect(result.items.length).toBeGreaterThan(0);
   });
 
   test('when getting referee checks for date range then returns referee checks for date range', async () => {
@@ -49,13 +58,11 @@ describe('Referees Api', () => {
       )
     );
 
-    const response = await axios.get<ListResult<RefereeCheckModel>>(
-      '/referees/checks?start=2020-05-01&end=2020-05-31',
-      { baseURL: fixture.baseUrl }
+    const result = await restApi.get<ListResult<RefereeCheckModel>>(
+      '/referees/checks?start=2020-05-01&end=2020-05-31'
     );
 
-    expect(response.status).toEqual(constants.HTTP_STATUS_OK);
-    expect(response.data.items).toHaveLength(1);
+    expect(result.items).toHaveLength(1);
   });
 
   afterEach(async () => {

@@ -10,12 +10,21 @@ describe('UserTimesheetEntity', () => {
     jest.useFakeTimers('modern').setSystemTime(parseISO(CURRENT_TIME));
   });
 
+  test('when created then should have default values', () => {
+    const entity = new UserTimesheetEntity('bill');
+
+    expect(entity.username).toEqual('bill');
+    expect(entity.rate).toEqual(12);
+    expect(entity.status).toEqual(TimesheetStatus.Unknown);
+    expect(entity.amount).toEqual(0);
+  });
+
   test('when created from model then entity is populated from model', () => {
     const model = ModelFactory.createUserTimesheetModel({
       timeIn: '2021-09-23T12:00:00.000Z',
       timeOut: '2021-09-23T15:35:00.000Z',
       hours: 4,
-      rate: 12,
+      rate: 14,
       status: TimesheetStatus.Paid,
       amount: 48,
     });
@@ -24,7 +33,7 @@ describe('UserTimesheetEntity', () => {
 
     expect(entity.id).toEqual(model.id);
     expect(entity.username).toEqual(model.username);
-    expect(entity.rate).toEqual(12);
+    expect(entity.rate).toEqual(14);
     expect(entity.hours).toEqual(4);
     expect(entity.amount).toEqual(48);
     expect(entity.status).toEqual(TimesheetStatus.Paid);

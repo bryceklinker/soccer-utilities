@@ -27,6 +27,15 @@ describe('ClockInCommandHandler', () => {
     commandBus = app.get(CommandBus);
   });
 
+  test('when user clocks in then returns timesheet id', async () => {
+    const id = await commandBus.execute(
+      new ClockInCommand('this-user-name', 14)
+    );
+
+    const timesheets = await repository.getAll();
+    expect(timesheets.map((t) => t.id)).toContainEqual(id);
+  });
+
   test('when user clocks in then saves user clocked in', async () => {
     await commandBus.execute(new ClockInCommand('this-user-name', 14));
 

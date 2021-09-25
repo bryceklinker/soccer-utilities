@@ -118,6 +118,9 @@ resource "azurerm_function_app" "function_app" {
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.function_app_insights.instrumentation_key
 
     // Application Environment Variables
+    AUTH0_DOMAIN = var.auth0_domain
+    AUTH0_CLIENT_ID = var.auth0_client_id
+    AUTH0_CLIENT_SECRET = var.auth0_client_secret
     ISSUER_URL = "https://${var.auth0_domain}/"
     AUDIENCE = auth0_resource_server.rest_api_server.identifier
     IS_AZURE_FUNCTION = true

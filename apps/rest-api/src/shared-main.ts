@@ -1,10 +1,9 @@
 import { INestApplication } from '@nestjs/common';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { WinstonModule } from 'nest-winston';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as winston from 'winston';
-import { JwtGuard } from '@soccer-utilities/nest-auth0';
 import * as packageJson from '../package.json';
 
 export async function createApp(): Promise<INestApplication> {
@@ -22,7 +21,6 @@ export async function createApp(): Promise<INestApplication> {
     }),
   });
   app.enableCors();
-  app.useGlobalGuards(new JwtGuard(app.get(Reflector)));
 
   const config = new DocumentBuilder()
     .setTitle('Soccer Utilities Api')

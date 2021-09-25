@@ -3,14 +3,17 @@ import { UserTimesheetRepository } from '../repositories/user-timesheet-reposito
 import { UserTimesheetEntity } from '../entities/user-timesheet.entity';
 
 export class ClockInCommand {
-  constructor(public readonly username: string, public readonly rate: number) {}
+  constructor(
+    public readonly username: string,
+    public readonly rate?: number
+  ) {}
 }
 
 @CommandHandler(ClockInCommand)
 export class ClockInCommandHandler implements ICommandHandler<ClockInCommand> {
   constructor(private readonly repository: UserTimesheetRepository) {}
 
-  async execute(command: ClockInCommand): Promise<void> {
+  async execute(command: ClockInCommand): Promise<string> {
     const openTimesheet = await this.repository.getOpenTimesheet(
       command.username
     );
@@ -20,6 +23,7 @@ export class ClockInCommandHandler implements ICommandHandler<ClockInCommand> {
 
     const entity = new UserTimesheetEntity(command.username, command.rate);
     entity.clockIn();
-    await this.repository.add(entity);
+    const result = await this.repository.add(entity);
+    return result.id;
   }
 }

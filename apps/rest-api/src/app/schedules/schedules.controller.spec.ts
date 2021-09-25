@@ -1,5 +1,4 @@
 import * as FormData from 'form-data';
-import axios from 'axios';
 import { constants } from 'http2';
 import {
   readSampleGameScheduleAsStream,
@@ -10,8 +9,12 @@ import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { GameScheduleModel } from '@soccer-utilities/models';
 import { ApiFixture } from '../../testing/api-fixture';
 import { TestingRepository } from '@soccer-utilities/data-access/testing';
+import { RestApi } from '@soccer-utilities/core';
+import axios from 'axios';
+import { ADMIN_USER, CONCESSIONS_USER } from '../../testing/users';
 
 describe('Schedules Api', () => {
+  let restApi: RestApi;
   let fixture: ApiFixture;
   let repository: TestingRepository<GameScheduleEntity>;
 
@@ -20,12 +23,19 @@ describe('Schedules Api', () => {
     await fixture.start();
 
     repository = fixture.repositoryFactory.setupRepository(GameScheduleEntity);
+    restApi = fixture.createRestApi(ADMIN_USER);
+  });
+
+  test('when non-admin gets schedule then rejects request', async () => {
+    const response = await fixture
+      .createRestApi(CONCESSIONS_USER)
+      .getResponse('/schedules/current');
+
+    expect(response.status).toEqual(constants.HTTP_STATUS_FORBIDDEN);
   });
 
   test('when getting current schedule and current schedule missing then returns not found', async () => {
-    const response = await axios.get('/schedules/current', {
-      baseURL: fixture.baseUrl,
-    });
+    const response = await restApi.getResponse('/schedules/current');
 
     expect(response.status).toEqual(constants.HTTP_STATUS_NOT_FOUND);
   });
@@ -36,7 +46,11 @@ describe('Schedules Api', () => {
 
     const response = await axios.post('/schedules/current', form, {
       baseURL: fixture.baseUrl,
-      headers: { ...form.getHeaders(), 'Content-Type': 'multipart/form-data' },
+      headers: {
+        ...form.getHeaders(),
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${JSON.stringify(ADMIN_USER)}`,
+      },
     });
 
     expect(response.status).toEqual(constants.HTTP_STATUS_CREATED);
@@ -48,12 +62,9 @@ describe('Schedules Api', () => {
       GameScheduleEntity.fromModel(ModelFactory.createGameSchedule())
     );
 
-    const response = await axios.get<GameScheduleModel>('/schedules/current', {
-      baseURL: fixture.baseUrl,
-    });
+    const result = await restApi.get<GameScheduleModel>('/schedules/current');
 
-    expect(response.status).toEqual(constants.HTTP_STATUS_OK);
-    expect(response.data.id).toEqual(id);
+    expect(result.id).toEqual(id);
   });
 
   afterEach(async () => {

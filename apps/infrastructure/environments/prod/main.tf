@@ -2,6 +2,14 @@ variable "auth0_domain" {
   type = string
 }
 
+variable "auth0_client_id" {
+  type = string
+}
+
+variable "auth0_client_secret" {
+  type = string
+}
+
 locals {
   app_name = "soccer"
   env_name = "prod"
@@ -24,6 +32,8 @@ module "api" {
   resource_group_name = local.resource_group_name
   api_directory = "${local.dist_directory}/apps/rest-api"
   auth0_domain = var.auth0_domain
+  auth0_client_id = var.auth0_client_id
+  auth0_client_secret = var.auth0_client_secret
 
   depends_on = [azurerm_resource_group.resource_group]
 }

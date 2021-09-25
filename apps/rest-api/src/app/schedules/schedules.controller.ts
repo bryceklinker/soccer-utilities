@@ -4,14 +4,15 @@ import {
   HttpException,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import {
+  GameScheduleDto,
   GetCurrentScheduleQuery,
   UpdateCurrentScheduleCommand,
-  GameScheduleDto,
 } from '@soccer-utilities/schedules-api';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Readable } from 'stream';
@@ -26,9 +27,12 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UploadScheduleModel } from './upload-schedule.model';
+import { RequiredRoles, Role, RolesGuard } from '@soccer-utilities/nest-auth0';
 
 @Controller('schedules')
 @ApiTags('Schedules')
+@RequiredRoles(Role.admin)
+@UseGuards(RolesGuard)
 export class SchedulesController {
   constructor(
     private readonly commandBus: CommandBus,

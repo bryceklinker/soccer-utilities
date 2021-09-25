@@ -12,9 +12,9 @@ import { TimesheetStatus } from '@soccer-utilities/models';
 export class UserTimesheetRepository {
   constructor(private readonly factory: RepositoryFactory) {}
 
-  async add(entity: UserTimesheetEntity): Promise<void> {
+  async add(entity: UserTimesheetEntity): Promise<UserTimesheetEntity> {
     const repository = this.repository();
-    await repository.create(entity);
+    return await repository.create(entity);
   }
 
   async getOpenTimesheet(

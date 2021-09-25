@@ -126,7 +126,10 @@ jobs:
 
       - run: |
           pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
-          terraform plan -var="auth0_domain=${AUTH0_DOMAIN}" -out "${TARGET_ENVIRONMENT_PLAN_PATH}"
+          terraform plan -var="auth0_domain=${AUTH0_DOMAIN}" \
+            -var="auth0_client_id=${AUTH0_CLIENT_ID}" \
+            -var="auth0_client_secret=${AUTH0_CLIENT_SECRET}" \
+            -out "${TARGET_ENVIRONMENT_PLAN_PATH}"
           popd || exit 1
         name: Create Terraform Plan
 

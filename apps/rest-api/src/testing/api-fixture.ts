@@ -6,6 +6,10 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../app/app.module';
 import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { INestApplication } from '@nestjs/common';
+import { JwtGuard } from '@soccer-utilities/nest-auth0';
+import { FakeJwtAuthGuard } from './fake-jwt-auth-guard';
+import { UserModel } from '@soccer-utilities/models';
+import { createRestApi, RestApi } from '@soccer-utilities/core';
 
 export class ApiFixture {
   private _baseUrl: string;
@@ -49,12 +53,19 @@ export class ApiFixture {
     throw new Error('You must start the application.');
   }
 
+  createRestApi(user: UserModel): RestApi {
+    return createRestApi(this.baseUrl, JSON.stringify(user));
+  }
+
   private static async startNestApp(): Promise<INestApplication> {
     const testingModule = await useTestingDataAccess(
       Test.createTestingModule({
         imports: [AppModule],
       })
-    ).compile();
+    )
+      .overrideProvider(JwtGuard)
+      .useClass(FakeJwtAuthGuard)
+      .compile();
     const app = testingModule.createNestApplication();
     await app.listen(0);
     return app;
