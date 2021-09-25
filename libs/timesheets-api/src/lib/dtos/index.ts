@@ -6,14 +6,14 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UserTimesheetDto implements UserTimesheetModel {
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   amount = 0;
 
-  @ApiProperty()
-  rate: number;
+  @ApiProperty({ type: Number })
+  rate = 0;
 
-  @ApiProperty()
-  username: string;
+  @ApiProperty({ type: String })
+  username = '';
 
   @ApiProperty({ enum: TimesheetStatus })
   status: TimesheetStatus;

@@ -13,11 +13,11 @@ import {
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
-  TIME_FORMAT
+  TIME_FORMAT,
 } from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name = '';
 
   @ApiProperty({ enum: RefereeType })
@@ -25,7 +25,7 @@ export class RefereeDto implements RefereeModel {
 }
 
 export class AgeGroupDto implements AgeGroupModel {
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   age = 0;
   @ApiProperty({ enum: Gender })
   gender: Gender = Gender.Unknown;
@@ -36,13 +36,13 @@ export class GameDto implements GameModel {
   date: string = format(new Date(), DATE_FORMAT);
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
-  @ApiProperty()
+  @ApiProperty({ type: String })
   homeTeam = '';
-  @ApiProperty()
+  @ApiProperty({ type: String })
   awayTeam = '';
-  @ApiProperty()
+  @ApiProperty({ type: String })
   field = '';
-  @ApiProperty()
+  @ApiProperty({ type: String })
   division = '';
 
   @ApiProperty({ type: AgeGroupDto })
@@ -66,20 +66,20 @@ export class RefereeCheckDto implements RefereeCheckModel {
   date: string = format(new Date(), DATE_FORMAT);
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
-  @ApiProperty()
+  @ApiProperty({ type: String })
   name = '';
   @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
   @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   amount = 0;
 }
 
 export class ListResultDto<T> implements ListResult<T> {
   @ApiProperty({ isArray: true })
   items: Array<T> = [];
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   count = 0;
 }
 
@@ -88,7 +88,7 @@ export class RefereePayScaleDto implements RefereePayScaleModel {
   refereeType: RefereeType = RefereeType.Center;
   @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   amount = 0;
 }
 
