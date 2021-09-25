@@ -20,14 +20,16 @@ export class AuthService {
     return this.configService.get<NestAuth0Config>('auth');
   }
 
-  constructor(private readonly configService: ConfigService,
-              private readonly logger: Logger) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly logger: Logger
+  ) {}
 
   async getUser(userId: string): Promise<UserModel> {
-    this.logger.log('Getting user with id', {userId});
+    this.logger.log('Getting user with id', { userId });
     const user = (await this.auth0Client.getUser({ id: userId })) as UserModel;
     const roles = await this.auth0Client.getUserRoles({ id: userId });
-    this.logger.log('Found user with id', {userId});
+    this.logger.log('Found user with id', { userId });
     return {
       ...user,
       roles: roles,
