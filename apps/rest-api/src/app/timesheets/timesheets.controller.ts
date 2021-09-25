@@ -5,7 +5,8 @@ import {
   ApiNoContentResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiQuery, ApiExtraModels
+  ApiQuery,
+  ApiExtraModels,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiListResponse } from '../swagger/api-list-response';

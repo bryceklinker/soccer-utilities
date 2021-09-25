@@ -13,12 +13,12 @@ import {
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
-  TIME_FORMAT
+  TIME_FORMAT,
 } from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
   @ApiProperty()
-  name: string = '';
+  name = '';
 
   @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
@@ -26,7 +26,7 @@ export class RefereeDto implements RefereeModel {
 
 export class AgeGroupDto implements AgeGroupModel {
   @ApiProperty()
-  age: number = 0;
+  age = 0;
   @ApiProperty({ enum: Gender })
   gender: Gender = Gender.Unknown;
 }
@@ -37,13 +37,13 @@ export class GameDto implements GameModel {
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  homeTeam: string = '';
+  homeTeam = '';
   @ApiProperty()
-  awayTeam: string = '';
+  awayTeam = '';
   @ApiProperty()
-  field: string = '';
+  field = '';
   @ApiProperty()
-  division: string = '';
+  division = '';
 
   @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
@@ -67,20 +67,20 @@ export class RefereeCheckDto implements RefereeCheckModel {
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  name: string = '';
+  name = '';
   @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
   @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount: number = 0;
+  amount = 0;
 }
 
 export class ListResultDto<T> implements ListResult<T> {
   @ApiProperty({ isArray: true })
   items: Array<T> = [];
   @ApiProperty()
-  count: number = 0;
+  count = 0;
 }
 
 export class RefereePayScaleDto implements RefereePayScaleModel {
@@ -89,7 +89,7 @@ export class RefereePayScaleDto implements RefereePayScaleModel {
   @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount: number = 0;
+  amount = 0;
 }
 
 export class DateRangeDto implements DateRangeModel {
