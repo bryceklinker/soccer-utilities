@@ -13,12 +13,12 @@ import {
   RefereeModel,
   RefereePayScaleModel,
   RefereeType,
-  TIME_FORMAT,
+  TIME_FORMAT
 } from '@soccer-utilities/models';
 
 export class RefereeDto implements RefereeModel {
   @ApiProperty()
-  name = '';
+  name: string = '';
 
   @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
@@ -26,7 +26,7 @@ export class RefereeDto implements RefereeModel {
 
 export class AgeGroupDto implements AgeGroupModel {
   @ApiProperty()
-  age = 0;
+  age: number = 0;
   @ApiProperty({ enum: Gender })
   gender: Gender = Gender.Unknown;
 }
@@ -37,15 +37,15 @@ export class GameDto implements GameModel {
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  homeTeam = '';
+  homeTeam: string = '';
   @ApiProperty()
-  awayTeam = '';
+  awayTeam: string = '';
   @ApiProperty()
-  field = '';
+  field: string = '';
   @ApiProperty()
-  division = '';
+  division: string = '';
 
-  @ApiProperty()
+  @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
 
   @ApiProperty({ type: [RefereeDto] })
@@ -67,29 +67,29 @@ export class RefereeCheckDto implements RefereeCheckModel {
   @ApiProperty({ format: TIME_FORMAT })
   time: string = format(new Date(), TIME_FORMAT);
   @ApiProperty()
-  name = '';
+  name: string = '';
   @ApiProperty({ enum: RefereeType })
   type: RefereeType = RefereeType.Center;
-  @ApiProperty()
+  @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount = 0;
+  amount: number = 0;
 }
 
 export class ListResultDto<T> implements ListResult<T> {
   @ApiProperty({ isArray: true })
   items: Array<T> = [];
   @ApiProperty()
-  count = 0;
+  count: number = 0;
 }
 
 export class RefereePayScaleDto implements RefereePayScaleModel {
   @ApiProperty({ enum: RefereeType })
   refereeType: RefereeType = RefereeType.Center;
-  @ApiProperty()
+  @ApiProperty({ type: AgeGroupDto })
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty()
-  amount = 0;
+  amount: number = 0;
 }
 
 export class DateRangeDto implements DateRangeModel {

@@ -5,7 +5,7 @@ import {
   ApiNoContentResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiQuery,
+  ApiQuery, ApiExtraModels
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiListResponse } from '../swagger/api-list-response';
@@ -19,9 +19,11 @@ import {
 import { TimesheetStatus, UserModel } from '@soccer-utilities/models';
 import { CurrentUser } from '@soccer-utilities/nest-auth0';
 import { RequiredRoles, Role, RolesGuard } from '@soccer-utilities/nest-auth0';
+import { ListResultDto } from '@soccer-utilities/schedules-api';
 
 @Controller('timesheets')
 @ApiTags('Timesheets')
+@ApiExtraModels(ListResultDto, UserTimesheetDto)
 @RequiredRoles(Role.admin)
 @UseGuards(RolesGuard)
 export class TimesheetsController {

@@ -7,7 +7,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UserTimesheetDto implements UserTimesheetModel {
   @ApiProperty()
-  amount = 0;
+  amount: number = 0;
 
   @ApiProperty()
   rate: number;
