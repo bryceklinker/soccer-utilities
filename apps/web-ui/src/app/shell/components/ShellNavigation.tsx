@@ -4,12 +4,14 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemProps,
   makeStyles,
   Toolbar,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { ColumnFlexBox } from '@soccer-utilities/common-ui';
+import { ColumnFlexBox, NoOp } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
+import { Role } from '@soccer-utilities/models';
 
 const useStyles = makeStyles(() => ({
   drawer: {
@@ -19,12 +21,15 @@ const useStyles = makeStyles(() => ({
 
 export type ShellNavigationProps = {
   isOpen: boolean;
-  onClose: () => void;
+  roles?: Array<Role>;
+  onClose?: () => void;
 };
 export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
   isOpen,
-  onClose,
+  roles = [],
+  onClose = NoOp,
 }) => {
+  const isAdmin = roles.includes(Role.admin);
   const styles = useStyles();
   return (
     <Drawer open={isOpen} onClose={onClose}>
@@ -32,32 +37,48 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
       <Divider />
       <ColumnFlexBox className={styles.drawer}>
         <List component={'nav'}>
-          <ListItem
-            button
-            component={Link}
-            to={ROUTES.WELCOME}
-            aria-label={'welcome'}
-          >
+          <LinkButton to={ROUTES.WELCOME} aria-label={'welcome'}>
             Welcome
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
+          </LinkButton>
+          <LinkButton
+            to={ROUTES.CURRENT_TIMESHEET}
+            aria-label={'current timesheet'}
+          >
+            Current Timesheet
+          </LinkButton>
+          <LinkButton
+            visible={isAdmin}
             to={ROUTES.CURRENT_SCHEDULE}
             aria-label={'current schedule'}
           >
             Current Schedule
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
+          </LinkButton>
+          <LinkButton
+            visible={isAdmin}
             to={ROUTES.REFEREE_CHECKS}
             aria-label={'referee checks'}
           >
             Referee Checks
-          </ListItem>
+          </LinkButton>
         </List>
       </ColumnFlexBox>
     </Drawer>
   );
+};
+
+interface LinkButtonProps {
+  visible?: boolean;
+  to: string;
+}
+
+const LinkButton: FunctionComponent<LinkButtonProps> = ({
+  to,
+  visible = true,
+  ...rest
+}) => {
+  if (!visible) {
+    return null;
+  }
+
+  return <ListItem button component={Link} to={to} {...rest} />;
 };

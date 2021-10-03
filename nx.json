@@ -49,6 +49,9 @@
     "timesheets-api": {
       "tags": []
     },
+    "timesheets-ui": {
+      "tags": []
+    },
     "web-ui": {
       "tags": [],
       "implicitDependencies": ["rest-api"]

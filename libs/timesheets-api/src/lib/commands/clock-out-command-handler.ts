@@ -1,5 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserTimesheetRepository } from '../repositories/user-timesheet-repository';
+import { UserTimesheetModel } from '@soccer-utilities/models';
 
 export class ClockOutCommand {
   constructor(public readonly username: string) {}
@@ -7,11 +8,11 @@ export class ClockOutCommand {
 
 @CommandHandler(ClockOutCommand)
 export class ClockOutCommandHandler
-  implements ICommandHandler<ClockOutCommand>
+  implements ICommandHandler<ClockOutCommand, UserTimesheetModel>
 {
   constructor(private readonly repository: UserTimesheetRepository) {}
 
-  async execute(command: ClockOutCommand): Promise<void> {
+  async execute(command: ClockOutCommand): Promise<UserTimesheetModel> {
     const timesheet = await this.repository.getOpenTimesheet(command.username);
     if (!timesheet) {
       throw new Error(
@@ -20,6 +21,6 @@ export class ClockOutCommandHandler
     }
 
     timesheet.clockOut();
-    await this.repository.update(timesheet);
+    return await this.repository.update(timesheet);
   }
 }

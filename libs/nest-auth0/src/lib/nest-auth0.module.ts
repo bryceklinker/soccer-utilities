@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { CacheModule, Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt-strategy';
@@ -7,7 +7,11 @@ import { RolesGuard } from './roles-guard';
 import { JwtGuard } from './jwt-guard';
 
 @Module({
-  imports: [ConfigModule, PassportModule.register({ defaultStrategy: 'jwt' })],
+  imports: [
+    ConfigModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    CacheModule.register(),
+  ],
   providers: [JwtStrategy, AuthService, RolesGuard, JwtGuard, Logger],
   exports: [PassportModule, AuthService, RolesGuard],
 })

@@ -27,7 +27,7 @@ describe('loadingReducer', () => {
     const state = generateStateFromActions(
       loadingReducer,
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(WebUiModelFactory.createUser())
+      AuthActions.loadUser.success(WebUiModelFactory.createAuthUser())
     );
 
     expect(state[AuthActions.loadUser.baseType]).toEqual(0);
@@ -47,9 +47,9 @@ describe('loadingReducer', () => {
     const state = generateStateFromActions(
       loadingReducer,
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(WebUiModelFactory.createUser()),
-      AuthActions.loadUser.success(WebUiModelFactory.createUser()),
-      AuthActions.loadUser.success(WebUiModelFactory.createUser())
+      AuthActions.loadUser.success(WebUiModelFactory.createAuthUser()),
+      AuthActions.loadUser.success(WebUiModelFactory.createAuthUser()),
+      AuthActions.loadUser.success(WebUiModelFactory.createAuthUser())
     );
 
     expect(state[AuthActions.loadUser.baseType]).toEqual(0);

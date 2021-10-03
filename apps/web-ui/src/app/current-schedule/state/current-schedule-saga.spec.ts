@@ -7,7 +7,7 @@ import {
 import { CurrentScheduleActions } from './current-schedule-actions';
 import { RestRequest } from 'msw';
 import { HttpStatusCodes } from '@soccer-utilities/testing-support';
-import { ApplicationUser } from '../../auth/state/auth-models';
+import { AuthUser } from '../../auth/state/auth-models';
 import { setupSagaTest } from '../../../testing/setup-saga-test';
 
 describe('Current Schedule Saga', () => {
@@ -64,7 +64,7 @@ describe('Current Schedule Saga', () => {
 
   describe('Upload Schedule', () => {
     let store: TestingStore;
-    let user: ApplicationUser;
+    let user: AuthUser;
     let apiUrl: string;
 
     beforeEach(() => {

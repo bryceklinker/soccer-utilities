@@ -29,9 +29,9 @@ describe('ClockOutCommandHandler', () => {
   test('when user clocks out then timesheet is clocked out', async () => {
     const original = await addOpenTimesheet('bill');
 
-    await commandBus.execute(new ClockOutCommand('bill'));
+    const updated = await commandBus.execute(new ClockOutCommand('bill'));
 
-    const updated = await repository.getById(original.id);
+    expect(updated.id).toEqual(original.id);
     expect(updated.timeOut).toEqual(CURRENT_TIME);
   });
 

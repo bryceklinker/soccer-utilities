@@ -2,11 +2,11 @@ import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
-  ApiNoContentResponse,
   ApiTags,
   ApiUnauthorizedResponse,
   ApiQuery,
   ApiExtraModels,
+  ApiOkResponse,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiListResponse } from '../swagger/api-list-response';
@@ -15,11 +15,12 @@ import {
   ClockInCommand,
   ClockOutCommand,
   GetTimesheetsQuery,
+  GetCurrentTimesheetQuery,
   PayTimesheetCommand,
 } from '@soccer-utilities/timesheets-api';
-import { TimesheetStatus, UserModel } from '@soccer-utilities/models';
+import { Role, TimesheetStatus, UserModel } from '@soccer-utilities/models';
 import { CurrentUser } from '@soccer-utilities/nest-auth0';
-import { RequiredRoles, Role, RolesGuard } from '@soccer-utilities/nest-auth0';
+import { RequiredRoles, RolesGuard } from '@soccer-utilities/nest-auth0';
 import { ListResultDto } from '@soccer-utilities/schedules-api';
 
 @Controller('timesheets')
@@ -55,8 +56,24 @@ export class TimesheetsController {
     return await this.queryBus.execute(query);
   }
 
-  @Post('clock-in')
-  @ApiCreatedResponse({ type: String, description: 'id of current schedule' })
+  @Get('current')
+  @ApiOkResponse({ type: UserTimesheetDto })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @RequiredRoles(Role.concessions)
+  async getCurrentTimesheet(@CurrentUser() user: UserModel) {
+    const query = new GetCurrentTimesheetQuery(
+      user.username,
+      user.user_metadata?.rate
+    );
+    return await this.queryBus.execute(query);
+  }
+
+  @Post('current/clock-in')
+  @ApiCreatedResponse({
+    type: UserTimesheetDto,
+    description: 'Newly created timesheet',
+  })
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   @RequiredRoles(Role.concessions)
@@ -68,22 +85,22 @@ export class TimesheetsController {
     return await this.commandBus.execute(command);
   }
 
-  @Post('clock-out')
-  @ApiNoContentResponse()
+  @Post('current/clock-out')
+  @ApiOkResponse({ type: UserTimesheetDto, description: 'Updated timesheet' })
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   @RequiredRoles(Role.concessions)
   async clockOut(@CurrentUser() user: UserModel) {
     const command = new ClockOutCommand(user.username);
-    await this.commandBus.execute(command);
+    return await this.commandBus.execute(command);
   }
 
   @Post(':id/pay')
-  @ApiNoContentResponse()
+  @ApiOkResponse({ type: UserTimesheetDto, description: 'Updated timesheet' })
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   async pay(@Param('id') id: string) {
     const command = new PayTimesheetCommand(id);
-    await this.commandBus.execute(command);
+    return await this.commandBus.execute(command);
   }
 }

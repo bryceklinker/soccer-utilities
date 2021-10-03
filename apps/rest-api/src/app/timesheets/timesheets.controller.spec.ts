@@ -20,6 +20,16 @@ describe('Timesheets Api', () => {
     repository = fixture.repositoryFactory.setupRepository(UserTimesheetEntity);
   });
 
+  test('when getting current timesheet then returns timesheet for current user', async () => {
+    const timesheet =
+      await getRestApiAsConcessionsUser().get<UserTimesheetModel>(
+        '/timesheets/current'
+      );
+
+    expect(timesheet.username).toEqual(CONCESSIONS_USER.username);
+    expect(timesheet.rate).toEqual(CONCESSIONS_USER.user_metadata.rate);
+  });
+
   test('when getting timesheets as concessions user then returns forbidden', async () => {
     const response = await getRestApiAsConcessionsUser().getResponse(
       '/timesheets'
@@ -58,32 +68,38 @@ describe('Timesheets Api', () => {
   });
 
   test('when user clocks in then adds timesheet for user', async () => {
-    await getRestApiAsConcessionsUser().post('/timesheets/clock-in');
+    const timesheet =
+      await getRestApiAsConcessionsUser().post<UserTimesheetModel>(
+        '/timesheets/current/clock-in'
+      );
 
-    const entities = await repository.getAll();
-    expect(entities).toHaveLength(1);
-    expect(entities[0].username).toEqual(CONCESSIONS_USER.username);
-    expect(entities[0].rate).toEqual(CONCESSIONS_USER.user_metadata.rate);
-    expect(entities[0].timeIn).toBeDefined();
+    expect(timesheet.username).toEqual(CONCESSIONS_USER.username);
+    expect(timesheet.rate).toEqual(CONCESSIONS_USER.user_metadata.rate);
+    expect(timesheet.timeIn).toBeDefined();
   });
 
   test('when user clocks out then updates timesheet for user', async () => {
-    await getRestApiAsConcessionsUser().post('/timesheets/clock-in');
-    await getRestApiAsConcessionsUser().post('/timesheets/clock-out');
+    await getRestApiAsConcessionsUser().post('/timesheets/current/clock-in');
+    const timesheet =
+      await getRestApiAsConcessionsUser().post<UserTimesheetModel>(
+        '/timesheets/current/clock-out'
+      );
 
-    const entities = await repository.getAll();
-    expect(entities).toHaveLength(1);
-    expect(entities[0].timeOut).toBeDefined();
+    expect(timesheet.timeOut).toBeDefined();
   });
 
   test('when user pays then updates timesheet for user', async () => {
-    const id = await getRestApiAsConcessionsUser().post('/timesheets/clock-in');
-    await getRestApiAsConcessionsUser().post('/timesheets/clock-out');
-    await getRestApiAsAdminUser().post(`/timesheets/${id}/pay`);
+    const timesheet =
+      await getRestApiAsConcessionsUser().post<UserTimesheetModel>(
+        '/timesheets/current/clock-in'
+      );
+    await getRestApiAsConcessionsUser().post('/timesheets/current/clock-out');
+    const paidTimesheet =
+      await getRestApiAsAdminUser().post<UserTimesheetModel>(
+        `/timesheets/${timesheet.id}/pay`
+      );
 
-    const entities = await repository.getAll();
-    expect(entities).toHaveLength(1);
-    expect(entities[0].status).toEqual(TimesheetStatus.Paid);
+    expect(paidTimesheet.status).toEqual(TimesheetStatus.Paid);
   });
 
   afterEach(async () => {

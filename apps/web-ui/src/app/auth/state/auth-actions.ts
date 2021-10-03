@@ -2,13 +2,20 @@ import {
   createAsyncActionSet,
   emptyPrepare,
 } from '../../state/create-async-action-set';
-import { ApplicationUser } from './auth-models';
+import { AuthUser } from './auth-models';
+import { UserModel } from '@soccer-utilities/models';
 
 export const AuthActions = {
   loadUser: createAsyncActionSet(
-    '[Auth] Load User',
+    '[Auth] Load Auth User',
     emptyPrepare,
-    (user: ApplicationUser | null) => ({ payload: user }),
+    (user: AuthUser | null) => ({ payload: user }),
+    emptyPrepare
+  ),
+  loadRoles: createAsyncActionSet(
+    '[Auth] Load Current User',
+    emptyPrepare,
+    (user: UserModel) => ({ payload: user }),
     emptyPrepare
   ),
 };

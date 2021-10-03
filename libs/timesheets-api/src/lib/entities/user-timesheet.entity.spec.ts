@@ -15,7 +15,7 @@ describe('UserTimesheetEntity', () => {
 
     expect(entity.username).toEqual('bill');
     expect(entity.rate).toEqual(12);
-    expect(entity.status).toEqual(TimesheetStatus.Unknown);
+    expect(entity.status).toEqual(TimesheetStatus.New);
     expect(entity.amount).toEqual(0);
   });
 
@@ -79,7 +79,7 @@ describe('UserTimesheetEntity', () => {
     entity.clockIn();
 
     expect(entity.timeIn).toEqual(CURRENT_TIME);
-    expect(entity.status).toEqual(TimesheetStatus.Incomplete);
+    expect(entity.status).toEqual(TimesheetStatus.Open);
   });
 
   test('when attempting to clock out without clocking in then throws error', () => {

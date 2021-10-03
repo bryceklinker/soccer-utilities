@@ -1,6 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserTimesheetRepository } from '../repositories/user-timesheet-repository';
 import { UserTimesheetEntity } from '../entities/user-timesheet.entity';
+import { UserTimesheetModel } from '@soccer-utilities/models';
 
 export class ClockInCommand {
   constructor(
@@ -10,10 +11,12 @@ export class ClockInCommand {
 }
 
 @CommandHandler(ClockInCommand)
-export class ClockInCommandHandler implements ICommandHandler<ClockInCommand> {
+export class ClockInCommandHandler
+  implements ICommandHandler<ClockInCommand, UserTimesheetModel>
+{
   constructor(private readonly repository: UserTimesheetRepository) {}
 
-  async execute(command: ClockInCommand): Promise<string> {
+  async execute(command: ClockInCommand): Promise<UserTimesheetModel> {
     const openTimesheet = await this.repository.getOpenTimesheet(
       command.username
     );
@@ -23,7 +26,6 @@ export class ClockInCommandHandler implements ICommandHandler<ClockInCommand> {
 
     const entity = new UserTimesheetEntity(command.username, command.rate);
     entity.clockIn();
-    const result = await this.repository.add(entity);
-    return result.id;
+    return await this.repository.add(entity);
   }
 }

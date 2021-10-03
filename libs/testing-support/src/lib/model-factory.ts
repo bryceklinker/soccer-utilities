@@ -15,8 +15,11 @@ import {
   RefereePayScaleModel,
   RefereeType,
   RefereeTypes,
+  Roles,
   TIME_FORMAT,
   TimesheetStatus,
+  UserModel,
+  UserRoleModel,
   UserTimesheetModel,
 } from '@soccer-utilities/models';
 
@@ -118,8 +121,24 @@ function createUserTimesheetModel(
     id: faker.datatype.uuid(),
     username: faker.internet.userName(),
     rate: faker.datatype.number(20),
-    status: TimesheetStatus.Incomplete,
+    status: TimesheetStatus.New,
     amount: 0,
+    ...model,
+  };
+}
+
+function createUserRole(model: Partial<UserRoleModel> = {}): UserRoleModel {
+  return {
+    id: faker.datatype.uuid(),
+    name: faker.random.arrayElement(Roles),
+    ...model,
+  };
+}
+
+function createUser(model: Partial<UserModel> = {}): UserModel {
+  return {
+    username: faker.internet.userName(),
+    roles: [],
     ...model,
   };
 }
@@ -147,6 +166,8 @@ export const ModelFactory = {
   createClientRefereeCheckModel,
   createNotificationModel,
   createUserTimesheetModel,
+  createUserRole,
+  createUser,
   createMany,
   createListResult,
 };

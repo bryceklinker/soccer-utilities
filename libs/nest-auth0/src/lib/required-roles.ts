@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { Role } from './role';
+import { Role } from '@soccer-utilities/models';
 
 export const REQUIRED_ROLES_KEY = 'required-roles';
 export const RequiredRoles = (...roles: Role[]) =>

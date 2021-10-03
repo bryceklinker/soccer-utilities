@@ -4,10 +4,12 @@ export interface UserRoleModel {
   description?: string;
 }
 
+export interface UserMetadata {
+  rate?: number;
+}
+
 export interface UserModel {
   username: string;
   roles: Array<UserRoleModel>;
-  user_metadata?: {
-    rate?: number;
-  };
+  user_metadata?: UserMetadata;
 }

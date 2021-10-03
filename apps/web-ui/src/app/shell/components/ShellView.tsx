@@ -1,5 +1,12 @@
 import { CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
-import { lazy, useCallback, useEffect, useState, Suspense } from 'react';
+import {
+  lazy,
+  useCallback,
+  useEffect,
+  useState,
+  Suspense,
+  FunctionComponent,
+} from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
@@ -10,6 +17,7 @@ import {
 } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { ShellNotificationsContainer } from './ShellNotificationsContainer';
+import { Role } from '@soccer-utilities/models';
 
 const WelcomePage = lazy(() =>
   import('../../welcome/Welcome').then((c) => ({ default: c.WelcomePage }))
@@ -25,13 +33,25 @@ const RefereeChecksPage = lazy(() =>
   }))
 );
 
+const CurrentTimesheetPage = lazy(() =>
+  import('../../timesheets/pages/CurrentTimesheetPage').then((c) => ({
+    default: c.CurrentTimesheetPage,
+  }))
+);
+
 const useStyles = makeStyles((theme) => ({
   mainContent: {
     padding: theme.spacing(3),
   },
 }));
 
-export function ShellView() {
+export interface ShellViewProps {
+  roles?: Array<Role>;
+}
+
+export const ShellView: FunctionComponent<ShellViewProps> = ({
+  roles = [],
+}) => {
   const location = useLocation();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const handleNavigationToggled = useCallback(
@@ -54,6 +74,7 @@ export function ShellView() {
       <RowFlexBox>
         <ShellAppBar onNavigationToggle={handleNavigationToggled} />
         <ShellNavigation
+          roles={roles}
           isOpen={isNavigationOpen}
           onClose={handleNavigationClosed}
         />
@@ -77,6 +98,11 @@ export function ShellView() {
                   <RefereeChecksPage />
                 </Suspense>
               </Route>
+              <Route path={ROUTES.CURRENT_TIMESHEET}>
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <CurrentTimesheetPage />
+                </Suspense>
+              </Route>
               <Redirect from={ROUTES.REDIRECT} to={ROUTES.WELCOME} />
             </Switch>
           </ColumnFlexBox>
@@ -85,4 +111,4 @@ export function ShellView() {
       <ShellNotificationsContainer />
     </>
   );
-}
+};

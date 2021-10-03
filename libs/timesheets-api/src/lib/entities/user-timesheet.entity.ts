@@ -15,7 +15,7 @@ export class UserTimesheetEntity implements UserTimesheetModel, Entity {
     public timeIn?: string,
     public timeOut?: string,
     public hours?: number,
-    public status: TimesheetStatus = TimesheetStatus.Unknown,
+    public status: TimesheetStatus = TimesheetStatus.New,
     public amount: number = 0
   ) {}
 
@@ -44,11 +44,11 @@ export class UserTimesheetEntity implements UserTimesheetModel, Entity {
 
   clockIn() {
     this.timeIn = new Date().toISOString();
-    this.status = TimesheetStatus.Incomplete;
+    this.status = TimesheetStatus.Open;
   }
 
   clockOut() {
-    if (this.status !== TimesheetStatus.Incomplete) {
+    if (this.status !== TimesheetStatus.Open) {
       throw new Error(
         `Attempt to clock out ${this.username} without clocking in.`
       );

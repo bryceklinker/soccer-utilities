@@ -22,7 +22,7 @@ export class UserTimesheetRepository {
   ): Promise<UserTimesheetEntity | null> {
     const query = new QueryBuilder(UserTimesheetEntity)
       .whereEqual('username', username)
-      .whereEqual('status', TimesheetStatus.Incomplete)
+      .whereEqual('status', TimesheetStatus.Open)
       .build();
     const results = await this.repository().query(query);
     return results.length === 0

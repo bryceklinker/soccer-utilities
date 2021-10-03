@@ -34,7 +34,8 @@
       "@soccer-utilities/testing-support": [
         "libs/testing-support/src/index.ts"
       ],
-      "@soccer-utilities/timesheets-api": ["libs/timesheets-api/src/index.ts"]
+      "@soccer-utilities/timesheets-api": ["libs/timesheets-api/src/index.ts"],
+      "@soccer-utilities/timesheets-ui": ["libs/timesheets-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

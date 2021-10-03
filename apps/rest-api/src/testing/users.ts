@@ -1,5 +1,4 @@
-import { UserModel } from '@soccer-utilities/models';
-import { Role } from '@soccer-utilities/nest-auth0';
+import { UserModel, Role } from '@soccer-utilities/models';
 
 export const ADMIN_USER: UserModel = {
   username: 'the.admin',

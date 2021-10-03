@@ -27,7 +27,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UploadScheduleModel } from './upload-schedule.model';
-import { RequiredRoles, Role, RolesGuard } from '@soccer-utilities/nest-auth0';
+import { RequiredRoles, RolesGuard } from '@soccer-utilities/nest-auth0';
+import { Role } from '@soccer-utilities/models';
 
 @Controller('schedules')
 @ApiTags('Schedules')

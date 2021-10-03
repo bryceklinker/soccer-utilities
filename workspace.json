@@ -249,6 +249,28 @@
         }
       }
     },
+    "timesheets-ui": {
+      "root": "libs/timesheets-ui",
+      "sourceRoot": "libs/timesheets-ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/timesheets-ui/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/timesheets-ui"],
+          "options": {
+            "jestConfig": "libs/timesheets-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "web-ui": {
       "root": "apps/web-ui",
       "sourceRoot": "apps/web-ui/src",

@@ -23,7 +23,7 @@ describe('loading selectors', () => {
       AuthActions.loadUser.request(),
       AuthActions.loadUser.request(),
       AuthActions.loadUser.request(),
-      AuthActions.loadUser.success(WebUiModelFactory.createUser())
+      AuthActions.loadUser.success(WebUiModelFactory.createAuthUser())
     );
 
     expect(selectIsLoading(AuthActions.loadUser.success)(state)).toEqual(true);

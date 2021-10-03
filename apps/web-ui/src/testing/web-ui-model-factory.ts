@@ -1,9 +1,9 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
-import { ApplicationUser } from '../app/auth/state/auth-models';
+import { AuthUser } from '../app/auth/state/auth-models';
 import * as faker from 'faker';
 import { SettingsModel } from '../app/settings/state/settings-model';
 
-function createUser(model: Partial<ApplicationUser> = {}): ApplicationUser {
+function createAuthUser(model: Partial<AuthUser> = {}): AuthUser {
   return {
     sub: faker.datatype.uuid(),
     name: faker.name.lastName(),
@@ -36,6 +36,6 @@ function createSettings(model: Partial<SettingsModel> = {}): SettingsModel {
 
 export const WebUiModelFactory = {
   ...ModelFactory,
-  createUser,
+  createAuthUser,
   createSettings,
 };

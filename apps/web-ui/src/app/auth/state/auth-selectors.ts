@@ -1,23 +1,29 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { AuthActions } from './auth-actions';
 import { authInitialState } from './auth-reducer';
 import { AuthState } from './auth-state';
 import { RootState } from '../../state/root-state';
-import { selectIsLoading } from '../../loading/state/loading-selectors';
+import { Role } from '@soccer-utilities/models';
 
 function selectAuthState(state: RootState): AuthState {
   return state?.auth || authInitialState;
 }
 
-export const selectApplicationUser = createSelector(
+export const selectAuthUser = createSelector(
   selectAuthState,
-  (s) => s.user
+  (s) => s.authUser
 );
 
-export const selectIsApplicationUserLoading = selectIsLoading(
-  AuthActions.loadUser.request
+export const selectCurrentUser = createSelector(
+  selectAuthState,
+  (s) => s.currentUser
 );
+
+export const selectUserRoles = createSelector(
+  selectAuthState,
+  (s) => s.currentUser?.roles?.map((r) => r.name as Role) || []
+);
+
 export const selectUserAccessToken = createSelector(
-  selectApplicationUser,
+  selectAuthUser,
   (state) => state?.accessToken
 );

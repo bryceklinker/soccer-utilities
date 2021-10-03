@@ -20,6 +20,7 @@ import { RefereesController } from './referees/referees.controller';
 import { TimesheetsApiModule } from '@soccer-utilities/timesheets-api';
 import { TimesheetsController } from './timesheets/timesheets.controller';
 import { APP_GUARD } from '@nestjs/core';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { APP_GUARD } from '@nestjs/core';
     HealthController,
     RefereesController,
     TimesheetsController,
+    UsersController,
   ],
   providers: [
     Logger,

@@ -27,13 +27,13 @@ describe('ClockInCommandHandler', () => {
     commandBus = app.get(CommandBus);
   });
 
-  test('when user clocks in then returns timesheet id', async () => {
-    const id = await commandBus.execute(
+  test('when user clocks in then returns added timesheet', async () => {
+    const addedTimesheet = await commandBus.execute(
       new ClockInCommand('this-user-name', 14)
     );
 
     const timesheets = await repository.getAll();
-    expect(timesheets.map((t) => t.id)).toContainEqual(id);
+    expect(timesheets).toContainEqual(addedTimesheet);
   });
 
   test('when user clocks in then saves user clocked in', async () => {
@@ -57,7 +57,7 @@ describe('ClockInCommandHandler', () => {
     expect(queries).toHaveLength(1);
     expect(queries[0]).toHaveQueryParameter({
       name: 'status',
-      value: TimesheetStatus.Incomplete,
+      value: TimesheetStatus.Open,
     });
     expect(queries[0]).toHaveQueryParameter({ name: 'username', value: 'bob' });
   });

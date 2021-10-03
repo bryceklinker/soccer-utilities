@@ -26,9 +26,11 @@ describe('PayTimesheetCommandHandler', () => {
   test('when timesheet is paid then timesheet is marked as paid', async () => {
     const original = await addClosedTimesheet('jack');
 
-    await commandBus.execute(new PayTimesheetCommand(original.id));
+    const updated = await commandBus.execute(
+      new PayTimesheetCommand(original.id)
+    );
 
-    const updated = await repository.getById(original.id);
+    expect(updated.id).toEqual(original.id);
     expect(updated.status).toEqual(TimesheetStatus.Paid);
   });
 

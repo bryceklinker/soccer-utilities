@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from './role';
+import { Role } from '@soccer-utilities/models';
 import { UserModel } from '@soccer-utilities/models';
 import { REQUIRED_ROLES_KEY } from './required-roles';
 

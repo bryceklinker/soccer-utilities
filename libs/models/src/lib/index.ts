@@ -14,6 +14,7 @@ export * from './client-referee-check.model';
 export * from './notification-type';
 export * from './notification.model';
 export * from './timesheet-status';
+export * from './role';
 export * from './user.model';
 export * from './user-timesheet.model';
 export * from './list';

@@ -1,6 +1,6 @@
 export enum TimesheetStatus {
-  Unknown = 'Unknown',
-  Incomplete = 'Incomplete',
+  New = 'New',
+  Open = 'Open',
   Complete = 'Complete',
   Paid = 'Paid',
 }

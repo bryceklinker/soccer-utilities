@@ -18,8 +18,9 @@ import {
   DateRangeModel,
   ListResult,
   RefereeCheckModel,
+  Role,
 } from '@soccer-utilities/models';
-import { RequiredRoles, Role, RolesGuard } from '@soccer-utilities/nest-auth0';
+import { RequiredRoles, RolesGuard } from '@soccer-utilities/nest-auth0';
 
 @Controller('referees')
 @ApiTags('Referees')

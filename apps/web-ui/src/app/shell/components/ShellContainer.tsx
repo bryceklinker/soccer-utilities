@@ -4,7 +4,10 @@ import { ShellView } from './ShellView';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
 import { Typography } from '@material-ui/core';
 import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
-import { selectApplicationUser } from '../../auth/state/auth-selectors';
+import {
+  selectAuthUser,
+  selectUserRoles,
+} from '../../auth/state/auth-selectors';
 import { AuthActions } from '../../auth/state/auth-actions';
 
 declare global {
@@ -17,7 +20,8 @@ const isCypressTest = !!window.Cypress;
 
 export const ShellContainer: FunctionComponent = () => {
   const dispatch = useRootDispatch();
-  const applicationUser = useRootSelector(selectApplicationUser);
+  const applicationUser = useRootSelector(selectAuthUser);
+  const roles = useRootSelector(selectUserRoles);
   const {
     isLoading,
     handleRedirectCallback,
@@ -44,6 +48,7 @@ export const ShellContainer: FunctionComponent = () => {
       dispatch(AuthActions.loadUser.request());
       const accessToken = await getAccessTokenSilently();
       dispatch(AuthActions.loadUser.success({ ...user, accessToken }));
+      dispatch(AuthActions.loadRoles.request());
     }
 
     function syncCypressUserWithState() {
@@ -59,6 +64,7 @@ export const ShellContainer: FunctionComponent = () => {
           accessToken: storedUser.body.access_token,
         })
       );
+      dispatch(AuthActions.loadRoles.request());
     }
 
     if (isCypressTest) {
@@ -76,5 +82,5 @@ export const ShellContainer: FunctionComponent = () => {
     );
   }
 
-  return <ShellView />;
+  return <ShellView roles={roles} />;
 };
