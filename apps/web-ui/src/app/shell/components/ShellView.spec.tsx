@@ -61,4 +61,16 @@ describe('ShellView', () => {
 
     expect(screen.getByLabelText('current schedule')).toBeInTheDocument();
   });
+
+  test('when rendered then redirects to welcome', () => {
+    renderWithProviders(<ShellView roles={[]} />);
+
+    expect(screen.getByLabelText('welcome message')).toBeInTheDocument();
+  });
+
+  test('when user has concessions role then redirects to timesheet', () => {
+    renderWithProviders(<ShellView roles={[Role.concessions]} />);
+
+    expect(screen.queryByLabelText('welcome message')).not.toBeInTheDocument();
+  });
 });

@@ -74,7 +74,7 @@ export const ShellContainer: FunctionComponent = () => {
     }
   }, [user, dispatch, getAccessTokenSilently]);
 
-  if (!applicationUser) {
+  if (!applicationUser || roles.length === 0) {
     return (
       <LoadingIndicator show center>
         <Typography variant={'h4'}>Preparing Your Application...</Typography>

@@ -1,11 +1,11 @@
 import { CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
 import {
+  FunctionComponent,
   lazy,
+  Suspense,
   useCallback,
   useEffect,
   useState,
-  Suspense,
-  FunctionComponent,
 } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { ShellAppBar } from './ShellAppBar';
@@ -67,6 +67,9 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
     handleNavigationClosed();
   }, [location, handleNavigationClosed]);
 
+  const redirectRoute = roles?.includes(Role.concessions)
+    ? ROUTES.CURRENT_TIMESHEET
+    : ROUTES.WELCOME;
   const styles = useStyles();
   return (
     <>
@@ -103,7 +106,7 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
                   <CurrentTimesheetPage />
                 </Suspense>
               </Route>
-              <Redirect from={ROUTES.REDIRECT} to={ROUTES.WELCOME} />
+              <Redirect from={ROUTES.REDIRECT} to={redirectRoute} />
             </Switch>
           </ColumnFlexBox>
         </ColumnFlexBox>

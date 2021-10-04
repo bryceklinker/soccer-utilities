@@ -44,7 +44,7 @@ export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
   const canPay = timesheet.status === TimesheetStatus.Complete;
   const styles = useStyles();
   return (
-    <Card className={styles.card}>
+    <Card className={styles.card} aria-label={'timesheet'}>
       <CardHeader
         title={
           <Typography variant={'h3'} aria-label={'title'}>
