@@ -5,10 +5,16 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { TimesheetStatus, UserTimesheetModel } from '@soccer-utilities/models';
-import { Formatter, NoOp } from '@soccer-utilities/common-ui';
+import {
+  ColumnFlexBox,
+  Formatter,
+  NoOp,
+  RowFlexBox,
+} from '@soccer-utilities/common-ui';
 
 interface TimesheetCardProps {
   timesheet: UserTimesheetModel;
@@ -17,6 +23,16 @@ interface TimesheetCardProps {
   onPay?: (timesheet: UserTimesheetModel) => void;
 }
 
+const useStyles = makeStyles((theme) => ({
+  card: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+  },
+  content: {
+    flex: 1,
+  },
+}));
 export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
   timesheet,
   onClockIn = NoOp,
@@ -26,8 +42,9 @@ export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
   const canClockIn = timesheet.status === TimesheetStatus.New;
   const canClockOut = timesheet.status === TimesheetStatus.Open;
   const canPay = timesheet.status === TimesheetStatus.Complete;
+  const styles = useStyles();
   return (
-    <Card>
+    <Card className={styles.card}>
       <CardHeader
         title={
           <Typography variant={'h3'} aria-label={'title'}>
@@ -35,27 +52,30 @@ export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
           </Typography>
         }
       />
-      <CardContent>
-        <Typography variant={'body1'} aria-label={'rate'}>
-          Hourly Rate: {Formatter.number(timesheet.rate)}
-        </Typography>
-        <Typography variant={'body1'} aria-label={'hours'}>
-          Hours Worked: {Formatter.number(timesheet.hours)}
-        </Typography>
-        <Typography variant={'body1'} aria-label={'amount'}>
-          Total Amount: {Formatter.currency(timesheet.amount)}
-        </Typography>
-        <Typography variant={'body1'} aria-label={'status'}>
-          Status: {timesheet.status}
-        </Typography>
-        <Typography variant={'body1'} aria-label={'time in'}>
-          Time In: {Formatter.datetime(timesheet.timeIn)}
-        </Typography>
-        <Typography variant={'body1'} aria-label={'time out'}>
-          Time Out: {Formatter.datetime(timesheet.timeOut)}
-        </Typography>
+      <CardContent className={styles.content}>
+        <ColumnFlexBox>
+          <Typography variant={'body1'} aria-label={'rate'}>
+            Hourly Rate: {Formatter.number(timesheet.rate)}
+          </Typography>
+          <Typography variant={'body1'} aria-label={'hours'}>
+            Hours Worked: {Formatter.number(timesheet.hours)}
+          </Typography>
+          <Typography variant={'body1'} aria-label={'amount'}>
+            Total Amount: {Formatter.currency(timesheet.amount)}
+          </Typography>
+          <Typography variant={'body1'} aria-label={'status'}>
+            Status: {timesheet.status}
+          </Typography>
+          <Typography variant={'body1'} aria-label={'time in'}>
+            Time In: {Formatter.datetime(timesheet.timeIn)}
+          </Typography>
+          <Typography variant={'body1'} aria-label={'time out'}>
+            Time Out: {Formatter.datetime(timesheet.timeOut)}
+          </Typography>
+        </ColumnFlexBox>
       </CardContent>
       <CardActions>
+        <ColumnFlexBox flex={1} />
         <Button
           aria-label={'clock in'}
           disabled={!canClockIn}
