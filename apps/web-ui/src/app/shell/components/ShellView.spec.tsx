@@ -73,4 +73,16 @@ describe('ShellView', () => {
 
     expect(screen.queryByLabelText('welcome message')).not.toBeInTheDocument();
   });
+
+  test('when user logs out then notifies to logout', () => {
+    const onLogout = jest.fn();
+    renderWithProviders(
+      <ShellView roles={[Role.concessions]} onLogout={onLogout} />
+    );
+
+    userEvent.click(screen.getByRole('button', { name: 'user menu' }));
+    userEvent.click(screen.getByRole('menuitem', { name: 'logout' }));
+
+    expect(onLogout).toHaveBeenCalled();
+  });
 });

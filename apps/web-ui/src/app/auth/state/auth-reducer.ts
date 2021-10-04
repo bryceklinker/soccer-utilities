@@ -9,12 +9,17 @@ export const authInitialState: AuthState = {
 
 export const authReducer = createReducer(authInitialState, (builder) =>
   builder
-    .addCase(AuthActions.loadUser.success, (state, { payload }) => ({
+    .addCase(AuthActions.loadAuthUser.success, (state, { payload }) => ({
       ...state,
       authUser: payload,
     }))
-    .addCase(AuthActions.loadRoles.success, (state, { payload }) => ({
+    .addCase(AuthActions.loadCurrentUser.success, (state, { payload }) => ({
       ...state,
       currentUser: payload,
+    }))
+    .addCase(AuthActions.logout, (state) => ({
+      ...state,
+      authUser: null,
+      currentUser: null,
     }))
 );

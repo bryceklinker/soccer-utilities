@@ -61,6 +61,7 @@ export class UserTimesheetEntity implements UserTimesheetModel, Entity {
     );
     const hoursWorked = minutesWorked / MINUTES_IN_HOUR;
     this.hours = Math.round((hoursWorked + Number.EPSILON) * 100) / 100;
+    this.amount = this.hours * this.rate;
     this.status = TimesheetStatus.Complete;
   }
 
@@ -71,7 +72,6 @@ export class UserTimesheetEntity implements UserTimesheetModel, Entity {
       );
     }
 
-    this.amount = this.hours * this.rate;
     this.status = TimesheetStatus.Paid;
   }
 }

@@ -8,7 +8,7 @@ describe('authReducer', () => {
 
     const state = generateStateFromActions(
       authReducer,
-      AuthActions.loadUser.success(user)
+      AuthActions.loadAuthUser.success(user)
     );
 
     expect(state.authUser).toEqual(user);
@@ -19,9 +19,24 @@ describe('authReducer', () => {
 
     const state = generateStateFromActions(
       authReducer,
-      AuthActions.loadRoles.success(user)
+      AuthActions.loadCurrentUser.success(user)
     );
 
     expect(state.currentUser).toEqual(user);
+  });
+
+  test('when user logs out then clears users', () => {
+    const authUser = WebUiModelFactory.createAuthUser();
+    const user = WebUiModelFactory.createUser();
+
+    const state = generateStateFromActions(
+      authReducer,
+      AuthActions.loadAuthUser.success(authUser),
+      AuthActions.loadCurrentUser.success(user),
+      AuthActions.logout()
+    );
+
+    expect(state.currentUser).toEqual(null);
+    expect(state.authUser).toEqual(null);
   });
 });

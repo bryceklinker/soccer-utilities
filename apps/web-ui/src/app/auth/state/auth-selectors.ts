@@ -23,6 +23,10 @@ export const selectUserRoles = createSelector(
   (s) => s.currentUser?.roles?.map((r) => r.name as Role) || []
 );
 
+export const selectIsAdminUser = createSelector(selectUserRoles, (roles) =>
+  roles.includes(Role.admin)
+);
+
 export const selectUserAccessToken = createSelector(
   selectAuthUser,
   (state) => state?.accessToken

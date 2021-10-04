@@ -13,6 +13,7 @@ import { ShellNavigation } from './ShellNavigation';
 import {
   ColumnFlexBox,
   LoadingIndicator,
+  NoOp,
   RowFlexBox,
 } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
@@ -47,10 +48,12 @@ const useStyles = makeStyles((theme) => ({
 
 export interface ShellViewProps {
   roles?: Array<Role>;
+  onLogout?: () => void;
 }
 
 export const ShellView: FunctionComponent<ShellViewProps> = ({
   roles = [],
+  onLogout = NoOp,
 }) => {
   const location = useLocation();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
@@ -75,7 +78,10 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
     <>
       <CssBaseline />
       <RowFlexBox>
-        <ShellAppBar onNavigationToggle={handleNavigationToggled} />
+        <ShellAppBar
+          onNavigationToggle={handleNavigationToggled}
+          onLogout={onLogout}
+        />
         <ShellNavigation
           roles={roles}
           isOpen={isNavigationOpen}

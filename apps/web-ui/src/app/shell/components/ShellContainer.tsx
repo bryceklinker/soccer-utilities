@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useCallback, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ShellView } from './ShellView';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
@@ -28,6 +28,7 @@ export const ShellContainer: FunctionComponent = () => {
     user,
     loginWithRedirect,
     getAccessTokenSilently,
+    logout,
   } = useAuth0();
 
   useEffect(() => {
@@ -45,10 +46,10 @@ export const ShellContainer: FunctionComponent = () => {
 
   useEffect(() => {
     async function syncUserWithState() {
-      dispatch(AuthActions.loadUser.request());
+      dispatch(AuthActions.loadAuthUser.request());
       const accessToken = await getAccessTokenSilently();
-      dispatch(AuthActions.loadUser.success({ ...user, accessToken }));
-      dispatch(AuthActions.loadRoles.request());
+      dispatch(AuthActions.loadAuthUser.success({ ...user, accessToken }));
+      dispatch(AuthActions.loadCurrentUser.request());
     }
 
     function syncCypressUserWithState() {
@@ -59,12 +60,12 @@ export const ShellContainer: FunctionComponent = () => {
 
       const storedUser = JSON.parse(cypressUser);
       dispatch(
-        AuthActions.loadUser.success({
+        AuthActions.loadAuthUser.success({
           ...storedUser.body.decodedToken.user,
           accessToken: storedUser.body.access_token,
         })
       );
-      dispatch(AuthActions.loadRoles.request());
+      dispatch(AuthActions.loadCurrentUser.request());
     }
 
     if (isCypressTest) {
@@ -74,6 +75,11 @@ export const ShellContainer: FunctionComponent = () => {
     }
   }, [user, dispatch, getAccessTokenSilently]);
 
+  const onLogout = useCallback(() => {
+    logout();
+    dispatch(AuthActions.logout());
+  }, [logout, dispatch]);
+
   if (!applicationUser || roles.length === 0) {
     return (
       <LoadingIndicator show center>
@@ -82,5 +88,5 @@ export const ShellContainer: FunctionComponent = () => {
     );
   }
 
-  return <ShellView roles={roles} />;
+  return <ShellView roles={roles} onLogout={onLogout} />;
 };

@@ -130,4 +130,13 @@ describe('TimesheetCard', () => {
 
     expect(onPay).toHaveBeenCalledWith(timesheet);
   });
+
+  test('when pay is disabled then pay is disabled', () => {
+    const timesheet = ModelFactory.createUserTimesheetModel({
+      status: TimesheetStatus.Complete,
+    });
+    render(<TimesheetCard timesheet={timesheet} disablePay={true} />);
+
+    expect(screen.getByRole('button', { name: 'pay' })).toBeDisabled();
+  });
 });

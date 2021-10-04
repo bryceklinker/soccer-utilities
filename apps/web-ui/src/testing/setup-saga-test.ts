@@ -31,7 +31,7 @@ export function setupSagaTest({
   const actualUser = user || WebUiModelFactory.createAuthUser();
   const store = createSagaTestingStore(
     SettingsActions.load.success(actualSettings),
-    AuthActions.loadUser.success(actualUser),
+    AuthActions.loadAuthUser.success(actualUser),
     ...actions
   );
   return {

@@ -18,6 +18,7 @@ import {
 
 interface TimesheetCardProps {
   timesheet: UserTimesheetModel;
+  disablePay?: boolean;
   onClockIn?: (timesheet: UserTimesheetModel) => void;
   onClockOut?: (timesheet: UserTimesheetModel) => void;
   onPay?: (timesheet: UserTimesheetModel) => void;
@@ -35,13 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
   timesheet,
+  disablePay = false,
   onClockIn = NoOp,
   onClockOut = NoOp,
   onPay = NoOp,
 }) => {
   const canClockIn = timesheet.status === TimesheetStatus.New;
   const canClockOut = timesheet.status === TimesheetStatus.Open;
-  const canPay = timesheet.status === TimesheetStatus.Complete;
+  const canPay = timesheet.status === TimesheetStatus.Complete && !disablePay;
   const styles = useStyles();
   return (
     <Card className={styles.card} aria-label={'timesheet'}>
@@ -61,7 +63,7 @@ export const TimesheetCard: FunctionComponent<TimesheetCardProps> = ({
             Hours Worked: {Formatter.number(timesheet.hours)}
           </Typography>
           <Typography variant={'body1'} aria-label={'amount'}>
-            Total Amount: {Formatter.currency(timesheet.amount)}
+            Timesheet Amount: {Formatter.currency(timesheet.amount)}
           </Typography>
           <Typography variant={'body1'} aria-label={'status'}>
             Status: {timesheet.status}

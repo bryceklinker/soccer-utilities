@@ -117,6 +117,7 @@ describe('UserTimesheetEntity', () => {
 
     expect(entity.timeOut).toEqual(clockOutTime.toISOString());
     expect(entity.hours).toEqual(1.22);
+    expect(entity.amount).toEqual(12.2);
     expect(entity.status).toEqual(TimesheetStatus.Complete);
   });
 
@@ -128,7 +129,6 @@ describe('UserTimesheetEntity', () => {
     entity.clockOut();
     entity.pay();
 
-    expect(entity.amount).toEqual(14.64);
     expect(entity.status).toEqual(TimesheetStatus.Paid);
   });
 

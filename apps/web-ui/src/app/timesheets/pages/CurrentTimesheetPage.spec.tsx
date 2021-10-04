@@ -6,8 +6,9 @@ import {
 import { CurrentTimesheetPage } from './CurrentTimesheetPage';
 import { TimesheetsActions } from '../state/timesheets-actions';
 import { screen } from '@testing-library/dom';
-import { TimesheetStatus } from '@soccer-utilities/models';
+import { Role, TimesheetStatus } from '@soccer-utilities/models';
 import userEvent from '@testing-library/user-event';
+import { AuthActions } from '../../auth/state/auth-actions';
 
 describe('CurrentTimesheetPage', () => {
   test('when rendered then requests to load current timesheet', () => {
@@ -73,11 +74,15 @@ describe('CurrentTimesheetPage', () => {
     );
   });
 
-  test('when user pays timesheet then requests to pay timesheet', () => {
+  test('when admin user pays timesheet then requests to pay timesheet', () => {
     const timesheet = WebUiModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.Complete,
     });
+    const user = WebUiModelFactory.createUser({
+      roles: [{ name: Role.admin }],
+    });
     const store = createTestingStoreFromActions(
+      AuthActions.loadCurrentUser.success(user),
       TimesheetsActions.loadCurrent.success(timesheet)
     );
     renderWithProviders(<CurrentTimesheetPage />, { store });
@@ -87,5 +92,21 @@ describe('CurrentTimesheetPage', () => {
     expect(store.getActions()).toContainEqual(
       TimesheetsActions.pay.request(timesheet)
     );
+  });
+
+  test('when normal user views completed timesheet then pay is disabled', () => {
+    const timesheet = WebUiModelFactory.createUserTimesheetModel({
+      status: TimesheetStatus.Complete,
+    });
+    const user = WebUiModelFactory.createUser({
+      roles: [{ name: Role.concessions }],
+    });
+    const store = createTestingStoreFromActions(
+      AuthActions.loadCurrentUser.success(user),
+      TimesheetsActions.loadCurrent.success(timesheet)
+    );
+    renderWithProviders(<CurrentTimesheetPage />, { store });
+
+    expect(screen.getByRole('button', { name: 'pay' })).toBeDisabled();
   });
 });

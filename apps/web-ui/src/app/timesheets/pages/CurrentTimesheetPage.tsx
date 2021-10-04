@@ -2,14 +2,16 @@ import { FunctionComponent, useEffect, useCallback } from 'react';
 import { Typography } from '@material-ui/core';
 import { TimesheetCard } from '@soccer-utilities/timesheets-ui';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
+import { UserTimesheetModel } from '@soccer-utilities/models';
 import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
 import { TimesheetsActions } from '../state/timesheets-actions';
 import { selectCurrentTimesheet } from '../state/timesheets-selectors';
-import { UserTimesheetModel } from '@soccer-utilities/models';
+import { selectIsAdminUser } from '../../auth/state/auth-selectors';
 
 export const CurrentTimesheetPage: FunctionComponent = () => {
   const dispatch = useRootDispatch();
   const currentTimesheet = useRootSelector(selectCurrentTimesheet);
+  const isAdmin = useRootSelector(selectIsAdminUser);
   const onClockIn = useCallback(
     () => dispatch(TimesheetsActions.clockIn.request()),
     [dispatch]
@@ -39,6 +41,7 @@ export const CurrentTimesheetPage: FunctionComponent = () => {
   return (
     <TimesheetCard
       timesheet={currentTimesheet}
+      disablePay={!isAdmin}
       onClockIn={onClockIn}
       onClockOut={onClockOut}
       onPay={onPay}

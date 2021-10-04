@@ -17,11 +17,11 @@ describe('Auth Saga', () => {
       });
       TestingRestApiServer.setupGet(`${apiUrl}/users/current`, user);
 
-      store.dispatch(AuthActions.loadRoles.request());
+      store.dispatch(AuthActions.loadCurrentUser.request());
 
       await waitFor(() =>
         expect(store.getActions()).toContainEqual(
-          AuthActions.loadRoles.success(user)
+          AuthActions.loadCurrentUser.success(user)
         )
       );
     });
