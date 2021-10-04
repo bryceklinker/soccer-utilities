@@ -11,6 +11,14 @@ import { AuthUser } from '../../auth/state/auth-models';
 import { setupSagaTest } from '../../../testing/setup-saga-test';
 
 describe('Current Schedule Saga', () => {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  let originalConsoleError: (...data: any[]) => void;
+
+  beforeEach(() => {
+    originalConsoleError = console.error;
+    console.error = jest.fn();
+  });
+
   describe('Load Current Schedule', () => {
     test('when load current schedule requested and succeeds then notifies load schedule success', async () => {
       const { store, apiUrl } = setupSagaTest();
@@ -143,5 +151,9 @@ describe('Current Schedule Saga', () => {
         )
       );
     });
+  });
+
+  afterEach(() => {
+    console.error = originalConsoleError;
   });
 });

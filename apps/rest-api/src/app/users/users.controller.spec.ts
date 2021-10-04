@@ -17,4 +17,8 @@ describe('Users Api', () => {
 
     expect(actual).toEqual(ADMIN_USER);
   });
+
+  afterEach(async () => {
+    await fixture.stop();
+  });
 });
