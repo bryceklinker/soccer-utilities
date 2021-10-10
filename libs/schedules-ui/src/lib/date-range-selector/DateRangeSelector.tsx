@@ -1,8 +1,9 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import { DateSelector, RowFlexBox } from '@soccer-utilities/common-ui';
 import { DateRangeModel } from '@soccer-utilities/models';
-import { IconButton, makeStyles } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { IconButton } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import SearchIcon from '@mui/icons-material/Search';
 
 export interface DateRangeSelectorProps {
   start?: string | null;
@@ -56,6 +57,7 @@ export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({
         aria-label={'search date range'}
         onClick={handleSearchDateRange}
         disabled={!!disableSearch}
+        size="large"
       >
         <SearchIcon />
       </IconButton>

@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { GameRow } from './GameRow';
 
 export type GameProps = {

@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { ColumnFlexBox, RowFlexBox, Spacer } from '@soccer-utilities/common-ui';
 import { RefereeChecksTable } from './RefereeChecksTable';
 import { ClientRefereeCheckModel } from '@soccer-utilities/models';
-import { Toolbar, Typography } from '@material-ui/core';
+import { Toolbar, Typography } from '@mui/material';
 
 export interface RefereeChecksProps {
   checks: Array<ClientRefereeCheckModel>;

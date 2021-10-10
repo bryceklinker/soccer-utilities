@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { TableCell, TableRow, Typography } from '@material-ui/core';
+import { TableCell, TableRow, Typography } from '@mui/material';
 
 export const EmptyRefereeCheckRow: FunctionComponent = () => {
   return (

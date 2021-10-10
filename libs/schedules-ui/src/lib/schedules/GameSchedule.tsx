@@ -2,9 +2,9 @@ import { FunctionComponent } from 'react';
 import { GameScheduleModel } from '@soccer-utilities/models';
 import { ColumnFlexBox, RowFlexBox } from '@soccer-utilities/common-ui';
 import { GamesTable } from './GamesTable';
-import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import UploadIcon from '@material-ui/icons/CloudUpload';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import UploadIcon from '@mui/icons-material/CloudUpload';
 
 export type GameScheduleProps = {
   schedule?: GameScheduleModel | null;
@@ -24,10 +24,18 @@ export const GameSchedule: FunctionComponent<GameScheduleProps> = ({
           <Typography variant={'subtitle1'} aria-label={'last updated'}>
             {schedule?.lastUpdated || 'No Schedule'}
           </Typography>
-          <IconButton aria-label={'upload schedule'} onClick={onUpload}>
+          <IconButton
+            aria-label={'upload schedule'}
+            onClick={onUpload}
+            size="large"
+          >
             <UploadIcon />
           </IconButton>
-          <IconButton aria-label={'refresh schedule'} onClick={onRefresh}>
+          <IconButton
+            aria-label={'refresh schedule'}
+            onClick={onRefresh}
+            size="large"
+          >
             <RefreshIcon />
           </IconButton>
         </RowFlexBox>

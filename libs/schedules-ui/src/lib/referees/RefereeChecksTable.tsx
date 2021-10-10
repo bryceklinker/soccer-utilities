@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import { EmptyRefereeCheckRow } from './EmptyRefereeCheckRow';
 import { RefereeCheckRow } from './RefereeCheckRow';
 import { ClientRefereeCheckModel } from '@soccer-utilities/models';

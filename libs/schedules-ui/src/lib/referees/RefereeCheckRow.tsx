@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback } from 'react';
-import { IconButton, TableCell, TableRow } from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { IconButton, TableCell, TableRow } from '@mui/material';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { refereeCheckMemo } from './referee-check-memo';
 import { ClientRefereeCheckModel } from '@soccer-utilities/models';
 
@@ -27,7 +27,11 @@ export const RefereeCheckRow: FunctionComponent<RefereeCheckRowProps> = ({
       </TableCell>
       <TableCell aria-label={'memo'}>{refereeCheckMemo(check)}</TableCell>
       <TableCell>
-        <IconButton aria-label={'copy check'} onClick={handleCopyClick}>
+        <IconButton
+          aria-label={'copy check'}
+          onClick={handleCopyClick}
+          size="large"
+        >
           <FileCopyIcon />
         </IconButton>
       </TableCell>

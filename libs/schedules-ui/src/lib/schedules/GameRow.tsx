@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { GameModel } from '@soccer-utilities/models';
-import { TableCell, TableRow, Typography } from '@material-ui/core';
+import { TableCell, TableRow, Typography } from '@mui/material';
 import { ColumnFlexBox } from '@soccer-utilities/common-ui';
 
 export type GameRowProps = {
