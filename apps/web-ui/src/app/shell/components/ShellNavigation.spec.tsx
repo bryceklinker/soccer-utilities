@@ -24,4 +24,16 @@ describe('ShellNavigation', () => {
     expect(screen.queryByLabelText('current schedule')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('referee checks')).not.toBeInTheDocument();
   });
+
+  test('when user has no roles then shows welcome link only', () => {
+    renderWithProviders(<ShellNavigation isOpen={true} roles={[]} />);
+
+    expect(screen.getByLabelText('welcome')).toBeVisible();
+
+    expect(
+      screen.queryByLabelText('current timesheet')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('current schedule')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('referee checks')).not.toBeInTheDocument();
+  });
 });

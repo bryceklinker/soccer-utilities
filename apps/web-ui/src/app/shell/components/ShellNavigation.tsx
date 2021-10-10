@@ -4,7 +4,6 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemProps,
   makeStyles,
   Toolbar,
 } from '@material-ui/core';
@@ -30,6 +29,7 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
   onClose = NoOp,
 }) => {
   const isAdmin = roles.includes(Role.admin);
+  const isConcessions = roles.includes(Role.concessions) || isAdmin;
   const styles = useStyles();
   return (
     <Drawer open={isOpen} onClose={onClose}>
@@ -41,6 +41,7 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
             Welcome
           </LinkButton>
           <LinkButton
+            visible={isConcessions}
             to={ROUTES.CURRENT_TIMESHEET}
             aria-label={'current timesheet'}
           >

@@ -16,7 +16,7 @@ import {
   NoOp,
   RowFlexBox,
 } from '@soccer-utilities/common-ui';
-import { ROUTES } from '../routing';
+import { getRedirectRoute, ROUTES } from '../routing';
 import { ShellNotificationsContainer } from './ShellNotificationsContainer';
 import { Role } from '@soccer-utilities/models';
 
@@ -70,9 +70,7 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
     handleNavigationClosed();
   }, [location, handleNavigationClosed]);
 
-  const redirectRoute = roles?.includes(Role.concessions)
-    ? ROUTES.CURRENT_TIMESHEET
-    : ROUTES.WELCOME;
+  const redirectRoute = getRedirectRoute(roles);
   const styles = useStyles();
   return (
     <>

@@ -1,14 +1,16 @@
-import { FunctionComponent, useCallback, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import { FunctionComponent } from 'react';
 import { ShellView } from './ShellView';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
 import { Typography } from '@material-ui/core';
-import { useRootDispatch, useRootSelector } from '../../state/root-hooks';
+import { useRootSelector } from '../../state/root-hooks';
 import {
   selectAuthUser,
   selectUserRoles,
 } from '../../auth/state/auth-selectors';
-import { AuthActions } from '../../auth/state/auth-actions';
+import { useAuthCallback } from '../../auth/hooks/use-auth-callback';
+import { useSyncAuthState } from '../../auth/hooks/use-sync-auth-state';
+import { useAuthLogout } from '../../auth/hooks/use-auth-logout';
+import { useCurrentUser } from '../../auth/hooks/use-current-user';
 
 declare global {
   interface Window {
@@ -19,71 +21,26 @@ declare global {
 const isCypressTest = !!window.Cypress;
 
 export const ShellContainer: FunctionComponent = () => {
-  const dispatch = useRootDispatch();
-  const applicationUser = useRootSelector(selectAuthUser);
+  const authUser = useRootSelector(selectAuthUser);
+  const currentUser = useCurrentUser();
   const roles = useRootSelector(selectUserRoles);
-  const {
-    isLoading,
-    handleRedirectCallback,
-    user,
-    loginWithRedirect,
-    getAccessTokenSilently,
-    logout,
-  } = useAuth0();
 
-  useEffect(() => {
-    if (isLoading || user) {
-      return;
-    }
+  useAuthCallback(isCypressTest);
+  useSyncAuthState(isCypressTest);
+  const onLogout = useAuthLogout();
 
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('code')) {
-      handleRedirectCallback().catch((err) => console.error(err));
-    } else if (!isCypressTest) {
-      loginWithRedirect().catch((err) => console.error(err));
-    }
-  }, [isLoading, handleRedirectCallback, user, loginWithRedirect]);
-
-  useEffect(() => {
-    async function syncUserWithState() {
-      dispatch(AuthActions.loadAuthUser.request());
-      const accessToken = await getAccessTokenSilently();
-      dispatch(AuthActions.loadAuthUser.success({ ...user, accessToken }));
-      dispatch(AuthActions.loadCurrentUser.request());
-    }
-
-    function syncCypressUserWithState() {
-      const cypressUser = localStorage.getItem('auth0-cypress');
-      if (!cypressUser) {
-        return;
-      }
-
-      const storedUser = JSON.parse(cypressUser);
-      dispatch(
-        AuthActions.loadAuthUser.success({
-          ...storedUser.body.decodedToken.user,
-          accessToken: storedUser.body.access_token,
-        })
-      );
-      dispatch(AuthActions.loadCurrentUser.request());
-    }
-
-    if (isCypressTest) {
-      syncCypressUserWithState();
-    } else {
-      syncUserWithState().catch((err) => console.error(err));
-    }
-  }, [user, dispatch, getAccessTokenSilently]);
-
-  const onLogout = useCallback(() => {
-    logout();
-    dispatch(AuthActions.logout());
-  }, [logout, dispatch]);
-
-  if (!applicationUser || roles.length === 0) {
+  if (!authUser) {
     return (
       <LoadingIndicator show center>
-        <Typography variant={'h4'}>Preparing Your Application...</Typography>
+        <Typography variant={'h4'}>Waiting for user login...</Typography>
+      </LoadingIndicator>
+    );
+  }
+
+  if (!currentUser) {
+    return (
+      <LoadingIndicator show center>
+        <Typography variant={'h4'}>Loading current user...</Typography>
       </LoadingIndicator>
     );
   }
