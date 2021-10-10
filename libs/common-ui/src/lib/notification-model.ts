@@ -1,4 +1,4 @@
-import { Color } from '@material-ui/lab';
+import { Color } from '@mui/lab';
 import { NotificationType } from '@soccer-utilities/models';
 
 export function convertToColor(type?: NotificationType): Color {

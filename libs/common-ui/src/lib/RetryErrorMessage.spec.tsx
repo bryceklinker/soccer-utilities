@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { RetryErrorMessage } from './RetryErrorMessage';
 import userEvent from '@testing-library/user-event';
 

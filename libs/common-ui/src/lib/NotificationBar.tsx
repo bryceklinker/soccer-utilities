@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { convertToColor } from './notification-model';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
 import { NotificationModel } from '@soccer-utilities/models';
 
 const DEFAULT_DURATION = 4000;

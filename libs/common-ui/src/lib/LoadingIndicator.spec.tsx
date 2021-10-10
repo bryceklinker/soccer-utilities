@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { LoadingIndicator } from './LoadingIndicator';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 describe('LoadingIndicator', () => {
   test('when show not specified then loading is showing', () => {

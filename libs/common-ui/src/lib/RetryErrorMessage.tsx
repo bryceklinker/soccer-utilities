@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { ColumnFlexBox } from './ColumnFlexBox';
-import { Button } from '@material-ui/core';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import { Button } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export type RetryErrorMessageProps = {
   show?: boolean;
