@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { ShellView } from './ShellView';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { useRootSelector } from '../../state/root-hooks';
 import {
   selectAuthUser,

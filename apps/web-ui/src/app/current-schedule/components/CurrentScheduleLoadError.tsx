@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { RetryErrorMessage } from '@soccer-utilities/common-ui';
 
 export type CurrentScheduleLoadErrorProps = {

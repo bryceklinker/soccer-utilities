@@ -1,12 +1,6 @@
 import { FunctionComponent } from 'react';
-import {
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  makeStyles,
-  Toolbar,
-} from '@material-ui/core';
+import { Divider, Drawer, List, ListItem, Toolbar } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import { ColumnFlexBox, NoOp } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';

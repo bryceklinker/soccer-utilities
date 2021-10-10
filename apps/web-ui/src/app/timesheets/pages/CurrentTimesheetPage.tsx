@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useCallback } from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { TimesheetCard } from '@soccer-utilities/timesheets-ui';
 import { LoadingIndicator } from '@soccer-utilities/common-ui';
 import { UserTimesheetModel } from '@soccer-utilities/models';

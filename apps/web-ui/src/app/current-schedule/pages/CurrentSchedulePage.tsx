@@ -4,7 +4,7 @@ import {
   GameSchedule,
   UploadScheduleDialog,
 } from '@soccer-utilities/schedules-ui';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { CurrentScheduleLoadError } from '../components/CurrentScheduleLoadError';
 import { selectHasErrors } from '../../errors/state/errors-selectors';
 import { selectIsLoading } from '../../loading/state/loading-selectors';

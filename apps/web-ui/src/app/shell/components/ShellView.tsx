@@ -1,4 +1,5 @@
-import { CssBaseline, makeStyles, Toolbar } from '@material-ui/core';
+import { CssBaseline, Toolbar } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   FunctionComponent,
   lazy,

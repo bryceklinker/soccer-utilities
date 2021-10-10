@@ -2,14 +2,14 @@ import { FunctionComponent, useCallback, useState, MouseEvent } from 'react';
 import {
   AppBar,
   IconButton,
-  makeStyles,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import { NoOp, RowFlexBox } from '@soccer-utilities/common-ui';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,12 +52,17 @@ export const ShellAppBar: FunctionComponent<ShellAppBarProps> = ({
         <IconButton
           aria-label={'navigation toggle'}
           onClick={onNavigationToggle}
+          size="large"
         >
           <MenuIcon />
         </IconButton>
         <Typography variant={'h6'}>BSC Internal</Typography>
         <RowFlexBox flex={1} />
-        <IconButton aria-label={'user menu'} onClick={handleOpenUserMenu}>
+        <IconButton
+          aria-label={'user menu'}
+          onClick={handleOpenUserMenu}
+          size="large"
+        >
           <PersonIcon />
         </IconButton>
         <Menu

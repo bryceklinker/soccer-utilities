@@ -10,12 +10,7 @@ import {
   RefereeChecks,
 } from '@soccer-utilities/schedules-ui';
 import { selectIsLoading } from '../../loading/state/loading-selectors';
-import {
-  FormControlLabel,
-  Switch,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import { FormControlLabel, Switch, Toolbar, Typography } from '@mui/material';
 import {
   ColumnFlexBox,
   LoadingIndicator,
