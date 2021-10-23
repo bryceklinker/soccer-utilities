@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { readWorkspaceJson } from '@nrwl/workspace';
+import { readWorkspaceJson, readNxJson } from '@nrwl/workspace';
 import * as path from 'path';
 import { PackageJsonLocator } from './package-json-locator';
 
@@ -12,7 +12,10 @@ describe('package-json-locator', () => {
       cwd: '.',
       root: REPO_ROOT_PATH,
       isVerbose: false,
-      workspace: readWorkspaceJson(),
+      workspace: {
+        ...readWorkspaceJson(),
+        ...readNxJson(),
+      },
     };
   });
 
