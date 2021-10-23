@@ -21,7 +21,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "core": {
       "root": "libs/core",
@@ -43,7 +44,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "data-access": {
       "root": "libs/data-access",
@@ -65,7 +67,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "models": {
       "root": "libs/models",
@@ -87,7 +90,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "nest-auth0": {
       "root": "libs/nest-auth0",
@@ -109,7 +113,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "rest-api": {
       "root": "apps/rest-api",
@@ -158,7 +163,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "schedules-api": {
       "root": "libs/schedules-api",
@@ -180,7 +186,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "schedules-ui": {
       "root": "libs/schedules-ui",
@@ -202,7 +209,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "testing-support": {
       "root": "libs/testing-support",
@@ -224,7 +232,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "timesheets-api": {
       "root": "libs/timesheets-api",
@@ -246,7 +255,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "timesheets-ui": {
       "root": "libs/timesheets-ui",
@@ -268,7 +278,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "web-ui": {
       "root": "apps/web-ui",
@@ -336,7 +347,9 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["rest-api"]
     },
     "web-ui-e2e": {
       "root": "apps/web-ui-e2e",
@@ -362,7 +375,9 @@
           },
           "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["web-ui"]
     },
     "workspace": {
       "targets": {
@@ -373,28 +388,8 @@
           }
         }
       },
-      "root": "."
+      "root": ".",
+      "tags": []
     }
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "strict": true,
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint",
-        "strict": true
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
   }
 }

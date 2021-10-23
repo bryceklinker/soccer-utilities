@@ -18,52 +18,6 @@
       }
     }
   },
-  "projects": {
-    "common-ui": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "data-access": {
-      "tags": []
-    },
-    "models": {
-      "tags": []
-    },
-    "nest-auth0": {
-      "tags": []
-    },
-    "rest-api": {
-      "tags": []
-    },
-    "schedules-api": {
-      "tags": []
-    },
-    "schedules-ui": {
-      "tags": []
-    },
-    "testing-support": {
-      "tags": []
-    },
-    "timesheets-api": {
-      "tags": []
-    },
-    "timesheets-ui": {
-      "tags": []
-    },
-    "web-ui": {
-      "tags": [],
-      "implicitDependencies": ["rest-api"]
-    },
-    "web-ui-e2e": {
-      "tags": [],
-      "implicitDependencies": ["web-ui"]
-    },
-    "workspace": {
-      "tags": []
-    }
-  },
   "targetDependencies": {
     "build": [
       {
@@ -71,5 +25,26 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true,
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true
+      }
+    }
   }
 }
