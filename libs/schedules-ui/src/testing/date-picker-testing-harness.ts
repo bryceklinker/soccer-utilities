@@ -4,7 +4,6 @@ import { screen } from '@testing-library/react';
 function changeDate(label: string, day: string) {
   userEvent.click(screen.getByRole('button', { name: label }));
   userEvent.click(screen.getByRole('button', { name: day }));
-  userEvent.click(screen.getByRole('button', { name: 'OK' }));
   removeDialogManuallySinceItDoesNotHappenLikeItDoesInABrowser();
 }
 

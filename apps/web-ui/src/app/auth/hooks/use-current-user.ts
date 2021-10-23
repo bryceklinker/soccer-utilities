@@ -12,14 +12,23 @@ export function useCurrentUser(): UserModel | null {
   const isLoadingCurrentUser = useRootSelector(
     selectIsLoading(AuthActions.loadCurrentUser.request)
   );
+  const isLoadingAuthUser = useRootSelector(
+    selectIsLoading(AuthActions.loadAuthUser.request)
+  );
 
   useEffect(() => {
-    if (!authUser || isLoadingCurrentUser || currentUser) {
+    if (!authUser || isLoadingCurrentUser || isLoadingAuthUser || currentUser) {
       return;
     }
 
     dispatch(AuthActions.loadCurrentUser.request());
-  }, [authUser, currentUser, isLoadingCurrentUser, dispatch]);
+  }, [
+    authUser,
+    currentUser,
+    isLoadingCurrentUser,
+    isLoadingAuthUser,
+    dispatch,
+  ]);
 
   return currentUser;
 }

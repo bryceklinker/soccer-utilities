@@ -1,16 +1,15 @@
 import { FunctionComponent } from 'react';
 import { Divider, Drawer, List, ListItem, Toolbar } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import { ColumnFlexBox, NoOp } from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { Role } from '@soccer-utilities/models';
 
-const useStyles = makeStyles(() => ({
+const styles = {
   drawer: {
     width: 240,
   },
-}));
+} as const;
 
 export type ShellNavigationProps = {
   isOpen: boolean;
@@ -24,12 +23,11 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
 }) => {
   const isAdmin = roles.includes(Role.admin);
   const isConcessions = roles.includes(Role.concessions) || isAdmin;
-  const styles = useStyles();
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <Toolbar />
       <Divider />
-      <ColumnFlexBox className={styles.drawer}>
+      <ColumnFlexBox sx={styles.drawer}>
         <List component={'nav'}>
           <LinkButton to={ROUTES.WELCOME} aria-label={'welcome'}>
             Welcome

@@ -4,19 +4,19 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Theme,
   Toolbar,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import { NoOp, RowFlexBox } from '@soccer-utilities/common-ui';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   appbar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
   },
-}));
+} as const;
 
 export type ShellAppBarProps = {
   onNavigationToggle: () => void;
@@ -45,9 +45,8 @@ export const ShellAppBar: FunctionComponent<ShellAppBarProps> = ({
     setUserMenuElement(null);
   }, [setUserMenuElement]);
 
-  const styles = useStyles();
   return (
-    <AppBar position={'fixed'} className={styles.appbar}>
+    <AppBar position={'fixed'} sx={styles.appbar}>
       <Toolbar>
         <IconButton
           aria-label={'navigation toggle'}

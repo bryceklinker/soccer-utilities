@@ -1,8 +1,7 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import { DateSelector, RowFlexBox } from '@soccer-utilities/common-ui';
 import { DateRangeModel } from '@soccer-utilities/models';
-import { IconButton } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export interface DateRangeSelectorProps {
@@ -11,11 +10,11 @@ export interface DateRangeSelectorProps {
   onSearch?: (range?: DateRangeModel) => void;
 }
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   spacer: {
-    marginRight: theme.spacing(2),
+    marginRight: 2,
   },
-}));
+} as const;
 export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({
   start,
   end,
@@ -29,30 +28,28 @@ export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({
       return;
     }
 
+    console.log('OnSearch', { startDate, endDate });
     if (!startDate || !endDate) {
       onSearch(undefined);
     } else {
       onSearch({ start: startDate, end: endDate });
     }
   }, [startDate, endDate, onSearch]);
-  const styles = useStyles();
   const disableSearch = (startDate && !endDate) || (endDate && !startDate);
   return (
     <RowFlexBox alignItems={'center'} justifyContent={'end'}>
       <DateSelector
         value={startDate || null}
         onChange={setStartDate}
-        placeholder={'Select Start Date'}
         aria-label={'start date'}
       />
-      <div className={styles.spacer} />
+      <Box sx={styles.spacer} />
       <DateSelector
         value={endDate || null}
         onChange={setEndDate}
-        placeholder={'Select End Date'}
         aria-label={'end date'}
       />
-      <div className={styles.spacer} />
+      <Box sx={styles.spacer} />
       <IconButton
         aria-label={'search date range'}
         onClick={handleSearchDateRange}

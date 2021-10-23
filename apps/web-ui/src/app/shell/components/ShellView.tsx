@@ -1,5 +1,4 @@
-import { CssBaseline, Toolbar } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Toolbar } from '@mui/material';
 import {
   FunctionComponent,
   lazy,
@@ -41,11 +40,11 @@ const CurrentTimesheetPage = lazy(() =>
   }))
 );
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   mainContent: {
-    padding: theme.spacing(3),
+    padding: 3,
   },
-}));
+} as const;
 
 export interface ShellViewProps {
   roles?: Array<Role>;
@@ -72,10 +71,8 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
   }, [location, handleNavigationClosed]);
 
   const redirectRoute = getRedirectRoute(roles);
-  const styles = useStyles();
   return (
     <>
-      <CssBaseline />
       <RowFlexBox>
         <ShellAppBar
           onNavigationToggle={handleNavigationToggled}
@@ -89,7 +86,7 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
 
         <ColumnFlexBox display={'flex'} flex={1} flexDirection={'column'}>
           <Toolbar />
-          <ColumnFlexBox className={styles.mainContent}>
+          <ColumnFlexBox sx={styles.mainContent}>
             <Switch>
               <Route path={ROUTES.WELCOME}>
                 <Suspense fallback={<LoadingIndicator show center />}>

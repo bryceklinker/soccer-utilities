@@ -1,27 +1,24 @@
-import {
-  ThemeProvider,
-  Theme,
-  StyledEngineProvider,
-} from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { FunctionComponent } from 'react';
-import { PaletteType } from '@mui/material';
+import { CssBaseline, PaletteMode } from '@mui/material';
 import { createSoccerTheme } from './create-soccer-theme';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
+import { StylesProvider } from '@mui/styles';
 
 export type SoccerThemeProviderProps = {
-  type?: PaletteType;
+  type?: PaletteMode;
 };
 
 export const SoccerThemeProvider: FunctionComponent<SoccerThemeProviderProps> =
   ({ type = 'dark', children }) => {
     const theme = createSoccerTheme(type);
     return (
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </StyledEngineProvider>
+      <StylesProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <>
+            <CssBaseline />
+            {children}
+          </>
+        </ThemeProvider>
+      </StylesProvider>
     );
   };

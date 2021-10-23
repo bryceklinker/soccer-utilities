@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@soccer-utilities/common-ui": ["libs/common-ui/src/index.ts"],
+      "@soccer-utilities/common-ui/testing": [
+        "libs/common-ui/src/testing/index.ts"
+      ],
       "@soccer-utilities/core": ["libs/core/src/index.ts"],
       "@soccer-utilities/data-access": ["libs/data-access/src/index.ts"],
       "@soccer-utilities/data-access/matchers": [

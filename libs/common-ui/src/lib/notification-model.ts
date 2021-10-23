@@ -1,7 +1,7 @@
-import { Color } from '@mui/lab';
 import { NotificationType } from '@soccer-utilities/models';
+import { AlertColor } from '@mui/material';
 
-export function convertToColor(type?: NotificationType): Color {
+export function convertToColor(type?: NotificationType): AlertColor {
   switch (type) {
     case NotificationType.Success:
       return 'success';

@@ -1,18 +1,17 @@
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  KeyboardDatePickerProps,
-} from '@material-ui/pickers';
-import { FunctionComponent, useCallback } from 'react';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { DatePickerProps, DesktopDatePicker } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { FunctionComponent, useCallback, useState } from 'react';
 import { parse } from 'date-fns';
 import { DATE_FORMAT } from '@soccer-utilities/models';
-import DateFnsUtils from '@date-io/date-fns';
+import { TextField } from '@mui/material';
+import { DateFormatter } from '@soccer-utilities/core';
 
 export type DateSelectorProps = Omit<
-  Omit<KeyboardDatePickerProps, 'onChange'>,
+  Omit<DatePickerProps<Date>, 'onChange' | 'renderInput' | 'date'>,
   'value'
 > & {
+  'aria-label'?: string;
   onChange: (value: string | null) => void;
   value: string | null;
 };
@@ -23,23 +22,28 @@ export const DateSelector: FunctionComponent<DateSelectorProps> = ({
   ...rest
 }) => {
   const handleChange = useCallback(
-    (date: MaterialUiPickersDate | null, newValue?: string | null) => {
-      onChange(newValue || null);
+    (date: Date | null) => {
+      onChange(DateFormatter.safeFormat(date));
     },
     [onChange]
   );
+
+  const actualValue = value ? parse(value, DATE_FORMAT, new Date()) : null;
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        value={value ? parse(value, DATE_FORMAT, new Date()) : null}
-        format={DATE_FORMAT}
-        inputProps={{ 'aria-label': ariaLabel }}
-        KeyboardButtonProps={{ 'aria-label': ariaLabel }}
-        DialogProps={{ 'aria-label': ariaLabel }}
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DesktopDatePicker
+        value={actualValue}
         onChange={handleChange}
         clearable
+        OpenPickerButtonProps={{ 'aria-label': ariaLabel }}
+        renderInput={(props) => (
+          <TextField
+            {...props}
+            inputProps={{ ...props.inputProps, 'aria-label': ariaLabel }}
+          />
+        )}
         {...rest}
       />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };

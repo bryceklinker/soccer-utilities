@@ -1,5 +1,5 @@
 import { AuthGuard } from '@nestjs/passport';
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ALLOW_ANONYMOUS_META_KEY } from './allow-anonymous';
 import { AuthService } from './auth-service';
@@ -9,7 +9,8 @@ import { Request } from 'express';
 export class JwtGuard extends AuthGuard('jwt') {
   constructor(
     private readonly reflector: Reflector,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly logger: Logger
   ) {
     super();
   }
@@ -27,11 +28,12 @@ export class JwtGuard extends AuthGuard('jwt') {
     }
 
     const result = (await super.canActivate(context)) as boolean;
-    const request = context.switchToHttp().getRequest<Request>();
+    this.logger.log('Result of can activate', result);
     if (!result) {
       return false;
     }
 
+    const request = context.switchToHttp().getRequest<Request>();
     request.user = {
       ...request.user,
       ...(await this.authService.getUser(request.user['sub'])),

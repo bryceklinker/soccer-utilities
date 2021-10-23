@@ -10,6 +10,7 @@ import {
 import { Provider } from 'react-redux';
 import { createTestingStoreFromActions } from './create-testing-store-from-state';
 import { RootState } from '../app/state/root-state';
+import { SoccerThemeProvider } from '@soccer-utilities/common-ui';
 
 export type RenderWithProvidersOptions = Partial<MemoryRouterProps> &
   Partial<RouterProps> & {
@@ -48,7 +49,9 @@ export function renderWithProviders(
   const store = options.store || createTestingStoreFromActions();
   return render(
     <Provider store={store}>
-      <TestingRouter {...options}>{component}</TestingRouter>
+      <SoccerThemeProvider>
+        <TestingRouter {...options}>{component}</TestingRouter>
+      </SoccerThemeProvider>
     </Provider>
   );
 }

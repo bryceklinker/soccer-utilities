@@ -5,12 +5,14 @@ import {
 import { RefereeChecksPage } from './RefereeChecksPage';
 import { RefereesActions } from '../state/referees-actions';
 import { ModelFactory } from '@soccer-utilities/testing-support';
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { List } from '@soccer-utilities/models';
 import { DatePickerTestingHarness } from '@soccer-utilities/schedules-ui/testing';
 
 const CURRENT_TIME = new Date(2021, 6, 10);
+const JULY_23_2021 = 'Jul 23, 2021';
+const JULY_24_2021 = 'Jul 24, 2021';
 describe('RefereeChecksPage', () => {
   beforeEach(() => {
     jest.useFakeTimers('modern').setSystemTime(CURRENT_TIME);
@@ -83,8 +85,8 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.changeStart('23');
-    DatePickerTestingHarness.changeEnd('24');
+    DatePickerTestingHarness.changeStart(JULY_23_2021);
+    DatePickerTestingHarness.changeEnd(JULY_24_2021);
     DatePickerTestingHarness.clickSearch();
 
     expect(store.getActions()).toContainEqual(
@@ -105,8 +107,8 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.changeStart('23');
-    DatePickerTestingHarness.changeEnd('24');
+    DatePickerTestingHarness.changeStart(JULY_23_2021);
+    DatePickerTestingHarness.changeEnd(JULY_24_2021);
     DatePickerTestingHarness.clickSearch();
 
     expect(DatePickerTestingHarness.getStartTextBox()).toHaveValue(

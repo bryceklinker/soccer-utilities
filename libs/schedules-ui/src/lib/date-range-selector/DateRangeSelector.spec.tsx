@@ -1,47 +1,52 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { DateRangeSelector } from './DateRangeSelector';
 import { DatePickerTestingHarness } from '../../testing/date-picker-testing-harness';
+import { renderWithTheme } from '@soccer-utilities/common-ui/testing';
 
 const CURRENT_DATE = new Date(2015, 3, 30);
+const APRIL_22_DATE = 'Apr 22, 2015';
+const APRIL_23_DATE = 'Apr 23, 2015';
 describe('DateRangeSelector', () => {
   beforeEach(() => {
     jest.useFakeTimers('modern').setSystemTime(CURRENT_DATE);
   });
 
   test('when no dates provided then no dates are selected', () => {
-    render(<DateRangeSelector />);
+    renderWithTheme(<DateRangeSelector />);
 
     expect(getStartDateTextBox()).toHaveValue('');
     expect(getEndDateTextBox()).toHaveValue('');
   });
 
   test('when start date provided then start date is used', () => {
-    render(<DateRangeSelector start={'2020-04-30'} />);
+    renderWithTheme(<DateRangeSelector start={'2020-04-30'} />);
 
-    expect(getStartDateTextBox()).toHaveValue('2020-04-30');
+    expect(getStartDateTextBox()).toHaveValue('04/30/2020');
     expect(getEndDateTextBox()).toHaveValue('');
   });
 
   test('when end date provided then end date is used', () => {
-    render(<DateRangeSelector end={'2020-04-30'} />);
+    renderWithTheme(<DateRangeSelector end={'2020-04-30'} />);
 
     expect(getStartDateTextBox()).toHaveValue('');
-    expect(getEndDateTextBox()).toHaveValue('2020-04-30');
+    expect(getEndDateTextBox()).toHaveValue('04/30/2020');
   });
 
   test('when start and end date provided then start and end are provided dates', () => {
-    render(<DateRangeSelector start={'2020-04-30'} end={'2021-04-30'} />);
+    renderWithTheme(
+      <DateRangeSelector start={'2020-04-30'} end={'2021-04-30'} />
+    );
 
-    expect(getStartDateTextBox()).toHaveValue('2020-04-30');
-    expect(getEndDateTextBox()).toHaveValue('2021-04-30');
+    expect(getStartDateTextBox()).toHaveValue('04/30/2020');
+    expect(getEndDateTextBox()).toHaveValue('04/30/2021');
   });
 
   test('when searched then notifies with start and end dates', () => {
     const onSearch = jest.fn();
-    render(<DateRangeSelector onSearch={onSearch} />);
+    renderWithTheme(<DateRangeSelector onSearch={onSearch} />);
 
-    DatePickerTestingHarness.changeStart('22');
-    DatePickerTestingHarness.changeEnd('23');
+    DatePickerTestingHarness.changeStart(APRIL_22_DATE);
+    DatePickerTestingHarness.changeEnd(APRIL_23_DATE);
     DatePickerTestingHarness.clickSearch();
 
     expect(onSearch).toHaveBeenCalledWith({
@@ -51,24 +56,24 @@ describe('DateRangeSelector', () => {
   });
 
   test('when start date filled in without end date then search is disabled', () => {
-    render(<DateRangeSelector />);
+    renderWithTheme(<DateRangeSelector />);
 
-    DatePickerTestingHarness.changeStart('22');
+    DatePickerTestingHarness.changeStart(APRIL_22_DATE);
 
     expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
   });
 
   test('when end date filled in without start date then search is disabled', () => {
-    render(<DateRangeSelector />);
+    renderWithTheme(<DateRangeSelector />);
 
-    DatePickerTestingHarness.changeEnd('22');
+    DatePickerTestingHarness.changeEnd(APRIL_22_DATE);
 
     expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
   });
 
   test('when searching without dates then notifies of search without range', () => {
     const onSearch = jest.fn();
-    render(<DateRangeSelector onSearch={onSearch} />);
+    renderWithTheme(<DateRangeSelector onSearch={onSearch} />);
 
     DatePickerTestingHarness.clickSearch();
 

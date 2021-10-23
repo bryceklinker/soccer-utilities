@@ -212,7 +212,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/testing-support/**/*.ts"]
+            "lintFilePatterns": ["libs/testing-support/**/*.{ts,tsx,js,jsx}"]
           },
           "outputs": ["{options.outputFile}"]
         },
