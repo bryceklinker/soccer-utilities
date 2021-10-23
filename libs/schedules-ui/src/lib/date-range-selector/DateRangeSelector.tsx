@@ -28,7 +28,6 @@ export const DateRangeSelector: FunctionComponent<DateRangeSelectorProps> = ({
       return;
     }
 
-    console.log('OnSearch', { startDate, endDate });
     if (!startDate || !endDate) {
       onSearch(undefined);
     } else {

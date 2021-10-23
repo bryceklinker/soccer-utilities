@@ -10,9 +10,7 @@ const navigate = () => {
 };
 
 const selectDate = (label: string, day: string) => {
-  cy.findByRole('button', { name: label }).click();
-  cy.findByRole('button', { name: day }).click();
-  cy.findByRole('button', { name: 'OK' }).click();
+  cy.findByRole('textbox', { name: label }).type(day);
 };
 
 const selectStartDate = (day: string) => {

@@ -1,6 +1,5 @@
 import { RefereeChecksPage } from '../support/referee-checks.po';
 import { Api } from '../support/api.commands';
-import { format } from 'date-fns';
 
 describe('Referee Checks', () => {
   it('should show referee checks', () => {
@@ -16,19 +15,13 @@ describe('Referee Checks', () => {
     Api.uploadSchedule();
 
     cy.login();
+
     RefereeChecksPage.navigate();
-    RefereeChecksPage.selectStartDate('22');
-    RefereeChecksPage.selectEndDate('23');
+    RefereeChecksPage.selectStartDate('07/23/2021');
+    RefereeChecksPage.selectEndDate('07/24/2021');
     RefereeChecksPage.search();
 
-    const currentYearAndMonth = format(new Date(), 'yyyy-MM');
-    RefereeChecksPage.findStartDate().should(
-      'have.value',
-      `${currentYearAndMonth}-22`
-    );
-    RefereeChecksPage.findEndDate().should(
-      'have.value',
-      `${currentYearAndMonth}-23`
-    );
+    RefereeChecksPage.findStartDate().should('have.value', `2021-07-23`);
+    RefereeChecksPage.findEndDate().should('have.value', `2021-07-24`);
   });
 });

@@ -11,8 +11,8 @@ import { List } from '@soccer-utilities/models';
 import { DatePickerTestingHarness } from '@soccer-utilities/schedules-ui/testing';
 
 const CURRENT_TIME = new Date(2021, 6, 10);
-const JULY_23_2021 = 'Jul 23, 2021';
-const JULY_24_2021 = 'Jul 24, 2021';
+const JULY_23_2021 = '07/23/2021';
+const JULY_24_2021 = '07/24/2021';
 describe('RefereeChecksPage', () => {
   beforeEach(() => {
     jest.useFakeTimers('modern').setSystemTime(CURRENT_TIME);
@@ -112,9 +112,9 @@ describe('RefereeChecksPage', () => {
     DatePickerTestingHarness.clickSearch();
 
     expect(DatePickerTestingHarness.getStartTextBox()).toHaveValue(
-      '2021-07-23'
+      '07/23/2021'
     );
-    expect(DatePickerTestingHarness.getEndTextBox()).toHaveValue('2021-07-24');
+    expect(DatePickerTestingHarness.getEndTextBox()).toHaveValue('07/24/2021');
   });
 
   test('when empty dates are searched then notifies to load referee checks', () => {

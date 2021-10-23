@@ -9,7 +9,7 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ColumnFlexBox } from '@soccer-utilities/common-ui';
-import { DropzoneArea } from 'material-ui-dropzone';
+import { DropzoneArea } from 'react-mui-dropzone';
 
 const UploadScheduleFormValidator = Yup.object().shape({
   scheduleFile: Yup.mixed<File>().required(),
@@ -56,7 +56,6 @@ export const UploadScheduleDialog: FunctionComponent<UploadScheduleDialogProps> 
           <ColumnFlexBox>
             <DropzoneArea
               onChange={handleFileChange}
-              filesLimit={1}
               inputProps={{ 'aria-label': 'schedule file' }}
             />
           </ColumnFlexBox>

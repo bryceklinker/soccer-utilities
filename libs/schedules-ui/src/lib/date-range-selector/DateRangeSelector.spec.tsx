@@ -4,8 +4,8 @@ import { DatePickerTestingHarness } from '../../testing/date-picker-testing-harn
 import { renderWithTheme } from '@soccer-utilities/common-ui/testing';
 
 const CURRENT_DATE = new Date(2015, 3, 30);
-const APRIL_22_DATE = 'Apr 22, 2015';
-const APRIL_23_DATE = 'Apr 23, 2015';
+const APRIL_22_DATE = '04/22/2015';
+const APRIL_23_DATE = '04/23/2015';
 describe('DateRangeSelector', () => {
   beforeEach(() => {
     jest.useFakeTimers('modern').setSystemTime(CURRENT_DATE);
