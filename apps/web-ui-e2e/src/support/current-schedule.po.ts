@@ -5,7 +5,7 @@ const navigate = () => {
   cy.intercept('GET', `${api.url}/schedules/current`).as('current-schedule');
 
   cy.findByRole('button', { name: 'navigation toggle' }).click();
-  cy.findByRole('button', { name: 'current schedule' }).click();
+  cy.findByRole('link', { name: 'current schedule' }).click();
 };
 
 const uploadSchedule = (schedulePath: string) => {

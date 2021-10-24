@@ -5,7 +5,7 @@ const navigate = () => {
   cy.intercept('GET', `${api.url}/referees/checks*`).as('referee-checks');
 
   cy.findByRole('button', { name: 'navigation toggle' }).click();
-  cy.findByRole('button', { name: 'referee checks' }).click();
+  cy.findByRole('link', { name: 'referee checks' }).click();
   cy.wait('@referee-checks', { requestTimeout: 60000 });
 };
 

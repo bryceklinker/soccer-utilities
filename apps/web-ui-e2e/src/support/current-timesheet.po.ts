@@ -5,7 +5,7 @@ const navigate = () => {
   cy.intercept('GET', `${api.url}/timesheets/current`).as('current-timesheet');
 
   cy.findByRole('button', { name: 'navigation toggle' }).click();
-  cy.findByRole('button', { name: 'current timesheet' }).click();
+  cy.findByRole('link', { name: 'current timesheet' }).click();
   cy.wait('@current-timesheet', { requestTimeout: 60000 });
 };
 
