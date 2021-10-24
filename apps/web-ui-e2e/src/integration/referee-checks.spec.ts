@@ -21,7 +21,7 @@ describe('Referee Checks', () => {
     RefereeChecksPage.selectEndDate('07/24/2021');
     RefereeChecksPage.search();
 
-    RefereeChecksPage.findStartDate().should('have.value', `2021-07-23`);
-    RefereeChecksPage.findEndDate().should('have.value', `2021-07-24`);
+    RefereeChecksPage.findStartDate().should('have.value', `07/23/2021`);
+    RefereeChecksPage.findEndDate().should('have.value', `07/24/2021`);
   });
 });

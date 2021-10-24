@@ -1,12 +1,9 @@
-import { CONFIG } from './config';
+import { Api } from './api.commands';
 
 const navigate = () => {
-  const { api } = CONFIG;
-  cy.intercept('GET', `${api.url}/timesheets/current`).as('current-timesheet');
-
   cy.findByRole('button', { name: 'navigation toggle' }).click();
   cy.findByRole('link', { name: 'current timesheet' }).click();
-  cy.wait('@current-timesheet', { requestTimeout: 60000 });
+  Api.waitForResponse(Api.aliases.getCurrentTimesheet);
 };
 
 const findRate = () => cy.findByLabelText('rate');

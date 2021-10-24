@@ -8,6 +8,10 @@ Cypress.Commands.add(
   (username = CONFIG.auth.username, password = CONFIG.auth.password) => {
     const { auth } = CONFIG;
 
+    Cypress.log({
+      displayName: 'Getting Token',
+      message: `Retrieving token from ${auth.domain}`,
+    });
     return cy.request<TokenResponse>({
       method: 'POST',
       url: `https://${auth.domain}/oauth/token`,

@@ -1,15 +1,12 @@
-import { CONFIG } from './config';
+import { Api } from './api.commands';
 
 const navigate = () => {
-  const { api } = CONFIG;
-  cy.intercept('GET', `${api.url}/schedules/current`).as('current-schedule');
-
   cy.findByRole('button', { name: 'navigation toggle' }).click();
   cy.findByRole('link', { name: 'current schedule' }).click();
 };
 
 const uploadSchedule = (schedulePath: string) => {
-  cy.wait('@current-schedule', { requestTimeout: 60000 });
+  Api.waitForResponse(Api.aliases.getCurrentSchedule);
 
   cy.findByRole('button', { name: 'upload schedule' }).click();
   cy.findByLabelText('schedule file').attachFile(schedulePath);
