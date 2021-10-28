@@ -1,6 +1,6 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { UserTimesheetModel } from '@soccer-utilities/models';
+import { UiUserTimesheetModel } from '@soccer-utilities/models';
 
-export interface TimesheetsState extends EntityState<UserTimesheetModel> {
-  current: UserTimesheetModel | string | null;
+export interface TimesheetsState extends EntityState<UiUserTimesheetModel> {
+  current: UiUserTimesheetModel | string | null;
 }

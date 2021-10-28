@@ -40,6 +40,12 @@ const CurrentTimesheetPage = lazy(() =>
   }))
 );
 
+const TimesheetsPage = lazy(() =>
+  import('../../timesheets/pages/TimesheetsPage').then((c) => ({
+    default: c.TimesheetsPage,
+  }))
+);
+
 const styles = {
   mainContent: {
     padding: 3,
@@ -106,6 +112,11 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
               <Route path={ROUTES.CURRENT_TIMESHEET}>
                 <Suspense fallback={<LoadingIndicator show center />}>
                   <CurrentTimesheetPage />
+                </Suspense>
+              </Route>
+              <Route path={ROUTES.TIMESHEETS}>
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <TimesheetsPage />
                 </Suspense>
               </Route>
               <Redirect from={ROUTES.REDIRECT} to={redirectRoute} />

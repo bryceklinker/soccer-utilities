@@ -5,7 +5,7 @@ import { selectAllQuery } from '../lib/standard-queries';
 export class TestingRepository<T extends Entity> implements Repository<T> {
   constructor(private readonly entityType: EntityType<T>) {}
 
-  private readonly entities: Array<T> = [];
+  private entities: Array<T> = [];
   private readonly queries: Array<RepositoryQuery> = [];
 
   getExecutedQueries(): Array<RepositoryQuery> {
@@ -27,7 +27,7 @@ export class TestingRepository<T extends Entity> implements Repository<T> {
 
   create(entity: T): Promise<T> {
     const created = { ...entity, id: faker.datatype.uuid() };
-    this.entities.push(created);
+    this.entities = [...this.entities, created];
     return Promise.resolve(created);
   }
 
@@ -37,10 +37,20 @@ export class TestingRepository<T extends Entity> implements Repository<T> {
       return this.create(entity);
     }
 
-    const existingIndex = this.entities.indexOf(existing);
     const updated = { ...existing, ...entity };
-    this.entities.splice(existingIndex, 1);
-    this.entities.push(updated);
+    this.entities = [
+      ...this.entities.filter((e) => e.id !== existing.id),
+      updated,
+    ];
     return updated;
+  }
+
+  async delete(id: string): Promise<void> {
+    const existing = await this.getById(id);
+    if (!existing) {
+      throw new Error(`Could not find entity with id ${id}`);
+    }
+
+    this.entities = [...this.entities.filter((e) => e.id !== id)];
   }
 }

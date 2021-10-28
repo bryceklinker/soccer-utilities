@@ -2,9 +2,16 @@ import {
   createAsyncActionSet,
   emptyPrepare,
 } from '../../state/create-async-action-set';
-import { UserTimesheetModel } from '@soccer-utilities/models';
+import { ListResult, UserTimesheetModel } from '@soccer-utilities/models';
 
 export const TimesheetsActions = {
+  loadAll: createAsyncActionSet(
+    '[Timesheets] Load All Timesheets',
+    emptyPrepare,
+    (result: ListResult<UserTimesheetModel>) => ({ payload: result.items }),
+    emptyPrepare
+  ),
+
   loadCurrent: createAsyncActionSet(
     '[Timesheeets] Load Current Timesheet',
     emptyPrepare,
@@ -31,5 +38,12 @@ export const TimesheetsActions = {
     (timesheet: UserTimesheetModel) => ({ payload: timesheet }),
     (timesheet: UserTimesheetModel) => ({ payload: timesheet }),
     emptyPrepare
+  ),
+
+  delete: createAsyncActionSet(
+    '[Timesheets] Delete',
+    (timesheet: UserTimesheetModel) => ({ payload: timesheet }),
+    (timesheet: UserTimesheetModel) => ({ payload: timesheet }),
+    (timesheet: UserTimesheetModel) => ({ payload: timesheet })
   ),
 };

@@ -18,6 +18,7 @@ import {
   Roles,
   TIME_FORMAT,
   TimesheetStatus,
+  UiUserTimesheetModel,
   UserModel,
   UserRoleModel,
   UserTimesheetModel,
@@ -127,6 +128,15 @@ function createUserTimesheetModel(
   };
 }
 
+function createUiUserTimesheetModel(
+  model: Partial<UiUserTimesheetModel> = {}
+): UiUserTimesheetModel {
+  return {
+    ...createUserTimesheetModel(model),
+    ...model,
+  };
+}
+
 function createUserRole(model: Partial<UserRoleModel> = {}): UserRoleModel {
   return {
     id: faker.datatype.uuid(),
@@ -166,6 +176,7 @@ export const ModelFactory = {
   createClientRefereeCheckModel,
   createNotificationModel,
   createUserTimesheetModel,
+  createUiUserTimesheetModel,
   createUserRole,
   createUser,
   createMany,

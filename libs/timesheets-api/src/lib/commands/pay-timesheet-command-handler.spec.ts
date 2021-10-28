@@ -1,30 +1,13 @@
-import { CommandBus } from '@nestjs/cqrs';
-import {
-  TestingRepository,
-  TestingRepositoryFactory,
-} from '@soccer-utilities/data-access/testing';
-import { RepositoryFactory } from '@soccer-utilities/data-access';
+import { Repository } from '@soccer-utilities/data-access';
 import { TimesheetStatus } from '@soccer-utilities/models';
 import { UserTimesheetEntity } from '../entities/user-timesheet.entity';
-import { setupTestingModule } from '../../testing';
 import { PayTimesheetCommand } from './pay-timesheet-command-handler';
+import { setupCommandTest } from '../../testing/setup-command-test';
 
 describe('PayTimesheetCommandHandler', () => {
-  let commandBus: CommandBus;
-  let repository: TestingRepository<UserTimesheetEntity>;
-
-  beforeEach(async () => {
-    const app = await setupTestingModule();
-
-    const repositoryFactory = app.get(
-      RepositoryFactory
-    ) as TestingRepositoryFactory;
-    repository = repositoryFactory.setupRepository(UserTimesheetEntity);
-    commandBus = app.get(CommandBus);
-  });
-
   test('when timesheet is paid then timesheet is marked as paid', async () => {
-    const original = await addClosedTimesheet('jack');
+    const { commandBus, repository } = await setupCommandTest();
+    const original = await addClosedTimesheet('jack', repository);
 
     const updated = await commandBus.execute(
       new PayTimesheetCommand(original.id)
@@ -35,13 +18,15 @@ describe('PayTimesheetCommandHandler', () => {
   });
 
   test('when timesheet is missing then throws error', async () => {
+    const { commandBus } = await setupCommandTest();
     await expect(() =>
       commandBus.execute(new PayTimesheetCommand('idk'))
     ).rejects.toThrowError('idk');
   });
 
   async function addClosedTimesheet(
-    username: string
+    username: string,
+    repository: Repository<UserTimesheetEntity>
   ): Promise<UserTimesheetEntity> {
     const timesheet = new UserTimesheetEntity(username, 12);
     timesheet.clockIn();

@@ -1,33 +1,19 @@
-import { CommandBus } from '@nestjs/cqrs';
-import {
-  TestingRepository,
-  TestingRepositoryFactory,
-} from '@soccer-utilities/data-access/testing';
 import { UserTimesheetEntity } from '../entities/user-timesheet.entity';
-import { setupTestingModule } from '../../testing';
-import { RepositoryFactory } from '@soccer-utilities/data-access';
 import { ClockInCommand } from './clock-in-command-handler';
 import { parseISO } from 'date-fns';
 import { TimesheetStatus } from '@soccer-utilities/models';
+import { setupCommandTest } from '../../testing/setup-command-test';
 
 const CURRENT_TIME = '2021-09-23T12:23:12.345Z';
 
 describe('ClockInCommandHandler', () => {
-  let commandBus: CommandBus;
-  let repository: TestingRepository<UserTimesheetEntity>;
-
   beforeEach(async () => {
     jest.useFakeTimers('modern').setSystemTime(parseISO(CURRENT_TIME));
-    const app = await setupTestingModule();
-
-    const repositoryFactory = app.get(
-      RepositoryFactory
-    ) as TestingRepositoryFactory;
-    repository = repositoryFactory.setupRepository(UserTimesheetEntity);
-    commandBus = app.get(CommandBus);
   });
 
   test('when user clocks in then returns added timesheet', async () => {
+    const { commandBus, repository } = await setupCommandTest();
+
     const addedTimesheet = await commandBus.execute(
       new ClockInCommand('this-user-name', 14)
     );
@@ -37,6 +23,8 @@ describe('ClockInCommandHandler', () => {
   });
 
   test('when user clocks in then saves user clocked in', async () => {
+    const { commandBus, repository } = await setupCommandTest();
+
     await commandBus.execute(new ClockInCommand('this-user-name', 14));
 
     const timesheets = await repository.getAll();
@@ -46,6 +34,8 @@ describe('ClockInCommandHandler', () => {
   });
 
   test('when user clocks in with open timesheet then throws error', async () => {
+    const { commandBus, repository } = await setupCommandTest();
+
     const openTimesheet = new UserTimesheetEntity('bob', 12);
     openTimesheet.clockIn();
     await repository.create(openTimesheet);

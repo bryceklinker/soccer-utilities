@@ -39,7 +39,7 @@ export class CosmosRepository<T extends Entity> implements Repository<T> {
 
   async getById(id: string): Promise<T> {
     const container = this.getContainer();
-    const response = await container.item(id).read<T>();
+    const response = await container.item(id, this.entityClass.type).read<T>();
     return response.resource;
   }
 
@@ -53,6 +53,11 @@ export class CosmosRepository<T extends Entity> implements Repository<T> {
     const container = this.getContainer();
     const result = await container.items.upsert<T>(updated);
     return result.resource;
+  }
+
+  async delete(id: string): Promise<void> {
+    const container = this.getContainer();
+    await container.item(id, this.entityClass.type).delete();
   }
 
   private getContainer(): Container {

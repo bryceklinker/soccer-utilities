@@ -11,6 +11,7 @@ describe('ShellNavigation', () => {
     expect(screen.getByLabelText('current schedule')).toBeVisible();
     expect(screen.getByLabelText('referee checks')).toBeVisible();
     expect(screen.getByLabelText('current timesheet')).toBeVisible();
+    expect(screen.getByLabelText('timesheets')).toBeVisible();
   });
 
   test('when user has concessions role then shows timesheet and welcome links', () => {
@@ -23,6 +24,7 @@ describe('ShellNavigation', () => {
 
     expect(screen.queryByLabelText('current schedule')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('referee checks')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('timesheets')).not.toBeInTheDocument();
   });
 
   test('when user has no roles then shows welcome link only', () => {
@@ -35,5 +37,6 @@ describe('ShellNavigation', () => {
     ).not.toBeInTheDocument();
     expect(screen.queryByLabelText('current schedule')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('referee checks')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('timesheets')).not.toBeInTheDocument();
   });
 });

@@ -11,4 +11,6 @@ export interface Repository<T extends Entity> {
   create(entity: T): Promise<T>;
 
   update(entity: T): Promise<T>;
+
+  delete(id: string): Promise<void>;
 }

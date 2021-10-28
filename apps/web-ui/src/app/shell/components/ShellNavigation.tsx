@@ -41,6 +41,13 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
           </LinkButton>
           <LinkButton
             visible={isAdmin}
+            to={ROUTES.TIMESHEETS}
+            aria-label={'timesheets'}
+          >
+            Timesheets
+          </LinkButton>
+          <LinkButton
+            visible={isAdmin}
             to={ROUTES.CURRENT_SCHEDULE}
             aria-label={'current schedule'}
           >

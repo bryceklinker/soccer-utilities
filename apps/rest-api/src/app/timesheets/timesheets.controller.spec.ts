@@ -102,6 +102,19 @@ describe('Timesheets Api', () => {
     expect(paidTimesheet.status).toEqual(TimesheetStatus.Paid);
   });
 
+  test('when timesheet is deleted then removes timesheet', async () => {
+    const timesheet =
+      await getRestApiAsConcessionsUser().post<UserTimesheetEntity>(
+        `/timesheets/current/clock-in`
+      );
+    await getRestApiAsAdminUser().delete(`/timesheets/${timesheet.id}`);
+
+    const response = await getRestApiAsAdminUser().get<
+      ListResult<UserTimesheetEntity>
+    >('/timesheets');
+    expect(response.items).not.toContainEqual(timesheet);
+  });
+
   afterEach(async () => {
     await fixture.stop();
   });

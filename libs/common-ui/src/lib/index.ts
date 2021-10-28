@@ -8,5 +8,7 @@ export * from './LoadingIndicator';
 export * from './RetryErrorMessage';
 export * from './DateSelector';
 export * from './NotificationBar';
+export * from './HideableIconButton';
+export * from './ConfirmableButton';
 export * from './notification-model';
 export * from './formatter';

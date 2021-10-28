@@ -15,6 +15,8 @@ export interface RestApi {
     path: string,
     body?: FormData
   ): Promise<AxiosResponse<T>>;
+
+  delete(path: string): Promise<AxiosResponse>;
 }
 
 function createRequestConfig(
@@ -49,6 +51,8 @@ export function createRestApi(
         'Content-Type': 'multipart/form-data',
       },
     });
+  const deleteResponse = async (path: string) =>
+    await axios.delete(path, requestConfig);
   return {
     getResponse,
     postResponse,
@@ -65,5 +69,6 @@ export function createRestApi(
       const response = await postFormResponse<T>(path, body);
       return response.data;
     },
+    delete: deleteResponse,
   };
 }

@@ -36,6 +36,10 @@ export class UserTimesheetRepository {
     );
   }
 
+  async delete(id: string): Promise<void> {
+    await this.repository().delete(id);
+  }
+
   async getById(id: string): Promise<UserTimesheetEntity | null> {
     const timesheet = await this.repository().getById(id);
     return timesheet ? UserTimesheetEntity.fromEntity(timesheet) : null;

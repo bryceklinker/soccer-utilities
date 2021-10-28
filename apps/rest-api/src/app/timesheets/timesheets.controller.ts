@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -7,10 +15,14 @@ import {
   ApiQuery,
   ApiExtraModels,
   ApiOkResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiListResponse } from '../swagger/api-list-response';
-import { UserTimesheetDto } from '@soccer-utilities/timesheets-api';
+import {
+  DeleteTimesheetCommand,
+  UserTimesheetDto,
+} from '@soccer-utilities/timesheets-api';
 import {
   ClockInCommand,
   ClockOutCommand,
@@ -54,6 +66,15 @@ export class TimesheetsController {
   ) {
     const query = new GetTimesheetsQuery({ status, username });
     return await this.queryBus.execute(query);
+  }
+
+  @Delete(':id')
+  @ApiNoContentResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  async deleteTimesheet(@Param('id') id: string) {
+    const command = new DeleteTimesheetCommand(id);
+    return await this.commandBus.execute(command);
   }
 
   @Get('current')

@@ -4,6 +4,7 @@ const DEFAULT_SCHEDULE = 'game-schedule.csv';
 const DEFAULT_API_TIMEOUT = 60000;
 const aliases = {
   getRefereeChecks: '@referee-checks',
+  getTimesheets: '@timesheets',
   getCurrentSchedule: '@current-schedule',
   getCurrentTimesheet: '@current-timesheet',
   getCurrentUser: '@current-user',
@@ -47,6 +48,9 @@ const setupIntercepts = () => {
   );
   cy.intercept('GET', `${api.url}/referees/checks*`).as(
     scrubAlias(aliases.getRefereeChecks)
+  );
+  cy.intercept('GET', `${api.url}/timesheets`).as(
+    scrubAlias(aliases.getTimesheets)
   );
 };
 

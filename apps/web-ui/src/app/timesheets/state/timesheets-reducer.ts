@@ -1,14 +1,17 @@
 import { createEntityAdapter, createReducer } from '@reduxjs/toolkit';
-import { UserTimesheetModel } from '@soccer-utilities/models';
+import { UiUserTimesheetModel } from '@soccer-utilities/models';
 import { TimesheetsState } from './timesheets-state';
 import { TimesheetsActions } from './timesheets-actions';
 
-export const timesheetAdapter = createEntityAdapter<UserTimesheetModel>();
+export const timesheetAdapter = createEntityAdapter<UiUserTimesheetModel>();
 
 export const timesheetsReducer = createReducer<TimesheetsState>(
   { ...timesheetAdapter.getInitialState(), current: null },
   (builder) =>
     builder
+      .addCase(TimesheetsActions.loadAll.success, (state, { payload }) =>
+        timesheetAdapter.upsertMany(state, payload)
+      )
       .addCase(TimesheetsActions.loadCurrent.success, (state, { payload }) => ({
         ...state,
         current: payload,
@@ -28,5 +31,17 @@ export const timesheetsReducer = createReducer<TimesheetsState>(
           { ...state, current: payload.id || null },
           payload
         );
+      })
+      .addCase(TimesheetsActions.delete.request, (state, { payload }) =>
+        timesheetAdapter.upsertOne(state, { ...payload, isDeleting: true })
+      )
+      .addCase(TimesheetsActions.delete.failed, (state, { payload }) =>
+        timesheetAdapter.upsertOne(state, { ...payload, isDeleting: false })
+      )
+      .addCase(TimesheetsActions.delete.success, (state, { payload }) => {
+        if (payload.id) {
+          return timesheetAdapter.removeOne(state, payload.id);
+        }
+        return state;
       })
 );

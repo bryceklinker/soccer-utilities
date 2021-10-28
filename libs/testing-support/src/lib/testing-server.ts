@@ -60,10 +60,30 @@ function setupPost<TResponse>(
   );
 }
 
+function setupDelete(
+  url: string,
+  options: TestingRequestOptions = {
+    status: HttpStatusCodes.OK,
+    captureRequest: DEFAULT_REQUEST_CAPTURE,
+  }
+): void {
+  server.use(
+    rest.delete(url, (req, res, ctx) => {
+      const transformers = [
+        ctx.status(options.status || HttpStatusCodes.NoContent),
+        ctx.delay(options.delay || 0),
+      ];
+      options.captureRequest(req);
+      return res(...transformers);
+    })
+  );
+}
+
 export const TestingServer = {
   start,
   stop,
   reset,
   setupGet,
   setupPost,
+  setupDelete,
 };

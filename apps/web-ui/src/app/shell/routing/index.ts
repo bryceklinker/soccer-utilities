@@ -5,6 +5,7 @@ export const ROUTES = {
   CURRENT_SCHEDULE: '/schedules/current',
   CURRENT_TIMESHEET: '/timesheets/current',
   REFEREE_CHECKS: '/referees/checks',
+  TIMESHEETS: '/timesheets',
   REDIRECT: '**',
 };
 

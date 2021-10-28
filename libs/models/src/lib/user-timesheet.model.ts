@@ -10,3 +10,7 @@ export interface UserTimesheetModel {
   timeOut?: string;
   hours?: number;
 }
+
+export interface UiUserTimesheetModel extends UserTimesheetModel {
+  isDeleting?: boolean;
+}
