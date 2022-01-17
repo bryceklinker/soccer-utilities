@@ -11,7 +11,7 @@ describe('RefereeRecertificationChecksGenerator', () => {
     const reimbursements =
       RefereeRecertificationChecksGenerator.generateFromScheduledGames(games);
 
-    expectReimbursement(reimbursements, 'john', 5);
+    expectReimbursement(reimbursements, 'John', 5);
   });
 
   test('when ref has centered one U10 game then $5 towards reimbursement', () => {
@@ -22,7 +22,7 @@ describe('RefereeRecertificationChecksGenerator', () => {
     const reimbursements =
       RefereeRecertificationChecksGenerator.generateFromScheduledGames(games);
 
-    expectReimbursement(reimbursements, 'jack', 5);
+    expectReimbursement(reimbursements, 'Jack', 5);
   });
 
   test('when ref has centered one U11 game then $10 towards reimbursement', () => {
@@ -44,7 +44,7 @@ describe('RefereeRecertificationChecksGenerator', () => {
     const reimbursements =
       RefereeRecertificationChecksGenerator.generateFromScheduledGames(games);
 
-    expectReimbursement(reimbursements, 'jack', 10);
+    expectReimbursement(reimbursements, 'Jack', 10);
   });
 
   test('when ref has been an assistant for one game then $5 towards reimbursement', () => {
@@ -69,7 +69,7 @@ describe('RefereeRecertificationChecksGenerator', () => {
     const reimbursements =
       RefereeRecertificationChecksGenerator.generateFromScheduledGames(games);
 
-    expectReimbursement(reimbursements, 'jack', 60);
+    expectReimbursement(reimbursements, 'Jack', 60);
   });
 
   test('when ref has been an assistant twelve times then max reimbursement amount', () => {
@@ -83,7 +83,7 @@ describe('RefereeRecertificationChecksGenerator', () => {
     const reimbursements =
       RefereeRecertificationChecksGenerator.generateFromScheduledGames(games);
 
-    expectReimbursement(reimbursements, 'jack', 60);
+    expectReimbursement(reimbursements, 'Jack', 60);
   });
 
   test('when grouping refs then case of name is ignored', () => {

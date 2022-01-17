@@ -110,4 +110,35 @@ describe('GameScheduleEntity', () => {
 
     expect(checks).toHaveLength(2);
   });
+
+  test('when getting referee reimbursement checks then returns all reimbursement checks', () => {
+    const schedule = GameScheduleEntity.fromModel(
+      ModelFactory.createGameSchedule({
+        games: [
+          ModelFactory.createGame({
+            ageGroup: ModelFactory.createAgeGroup({ age: 8 }),
+            referees: [
+              ModelFactory.createReferee({
+                name: 'Bob',
+                type: RefereeType.Center,
+              }),
+            ],
+          }),
+          ModelFactory.createGame({
+            ageGroup: ModelFactory.createAgeGroup({ age: 8 }),
+            referees: [
+              ModelFactory.createReferee({
+                name: 'Jon',
+                type: RefereeType.Center,
+              }),
+            ],
+          }),
+        ],
+      })
+    );
+
+    const checks = schedule.getRefereeReimbursementChecks();
+
+    expect(checks).toHaveLength(2);
+  });
 });

@@ -1,7 +1,11 @@
 import { TestingRepository } from '@soccer-utilities/data-access/testing';
 import { GameScheduleEntity } from '@soccer-utilities/schedules-api';
 import { ModelFactory } from '@soccer-utilities/testing-support';
-import { ListResult, RefereeCheckModel } from '@soccer-utilities/models';
+import {
+  ListResult,
+  RefereeCheckModel,
+  RefereeReimbursementCheckModel,
+} from '@soccer-utilities/models';
 import { ApiFixture } from '../../testing/api-fixture';
 import { RestApi } from '@soccer-utilities/core';
 import { ADMIN_USER, CONCESSIONS_USER } from '../../testing/users';
@@ -61,6 +65,27 @@ describe('Referees Api', () => {
     const result = await restApi.get<ListResult<RefereeCheckModel>>(
       '/referees/checks?start=2020-05-01&end=2020-05-31'
     );
+
+    expect(result.items).toHaveLength(1);
+  });
+
+  test('when getting referee reimbursement checks then returns all reimbursement checks', async () => {
+    await repository.create(
+      GameScheduleEntity.fromModel(
+        ModelFactory.createGameSchedule({
+          games: [
+            ModelFactory.createGame({
+              ageGroup: ModelFactory.createAgeGroup({ age: 10 }),
+              referees: [ModelFactory.createReferee({ name: 'Bob' })],
+            }),
+          ],
+        })
+      )
+    );
+
+    const result = await restApi.get<
+      ListResult<RefereeReimbursementCheckModel>
+    >('/referees/reimbursement-checks');
 
     expect(result.items).toHaveLength(1);
   });

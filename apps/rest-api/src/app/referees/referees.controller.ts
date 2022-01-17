@@ -2,8 +2,10 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   GetRefereeChecksQuery,
+  GetRefereeReimbursementChecksQuery,
   ListResultDto,
   RefereeCheckDto,
+  RefereeReimbursementCheckDto,
 } from '@soccer-utilities/schedules-api';
 import {
   ApiExtraModels,
@@ -18,6 +20,7 @@ import {
   DateRangeModel,
   ListResult,
   RefereeCheckModel,
+  RefereeReimbursementCheckModel,
   Role,
 } from '@soccer-utilities/models';
 import { RequiredRoles, RolesGuard } from '@soccer-utilities/nest-auth0';
@@ -53,5 +56,17 @@ export class RefereesController {
     const range: DateRangeModel | undefined =
       start && end ? { start, end } : undefined;
     return await this.queryBus.execute(new GetRefereeChecksQuery(range));
+  }
+
+  @Get('reimbursement-checks')
+  @ApiListResponse(RefereeReimbursementCheckDto)
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  async getReimbursementChecks(): Promise<
+    ListResult<RefereeReimbursementCheckModel>
+  > {
+    return await this.queryBus.execute(
+      new GetRefereeReimbursementChecksQuery()
+    );
   }
 }

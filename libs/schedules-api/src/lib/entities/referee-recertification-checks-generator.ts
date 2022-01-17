@@ -38,7 +38,7 @@ function calculateReimbursement(
   const games = refereeGames.map((v) => v.game);
   const referee = refereeGames[0].referee;
   return {
-    referee: normalizeRefereeName(referee),
+    referee: referee.name,
     amount:
       reimbursementTotal > MAX_REIMBURSEMENT_AMOUNT
         ? MAX_REIMBURSEMENT_AMOUNT

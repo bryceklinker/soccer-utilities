@@ -12,6 +12,7 @@ import {
   RefereeCheckModel,
   RefereeModel,
   RefereePayScaleModel,
+  RefereeReimbursementCheckModel,
   RefereeType,
   TIME_FORMAT,
 } from '@soccer-utilities/models';
@@ -74,6 +75,19 @@ export class RefereeCheckDto implements RefereeCheckModel {
   ageGroup: AgeGroupModel = new AgeGroupDto();
   @ApiProperty({ type: Number })
   amount = 0;
+}
+
+export class RefereeReimbursementCheckDto
+  implements RefereeReimbursementCheckModel
+{
+  @ApiProperty({ type: String })
+  referee: string;
+
+  @ApiProperty({ type: Number })
+  amount: number;
+
+  @ApiProperty({ type: [GameDto] })
+  games: Array<GameModel>;
 }
 
 export class ListResultDto<T> implements ListResult<T> {

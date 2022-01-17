@@ -7,7 +7,9 @@ import {
   GameScheduleModel,
   RefereeCheckModel,
   RefereePayScaleModel,
+  RefereeReimbursementCheckModel,
 } from '@soccer-utilities/models';
+import { RefereeRecertificationChecksGenerator } from './referee-recertification-checks-generator';
 
 export class GameScheduleEntity implements GameScheduleModel, Entity {
   static type = 'game-schedule';
@@ -51,6 +53,12 @@ export class GameScheduleEntity implements GameScheduleModel, Entity {
     return RefereeChecksGenerator.generateFromGames(
       this.getGamesInRange(range),
       refereePayScales
+    );
+  }
+
+  getRefereeReimbursementChecks(): Array<RefereeReimbursementCheckModel> {
+    return RefereeRecertificationChecksGenerator.generateFromScheduledGames(
+      this.games
     );
   }
 

@@ -18,6 +18,7 @@ export class GetRefereeChecksQueryHandler
     IQueryHandler<GetRefereeChecksQuery, ListResult<RefereeCheckModel>>
 {
   constructor(private readonly repository: GameScheduleRepository) {}
+
   async execute(
     query: GetRefereeChecksQuery
   ): Promise<ListResult<RefereeCheckModel>> {
