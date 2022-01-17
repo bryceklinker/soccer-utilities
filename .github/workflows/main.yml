@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: '14'
 
-      - run: npm ci
+      - run: yarn install
         name: Install Dependencies
 
       - run: npm test
@@ -39,15 +39,15 @@ jobs:
           git remote set-url --push origin "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/bryceklinker/soccer-utilities"
           git config --global user.email "automation@github.com"
           git config --global user.name "automation"
-          npm run bump:version -- --version=patch
+          yarn bump:version -- --version=patch
         name: Bump Version
 
-      - run: npm run build
+      - run: yarn build
         name: Build Applications
 
       - run: |
           pushd "${REST_API_OUTPUT_DIRECTORY}" || exit 1
-          npm install --production
+          yarn install --production
           popd || exit 1
         name: Install Function App Packages
 
@@ -115,7 +115,7 @@ jobs:
           unzip -qq "${{ github.workspace }}/rest-api.zip" -d "${REST_API_OUTPUT_DIRECTORY}"
         name: Extract Rest Api
 
-      - run: npm ci
+      - run: yarn install
         name: Install Npm Packages
 
       - run: |
@@ -153,7 +153,7 @@ jobs:
           export CYPRESS_API_URL="$(terraform output -raw function_app_url)"
           popd || exit 1
 
-          npm run e2e
+          yarn e2e
         name: Run End-To-End Tests
 
       - uses: actions/upload-artifact@v2

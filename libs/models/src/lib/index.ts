@@ -7,6 +7,7 @@ export * from './age-group.model';
 export * from './game.model';
 export * from './game-schedule.model';
 export * from './referee-check.model';
+export * from './referee-reimbursement-check.model';
 export * from './list-result';
 export * from './referee-pay-scale.model';
 export * from './date-range.model';
