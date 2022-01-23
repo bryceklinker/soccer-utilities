@@ -81,4 +81,40 @@ describe('convertCsvRowToGame', () => {
       ],
     });
   });
+
+  test('when home is Iowa Storm then returns null', () => {
+    const row = {
+      Date: '4/10/2021',
+      Time: '9:00:00 AM',
+      Home: 'Iowa Storm Soccer Club 2012',
+      Away: 'Honkies',
+      Field: 'Field 1',
+      Division: 'U8 Girls',
+      Center: 'Bill',
+      AR1: 'John',
+      AR2: 'Jim',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual(null);
+  });
+
+  test('when home team is Iowa Storm then returns null', () => {
+    const row = {
+      'Game Date': '4/10/2021',
+      'Game Time': '9:00:00 AM',
+      'Home Team': 'iowa STORM Soccer Club 2011',
+      'Away Team': 'Honkies',
+      Field: 'Field 1',
+      Division: 'U8 Girls',
+      Center: 'Bill',
+      AR1: 'John',
+      AR2: 'Jim',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual(null);
+  });
 });
