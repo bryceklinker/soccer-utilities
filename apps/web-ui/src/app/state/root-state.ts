@@ -6,6 +6,7 @@ import { CurrentScheduleState } from '../current-schedule/state/current-schedule
 import { RefereeChecksState } from '../referees/state/referee-checks-state';
 import { NotificationsState } from '../notifications/state/notifications-state';
 import { TimesheetsState } from '../timesheets/state/timesheets-state';
+import { RefereeReimbursementChecksState } from '../referees/state/referee-reimbursement-checks-state';
 
 export type RootState = {
   auth: AuthState;
@@ -14,6 +15,7 @@ export type RootState = {
   settings: SettingsState;
   currentSchedule: CurrentScheduleState;
   refereeChecks: RefereeChecksState;
+  refereeReimbursementChecks: RefereeReimbursementChecksState;
   notifications: NotificationsState;
   timesheets: TimesheetsState;
 };

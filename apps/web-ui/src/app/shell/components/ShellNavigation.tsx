@@ -60,6 +60,13 @@ export const ShellNavigation: FunctionComponent<ShellNavigationProps> = ({
           >
             Referee Checks
           </LinkButton>
+          <LinkButton
+            visible={isAdmin}
+            to={ROUTES.REFEREE_REIMBURSEMENT_CHECKS}
+            aria-label={'referee reimbursement checks'}
+          >
+            Referee Reimbursement Checks
+          </LinkButton>
         </List>
       </ColumnFlexBox>
     </Drawer>

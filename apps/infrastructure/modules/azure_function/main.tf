@@ -102,7 +102,7 @@ resource "azurerm_function_app" "function_app" {
   version = "~3"
 
   site_config {
-    linux_fx_version = "node|14"
+    linux_fx_version = "node|16"
     use_32_bit_worker_process = false
 
     cors {

@@ -13,6 +13,7 @@ import {
   RefereeCheckModel,
   RefereeModel,
   RefereePayScaleModel,
+  RefereeReimbursementCheckModel,
   RefereeType,
   RefereeTypes,
   Roles,
@@ -90,6 +91,17 @@ function createRefereeCheck(
     type: faker.random.arrayElement(RefereeTypes),
     name: faker.name.firstName(),
     ageGroup: createAgeGroup(model.ageGroup),
+    ...model,
+  };
+}
+
+function createRefereeReimbursementCheck(
+  model: Partial<RefereeReimbursementCheckModel> = {}
+): RefereeReimbursementCheckModel {
+  return {
+    referee: `${faker.name.firstName()} ${faker.name.lastName()}`,
+    amount: faker.datatype.number(),
+    games: [],
     ...model,
   };
 }
@@ -173,6 +185,7 @@ export const ModelFactory = {
   createGameSchedule,
   createPayScale,
   createRefereeCheck,
+  createRefereeReimbursementCheck,
   createClientRefereeCheckModel,
   createNotificationModel,
   createUserTimesheetModel,

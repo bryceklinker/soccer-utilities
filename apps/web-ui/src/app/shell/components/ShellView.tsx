@@ -23,14 +23,22 @@ import { Role } from '@soccer-utilities/models';
 const WelcomePage = lazy(() =>
   import('../../welcome/Welcome').then((c) => ({ default: c.WelcomePage }))
 );
+
 const CurrentSchedulePage = lazy(() =>
   import('../../current-schedule/pages/CurrentSchedulePage').then((c) => ({
     default: c.CurrentSchedulePage,
   }))
 );
+
 const RefereeChecksPage = lazy(() =>
   import('../../referees/pages/RefereeChecksPage').then((c) => ({
     default: c.RefereeChecksPage,
+  }))
+);
+
+const RefereeReimbursementChecksPage = lazy(() =>
+  import('../../referees/pages/RefereeReimbursementChecksPage').then((c) => ({
+    default: c.RefereeReimbursementChecksPage,
   }))
 );
 
@@ -107,6 +115,11 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
               <Route path={ROUTES.REFEREE_CHECKS}>
                 <Suspense fallback={<LoadingIndicator show center />}>
                   <RefereeChecksPage />
+                </Suspense>
+              </Route>
+              <Route path={ROUTES.REFEREE_REIMBURSEMENT_CHECKS}>
+                <Suspense fallback={<LoadingIndicator show center />}>
+                  <RefereeReimbursementChecksPage />
                 </Suspense>
               </Route>
               <Route path={ROUTES.CURRENT_TIMESHEET}>

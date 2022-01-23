@@ -24,13 +24,20 @@ function createRequestConfig(
   accessToken?: string,
   baseOptions: AxiosRequestConfig = {}
 ): AxiosRequestConfig {
-  return {
+  const options = {
     ...baseOptions,
     baseURL: baseUrl,
-    headers: {
-      Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
-    },
   };
+  if (accessToken) {
+    return {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+  }
+
+  return options;
 }
 
 export function createRestApi(

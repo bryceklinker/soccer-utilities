@@ -5,7 +5,7 @@ import {
 import { RefereeChecksPage } from './RefereeChecksPage';
 import { RefereesActions } from '../state/referees-actions';
 import { ModelFactory } from '@soccer-utilities/testing-support';
-import { screen, waitFor } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { List } from '@soccer-utilities/models';
 import { DatePickerTestingHarness } from '@soccer-utilities/schedules-ui/testing';

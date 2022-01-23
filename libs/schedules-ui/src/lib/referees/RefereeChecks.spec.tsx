@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { RefereeChecks } from './RefereeChecks';
-import { RefereeChecksTable } from './RefereeChecksTable';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import userEvent from '@testing-library/user-event';
 
