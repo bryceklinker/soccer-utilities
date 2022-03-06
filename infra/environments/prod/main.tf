@@ -40,6 +40,7 @@ module "api" {
   storage_account_access_key   = module.platform.storage_account_access_key
   storage_account_name         = module.platform.storage_account_name
   storage_account_sas          = module.platform.storage_account_readonly_sas
+  log_analytics_workspace_id   = module.platform.log_analytics_workspace_id
   api_directory                = "${local.dist_directory}/apps/rest-api"
   auth0_domain                 = var.auth0_domain
   auth0_client_id              = var.auth0_client_id
@@ -56,11 +57,12 @@ module "site" {
   env_name                     = local.env_name
   location                     = module.platform.location
   audience                     = module.api.api_identifier
-  site_directory               = "${local.dist_directory}/apps/web-ui"
   api_url                      = module.api.function_app_url
-  auth0_domain                 = var.auth0_domain
-  storage_account_name         = module.platform.storage_account_name
   storage_account_web_host_url = module.platform.storage_account_web_host_url
+  storage_account_name         = module.platform.storage_account_name
+  log_analytics_workspace_id   = module.platform.log_analytics_workspace_id
+  site_directory               = "${local.dist_directory}/apps/web-ui"
+  auth0_domain                 = var.auth0_domain
   tags                         = local.tags
 
   depends_on = [module.api, module.platform]
