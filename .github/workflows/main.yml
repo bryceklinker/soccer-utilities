@@ -2,7 +2,7 @@ on: [push]
 env:
   REST_API_OUTPUT_DIRECTORY: ${{ github.workspace }}/dist/apps/rest-api
   REST_API_ARCHIVE_PATH: ${{ github.workspace }}/dist/apps/rest-api.zip
-  TERRAFORM_VERSION: 1.0.1
+  TERRAFORM_VERSION: 1.1.7
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
