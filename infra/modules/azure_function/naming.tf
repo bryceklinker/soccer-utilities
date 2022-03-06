@@ -1,5 +1,5 @@
 resource "azurecaf_name" "function" {
-  name = "${var.env_name}-${var.app_name}"
+  name = "${var.env_name}-${var.app_name}-${var.service_name}"
   random_length = 4
   clean_input = true
 

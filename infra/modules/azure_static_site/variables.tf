@@ -6,6 +6,11 @@ variable "app_name" {
   type = string
 }
 
+variable "service_name" {
+  type = string
+  default = "site"
+}
+
 variable "location" {
   type = string
 }
@@ -46,7 +51,7 @@ variable "tags" {
 locals {
   tags = merge({
     environment = var.env_name
-    module      = "site"
+    service      = var.service_name
     application = var.app_name
   }, var.tags)
 }

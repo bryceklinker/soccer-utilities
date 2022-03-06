@@ -1,5 +1,5 @@
 resource "azurecaf_name" "default" {
-  name = "${var.env_name}-${var.app_name}"
+  name = "${var.env_name}-${var.app_name}-${var.service_name}"
   resource_types = [
     "azurerm_resource_group",
     "azurerm_log_analytics_workspace",
