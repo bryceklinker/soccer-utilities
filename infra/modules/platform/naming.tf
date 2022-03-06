@@ -1,5 +1,7 @@
 resource "azurecaf_name" "default" {
-  name = "${var.env_name}-${var.app_name}-${var.service_name}"
+  name           = "${var.env_name}-${var.app_name}-${var.service_name}"
+  random_length  = 4
+  clean_input    = true
   resource_types = [
     "azurerm_resource_group",
     "azurerm_log_analytics_workspace",
@@ -7,6 +9,4 @@ resource "azurecaf_name" "default" {
     "azurerm_storage_account",
     "azurerm_app_service_plan"
   ]
-  random_length = 4
-  clean_input = true
 }

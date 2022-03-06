@@ -7,7 +7,7 @@ variable "env_name" {
 }
 
 variable "service_name" {
-  type = string
+  type    = string
   default = "api"
 }
 
@@ -68,7 +68,7 @@ variable "auth0_client_secret" {
 }
 
 variable "tags" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
@@ -76,7 +76,7 @@ locals {
   name = "${var.env_name}-${var.app_name}"
   tags = merge({
     environment = var.env_name
-    service      = var.service_name
+    service     = var.service_name
     application = var.app_name
   }, var.tags)
 }

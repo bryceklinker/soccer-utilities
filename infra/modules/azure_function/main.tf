@@ -31,8 +31,7 @@ resource "azurerm_application_insights" "function_app_insights" {
   resource_group_name = azurerm_resource_group.function.name
   application_type    = "Node.JS"
   workspace_id        = var.log_analytics_workspace_id
-
-  tags = local.tags
+  tags                = local.tags
 }
 
 resource "azurerm_function_app" "function_app" {
@@ -46,9 +45,8 @@ resource "azurerm_function_app" "function_app" {
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
   os_type                    = "linux"
-
-  tags    = local.tags
-  version = "~3"
+  tags                       = local.tags
+  version                    = "~3"
 
   site_config {
     linux_fx_version          = "node|14"

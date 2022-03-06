@@ -1,7 +1,7 @@
 resource "azurecaf_name" "function" {
-  name = "${var.env_name}-${var.app_name}-${var.service_name}"
+  name          = "${var.env_name}-${var.app_name}-${var.service_name}"
   random_length = 4
-  clean_input = true
+  clean_input   = true
 
   resource_types = [
     "azurerm_resource_group",
