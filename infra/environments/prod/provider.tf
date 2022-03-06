@@ -2,12 +2,17 @@ terraform {
   required_providers {
     azurerm = {
       source = "hashicorp/azurerm"
-      version = "2.64.0"
+      version = "2.98.0"
     }
 
     auth0 = {
-      source = "alexkappa/auth0"
-      version = "0.21.0"
+      source = "auth0/auth0"
+      version = "0.28.0"
+    }
+
+    azurecaf = {
+      source = "aztfmod/azurecaf"
+      version = "2.0.0-preview-2"
     }
   }
 
@@ -25,3 +30,5 @@ provider "azurerm" {
 }
 
 provider "auth0" {}
+
+provider "azurecaf" {}

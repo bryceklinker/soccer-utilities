@@ -82,8 +82,8 @@ jobs:
     environment: prod
     env:
       TARGET_ENVIRONMENT: prod
-      TARGET_ENVIRONMENT_DIRECTORY: ${{ github.workspace }}/apps/infrastructure/environments/prod
-      TARGET_ENVIRONMENT_PLAN_PATH: ${{ github.workspace }}/apps/infrastructure/environments/prod.tfplan
+      TARGET_ENVIRONMENT_DIRECTORY: ${{ github.workspace }}/infra/environments/prod
+      TARGET_ENVIRONMENT_PLAN_PATH: ${{ github.workspace }}/infra/environments/prod.tfplan
     steps:
       - uses: actions/checkout@v2
         name: Checkout
