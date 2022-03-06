@@ -28,6 +28,7 @@ jobs:
         name: Setup Node
         with:
           node-version: '16'
+          cache: 'yarn'
 
       - run: yarn install
         name: Install Dependencies
@@ -92,6 +93,7 @@ jobs:
         name: Setup Node
         with:
           node-version: '14'
+          cache: 'yarn'
 
       - uses: actions/download-artifact@v2
         id: rest-api
