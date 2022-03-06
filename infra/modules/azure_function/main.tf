@@ -30,6 +30,7 @@ resource "azurerm_application_insights" "function_app_insights" {
   name                = azurecaf_name.function.results["azurerm_application_insights"]
   resource_group_name = azurerm_resource_group.function.name
   application_type    = "Node.JS"
+  workspace_id        = var.log_analytics_workspace_id
 
   tags = local.tags
 }
