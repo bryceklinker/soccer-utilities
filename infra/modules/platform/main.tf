@@ -50,6 +50,8 @@ resource "azurerm_app_service_plan" "platform_func" {
   name                = azurecaf_name.default.results["azurerm_app_service_plan"]
   resource_group_name = azurerm_resource_group.platform.name
   tags                = local.tags
+  kind                = "FunctionApp"
+  reserved            = true
 
   sku {
     size = "Y1"
