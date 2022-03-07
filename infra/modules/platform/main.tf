@@ -34,7 +34,7 @@ resource "azurerm_storage_account" "platform" {
   account_replication_type  = "LRS"
   account_tier              = "Standard"
   location                  = azurerm_resource_group.platform.location
-  name                      = azurecaf_name.default.results["azurerm_storage_account"]
+  name                      = azurecaf_name.storage.results["azurerm_storage_account"]
   resource_group_name       = azurerm_resource_group.platform.name
   enable_https_traffic_only = true
   tags                      = local.tags

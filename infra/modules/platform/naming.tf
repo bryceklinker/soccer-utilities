@@ -10,3 +10,12 @@ resource "azurecaf_name" "default" {
     "azurerm_app_service_plan"
   ]
 }
+
+resource "azurecaf_name" "storage" {
+  name           = "${var.env_name}${var.app_name}${var.service_name}"
+  random_length  = 4
+  clean_input    = true
+  resource_types = [
+    "azurerm_storage_account"
+  ]
+}
