@@ -15,7 +15,6 @@ env:
   CYPRESS_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   CYPRESS_AUTH0_USERNAME: ${{ secrets.CYPRESS_AUTH0_USERNAME }}
   CYPRESS_AUTH0_PASSWORD: ${{ secrets.CYPRESS_AUTH0_PASSWORD }}
-  CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
 jobs:
   verify:
     name: Verify
@@ -153,6 +152,7 @@ jobs:
           pushd "${TARGET_ENVIRONMENT_DIRECTORY}" || exit 1
           export CYPRESS_BASE_URL="$(terraform output -raw web_site_url)"
           export CYPRESS_API_URL="$(terraform output -raw function_app_url)"
+          export CYPRESS_AUTH0_AUDIENCE="$(terraform -raw auth0_api_identifier)"
           popd || exit 1
 
           yarn e2e
