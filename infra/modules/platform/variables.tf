@@ -8,7 +8,7 @@ variable "app_name" {
 
 variable "service_name" {
   type    = string
-  default = "platform"
+  default = "plat"
 }
 
 variable "location" {

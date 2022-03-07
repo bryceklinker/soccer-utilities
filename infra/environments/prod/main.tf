@@ -11,8 +11,8 @@ variable "auth0_client_secret" {
 }
 
 locals {
-  env_name       = "prod"
-  app_name       = "soccer-utilities"
+  env_name       = "prd"
+  app_name       = "bsc-util"
   dist_directory = "${path.cwd}/../../../dist"
 
   tags = {}
