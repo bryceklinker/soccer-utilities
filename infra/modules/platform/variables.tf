@@ -24,7 +24,7 @@ variable "tags" {
 locals {
   tags = merge({
     environment = var.env_name
-    service     = var.service_name
+    service     = "platform"
     application = var.app_name
   }, var.tags)
 }
