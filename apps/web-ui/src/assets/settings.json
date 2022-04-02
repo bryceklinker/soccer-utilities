@@ -1,8 +1,8 @@
 {
   "auth": {
-    "clientId": "K0p6oMVdv0rk325QpvckdhAb9vV2HzIG",
+    "clientId": "1WhwUQTQcf8jPlClgkw19js39pTK1YG3",
     "domain": "bondurant-soccer-club-internal.us.auth0.com",
-    "audience": "https://prod-soccer-api.com"
+    "audience": "https://prd-bsc-util.com"
   },
   "api": {
     "url": "http://localhost:3333"
