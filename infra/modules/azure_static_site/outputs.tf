@@ -8,4 +8,5 @@ output "automation_client_id" {
 
 output "automation_client_secret" {
   value = auth0_client.automation.client_secret
+  sensitive = true
 }

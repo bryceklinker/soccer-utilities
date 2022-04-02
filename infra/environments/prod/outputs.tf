@@ -16,4 +16,5 @@ output "automation_client_id" {
 
 output "automation_client_secret" {
   value = module.site.automation_client_secret
+  sensitive = true
 }
