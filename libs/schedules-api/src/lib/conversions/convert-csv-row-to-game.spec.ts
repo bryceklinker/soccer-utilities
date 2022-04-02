@@ -117,4 +117,38 @@ describe('convertCsvRowToGame', () => {
 
     expect(game).toEqual(null);
   });
+
+  test('when column names are spring 2022 column names then returns game from new format row', () => {
+    const row = {
+      Date: '4/2/2022',
+      Time: '9:00 AM',
+      Age: 'Girls 9/10U Rec Girls Rec',
+      Home: 'Bondurant Soccer Club',
+      'Home Team Number': 'G10A',
+      Away: 'Iowa Rush',
+      'Away Team Number': 'G10A',
+      Complex: 'Bondurant West Complex',
+      Field: 'Field 10-1',
+      Center: 'Centy',
+      AR1: 'Joe',
+      AR2: 'Bob',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual({
+      date: '2022-04-02',
+      time: '09:00 AM',
+      homeTeam: 'Bondurant Soccer Club',
+      awayTeam: 'Iowa Rush',
+      field: 'Field 10-1',
+      division: 'Girls 9/10U Rec Girls Rec',
+      ageGroup: { gender: Gender.Girls, age: 10 },
+      referees: [
+        { type: RefereeType.Center, name: 'Centy' },
+        { type: RefereeType.Assistant, name: 'Joe' },
+        { type: RefereeType.Assistant, name: 'Bob' },
+      ],
+    });
+  });
 });

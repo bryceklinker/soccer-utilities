@@ -153,6 +153,8 @@ jobs:
           export CYPRESS_BASE_URL="$(terraform output -raw web_site_url)"
           export CYPRESS_API_URL="$(terraform output -raw function_app_url)"
           export CYPRESS_AUTH0_AUDIENCE="$(terraform -raw auth0_api_identifier)"
+          export CYPRESS_AUTH0_CLIENT_ID="$(terraform -raw automation_client_id)"
+          export CYPRESS_AUTH0_CLIENT_SECRET="$(terraform -raw automation_client_secret)"
           popd || exit 1
 
           yarn e2e

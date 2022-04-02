@@ -87,3 +87,28 @@ resource "auth0_client" "site" {
     "http://localhost:4200"
   ]
 }
+
+resource "auth0_client" "automation" {
+  name = "${var.env_name} ${var.app_name} automation"
+
+  oidc_conformant            = true
+  app_type                   = "non_interactive"
+  is_first_party             = true
+  token_endpoint_auth_method = "client_secret_post"
+
+  grant_types = [
+    "password",
+    "client_credentials"
+  ]
+}
+
+resource "auth0_client_grant" "automation" {
+  audience  = var.audience
+  client_id = auth0_client.automation.client_id
+  scope     = [
+    "openid",
+    "profile"
+  ]
+}
+
+
