@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { DataAccessModule } from '@soccer-utilities/data-access';
 import { CqrsModule } from '@nestjs/cqrs';
 import { QUERY_HANDLERS } from './queries';
@@ -14,7 +14,7 @@ import { REPOSITORIES } from './repositories';
     }),
   ],
   controllers: [],
-  providers: [...REPOSITORIES, ...QUERY_HANDLERS, ...COMMAND_HANDLERS],
+  providers: [...REPOSITORIES, ...QUERY_HANDLERS, ...COMMAND_HANDLERS, Logger],
   exports: [CqrsModule],
 })
 export class SchedulesModule {}
