@@ -26,14 +26,22 @@ export function convertCsvRowToGame(row: CsvRow): GameModel | null {
   const date = getValueByKeys(row, 'Game Date', 'Date');
   const time = getValueByKeys(row, 'Game Time', 'Time');
   const division = getValueByKeys(row, 'Division', 'Age');
+  const home = getValueByKeys(row, 'Home');
+  const isHomeADivision = home && home.includes('U7');
   return {
     date: convertCsvDateToDateString(date),
     time: convertCsvTimeToTimeString(time),
-    homeTeam,
-    awayTeam: getValueByKeys(row, 'Away Team', 'Away'),
+    homeTeam: isHomeADivision
+      ? getValueByKeys(row, 'Home Team Number')
+      : homeTeam,
+    awayTeam: isHomeADivision
+      ? getValueByKeys(row, 'Away Team Number')
+      : getValueByKeys(row, 'Away Team', 'Away'),
     field: getValueByKeys(row, 'Field'),
     division,
-    ageGroup: convertDivisionOrTeamNumberToAgeGroup(divisionOrTeamNumber),
+    ageGroup: isHomeADivision
+      ? convertDivisionOrTeamNumberToAgeGroup(home)
+      : convertDivisionOrTeamNumberToAgeGroup(divisionOrTeamNumber),
     referees: convertCsvRowToReferees(row),
   };
 }

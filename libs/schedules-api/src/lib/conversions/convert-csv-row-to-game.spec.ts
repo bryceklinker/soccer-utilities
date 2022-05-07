@@ -151,4 +151,64 @@ describe('convertCsvRowToGame', () => {
       ],
     });
   });
+
+  test('when column names are spring 2022 U7/8 Boys game then returns correct age group', () => {
+    const row = {
+      Date: '4/2/2022',
+      Time: '9:00 AM',
+      Age: 'Bondurant Soccer Club',
+      Home: 'U7/8 Boys',
+      'Home Team Number': 'Bondurant 16',
+      Away: 'U7/8 Boys',
+      'Away Team Number': 'Bondurant 9',
+      Complex: 'Bondurant West Complex',
+      Field: 'Field 8-1',
+      Center: 'Centy',
+      AR1: 'X',
+      AR2: 'X',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual({
+      date: '2022-04-02',
+      time: '09:00 AM',
+      homeTeam: 'Bondurant 16',
+      awayTeam: 'Bondurant 9',
+      field: 'Field 8-1',
+      division: 'Bondurant Soccer Club',
+      ageGroup: { gender: Gender.Boys, age: 7 },
+      referees: [{ type: RefereeType.Center, name: 'Centy' }],
+    });
+  });
+
+  test('when column names are spring 2022 U7/8 Boys game then returns correct age group', () => {
+    const row = {
+      Date: '4/2/2022',
+      Time: '9:00 AM',
+      Age: 'Bondurant Soccer Club',
+      Home: 'U7/8 Girls',
+      'Home Team Number': 'Bondurant 16',
+      Away: 'U7/8 Girls',
+      'Away Team Number': 'Bondurant 9',
+      Complex: 'Bondurant West Complex',
+      Field: 'Field 8-1',
+      Center: 'Centy',
+      AR1: 'X',
+      AR2: 'X',
+    };
+
+    const game = convertCsvRowToGame(row);
+
+    expect(game).toEqual({
+      date: '2022-04-02',
+      time: '09:00 AM',
+      homeTeam: 'Bondurant 16',
+      awayTeam: 'Bondurant 9',
+      field: 'Field 8-1',
+      division: 'Bondurant Soccer Club',
+      ageGroup: { gender: Gender.Girls, age: 7 },
+      referees: [{ type: RefereeType.Center, name: 'Centy' }],
+    });
+  });
 });
