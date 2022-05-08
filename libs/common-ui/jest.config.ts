@@ -1,11 +1,11 @@
 module.exports = {
-  displayName: 'web-ui',
-  preset: '../../jest.preset.js',
+  displayName: 'common-ui',
+
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
   transform: {
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/apps/web-ui',
+  coverageDirectory: '../../coverage/libs/common-ui',
+  preset: '../../jest.preset.ts',
 };

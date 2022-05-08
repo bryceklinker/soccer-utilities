@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { Route, useLocation, Navigate, Routes } from 'react-router-dom';
 import { ShellAppBar } from './ShellAppBar';
 import { ShellNavigation } from './ShellNavigation';
 import {
@@ -101,39 +101,59 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
         <ColumnFlexBox display={'flex'} flex={1} flexDirection={'column'}>
           <Toolbar />
           <ColumnFlexBox sx={styles.mainContent}>
-            <Switch>
-              <Route path={ROUTES.WELCOME}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <WelcomePage />
-                </Suspense>
+            <Routes>
+              <Route
+                path={ROUTES.WELCOME}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <WelcomePage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.CURRENT_SCHEDULE}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <CurrentSchedulePage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.REFEREE_CHECKS}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <RefereeChecksPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.REFEREE_REIMBURSEMENT_CHECKS}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <RefereeReimbursementChecksPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.CURRENT_TIMESHEET}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <CurrentTimesheetPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path={ROUTES.TIMESHEETS}
+                element={
+                  <Suspense fallback={<LoadingIndicator show center />}>
+                    <TimesheetsPage />
+                  </Suspense>
+                }
+              />
+              <Route path={'**'}>
+                <Navigate to={redirectRoute} />
               </Route>
-              <Route path={ROUTES.CURRENT_SCHEDULE}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <CurrentSchedulePage />
-                </Suspense>
-              </Route>
-              <Route path={ROUTES.REFEREE_CHECKS}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <RefereeChecksPage />
-                </Suspense>
-              </Route>
-              <Route path={ROUTES.REFEREE_REIMBURSEMENT_CHECKS}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <RefereeReimbursementChecksPage />
-                </Suspense>
-              </Route>
-              <Route path={ROUTES.CURRENT_TIMESHEET}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <CurrentTimesheetPage />
-                </Suspense>
-              </Route>
-              <Route path={ROUTES.TIMESHEETS}>
-                <Suspense fallback={<LoadingIndicator show center />}>
-                  <TimesheetsPage />
-                </Suspense>
-              </Route>
-              <Redirect from={ROUTES.REDIRECT} to={redirectRoute} />
-            </Switch>
+            </Routes>
           </ColumnFlexBox>
         </ColumnFlexBox>
       </RowFlexBox>

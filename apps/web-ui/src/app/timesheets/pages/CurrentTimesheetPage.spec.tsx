@@ -42,7 +42,7 @@ describe('CurrentTimesheetPage', () => {
     );
   });
 
-  test('when user clocks in then requests to clock in', () => {
+  test('when user clocks in then requests to clock in', async () => {
     const timesheet = WebUiModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.New,
     });
@@ -51,14 +51,14 @@ describe('CurrentTimesheetPage', () => {
     );
     renderWithProviders(<CurrentTimesheetPage />, { store });
 
-    userEvent.click(screen.getByRole('button', { name: 'clock in' }));
+    await userEvent.click(screen.getByRole('button', { name: 'clock in' }));
 
     expect(store.getActions()).toContainEqual(
       TimesheetsActions.clockIn.request()
     );
   });
 
-  test('when user clocks out then requests to clock out', () => {
+  test('when user clocks out then requests to clock out', async () => {
     const timesheet = WebUiModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.Open,
     });
@@ -67,14 +67,14 @@ describe('CurrentTimesheetPage', () => {
     );
     renderWithProviders(<CurrentTimesheetPage />, { store });
 
-    userEvent.click(screen.getByRole('button', { name: 'clock out' }));
+    await userEvent.click(screen.getByRole('button', { name: 'clock out' }));
 
     expect(store.getActions()).toContainEqual(
       TimesheetsActions.clockOut.request()
     );
   });
 
-  test('when admin user pays timesheet then requests to pay timesheet', () => {
+  test('when admin user pays timesheet then requests to pay timesheet', async () => {
     const timesheet = WebUiModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.Complete,
     });
@@ -87,7 +87,7 @@ describe('CurrentTimesheetPage', () => {
     );
     renderWithProviders(<CurrentTimesheetPage />, { store });
 
-    userEvent.click(screen.getByRole('button', { name: 'pay' }));
+    await userEvent.click(screen.getByRole('button', { name: 'pay' }));
 
     expect(store.getActions()).toContainEqual(
       TimesheetsActions.pay.request(timesheet)

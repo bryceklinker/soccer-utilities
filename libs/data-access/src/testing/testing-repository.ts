@@ -1,5 +1,5 @@
 import { Entity, EntityType, Repository, RepositoryQuery } from '../lib';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 import { selectAllQuery } from '../lib/standard-queries';
 
 export class TestingRepository<T extends Entity> implements Repository<T> {

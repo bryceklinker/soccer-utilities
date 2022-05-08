@@ -41,15 +41,17 @@ describe('TimesheetsPage', () => {
     expect(screen.getAllByRole('row', { name: 'timesheet' })).toHaveLength(4);
   });
 
-  test('when timesheet is deleted then notifies to delete timesheet', () => {
+  test('when timesheet is deleted then notifies to delete timesheet', async () => {
     const timesheet = WebUiModelFactory.createUserTimesheetModel();
     const store = createTestingStoreFromActions(
       TimesheetsActions.loadAll.success(List.fromItems(timesheet))
     );
     renderWithProviders(<TimesheetsPage />, { store });
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete confirm' })
+    );
 
     expect(store.getActions()).toContainEqual(
       TimesheetsActions.delete.request(timesheet)

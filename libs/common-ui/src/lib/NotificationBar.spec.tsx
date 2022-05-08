@@ -21,7 +21,7 @@ describe('NotificationBar', () => {
     );
   });
 
-  test('when notification closed then notifies that notification was closed', () => {
+  test('when notification closed then notifies that notification was closed', async () => {
     const notification = ModelFactory.createNotificationModel();
     const onCloseNotification = jest.fn();
     render(
@@ -31,7 +31,7 @@ describe('NotificationBar', () => {
       />
     );
 
-    userEvent.click(screen.getByLabelText('notification'));
+    await userEvent.click(screen.getByLabelText('notification'));
 
     expect(onCloseNotification).toHaveBeenCalledWith(notification);
   });

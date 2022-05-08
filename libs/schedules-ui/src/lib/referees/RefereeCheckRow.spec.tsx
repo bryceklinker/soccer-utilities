@@ -40,13 +40,13 @@ describe('RefereeCheckRow', () => {
     );
   });
 
-  test('when check copied then notifies of copy', () => {
+  test('when check copied then notifies of copy', async () => {
     const onCopy = jest.fn();
     const check = ModelFactory.createClientRefereeCheckModel();
 
     render(<RefereeChecksTable checks={[check]} onCopyCheck={onCopy} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'copy check' }));
+    await userEvent.click(screen.getByRole('button', { name: 'copy check' }));
 
     expect(onCopy).toHaveBeenCalledWith(check);
   });

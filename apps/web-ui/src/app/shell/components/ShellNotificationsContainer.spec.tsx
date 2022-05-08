@@ -18,14 +18,14 @@ describe('ShellNotificationsContainer', () => {
     expect(screen.getByLabelText('notification')).toBeInTheDocument();
   });
 
-  test('when notification closed then notifies to remove notification', () => {
+  test('when notification closed then notifies to remove notification', async () => {
     const notification = ModelFactory.createNotificationModel();
     const store = createTestingStoreFromActions(
       NotificationsActions.publish(notification)
     );
     renderWithProviders(<ShellNotificationsContainer />, { store });
 
-    userEvent.click(screen.getByLabelText('notification'));
+    await userEvent.click(screen.getByLabelText('notification'));
 
     expect(store.getActions()).toContainEqual(
       NotificationsActions.remove(notification)

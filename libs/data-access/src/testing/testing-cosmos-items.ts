@@ -17,7 +17,7 @@ import { TestingCosmosContainer } from './testing-cosmos-container';
 import { NotImplementedException } from '@nestjs/common';
 import { TestingQueryIterator } from './testing-query-iterator';
 import { TestingCosmosItem } from './testing-cosmos-item';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 
 export class TestingCosmosItems extends Items {
   private readonly items: Array<TestingCosmosItem>;

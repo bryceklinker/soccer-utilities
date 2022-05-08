@@ -26,7 +26,7 @@ describe('GameSchedule', () => {
     );
   });
 
-  test('when refresh schedule triggered then notifies for refresh', () => {
+  test('when refresh schedule triggered then notifies for refresh', async () => {
     const onRefresh = jest.fn();
     render(
       <GameSchedule
@@ -35,12 +35,12 @@ describe('GameSchedule', () => {
       />
     );
 
-    userEvent.click(screen.getByLabelText('refresh schedule'));
+    await userEvent.click(screen.getByLabelText('refresh schedule'));
 
     expect(onRefresh).toHaveBeenCalled();
   });
 
-  test('when upload schedule triggered then notifies upload schedule', () => {
+  test('when upload schedule triggered then notifies upload schedule', async () => {
     const onUpload = jest.fn();
     render(
       <GameSchedule
@@ -49,7 +49,7 @@ describe('GameSchedule', () => {
       />
     );
 
-    userEvent.click(screen.getByLabelText('upload schedule'));
+    await userEvent.click(screen.getByLabelText('upload schedule'));
 
     expect(onUpload).toHaveBeenCalled();
   });

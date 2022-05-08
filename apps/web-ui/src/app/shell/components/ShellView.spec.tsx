@@ -13,7 +13,7 @@ describe('ShellView', () => {
   test('when side navigation is opened then side navigation is opened', async () => {
     renderWithProviders(<ShellView />);
 
-    userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
 
     expect(await screen.findByRole('navigation')).toBeVisible();
   });
@@ -21,8 +21,8 @@ describe('ShellView', () => {
   test('when side navigation is closed then side navigation is hidden', async () => {
     renderWithProviders(<ShellView />);
 
-    userEvent.click(screen.getByLabelText('navigation toggle'));
-    userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
@@ -30,17 +30,17 @@ describe('ShellView', () => {
   test('when side navigation closes then side navigation is hidden', async () => {
     renderWithProviders(<ShellView />);
 
-    userEvent.click(screen.getByLabelText('navigation toggle'));
-    userEvent.keyboard('{esc}');
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.keyboard('{esc}');
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
 
-  test('when navigation is triggered then side navigation is hidden', () => {
+  test('when navigation is triggered then side navigation is hidden', async () => {
     renderWithProviders(<ShellView />);
 
-    userEvent.click(screen.getByLabelText('navigation toggle'));
-    userEvent.keyboard('{esc}');
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.keyboard('{esc}');
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
@@ -54,10 +54,10 @@ describe('ShellView', () => {
     expect(screen.getByLabelText('notification')).toBeInTheDocument();
   });
 
-  test('when user with admin role rendered then shows admin links', () => {
+  test('when user with admin role rendered then shows admin links', async () => {
     renderWithProviders(<ShellView roles={[Role.admin]} />);
 
-    userEvent.click(screen.getByLabelText('navigation toggle'));
+    await userEvent.click(screen.getByLabelText('navigation toggle'));
 
     expect(screen.getByLabelText('current schedule')).toBeInTheDocument();
   });
@@ -74,14 +74,14 @@ describe('ShellView', () => {
     expect(screen.queryByLabelText('welcome message')).not.toBeInTheDocument();
   });
 
-  test('when user logs out then notifies to logout', () => {
+  test('when user logs out then notifies to logout', async () => {
     const onLogout = jest.fn();
     renderWithProviders(
       <ShellView roles={[Role.concessions]} onLogout={onLogout} />
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'user menu' }));
-    userEvent.click(screen.getByRole('menuitem', { name: 'logout' }));
+    await userEvent.click(screen.getByRole('button', { name: 'user menu' }));
+    await userEvent.click(screen.getByRole('menuitem', { name: 'logout' }));
 
     expect(onLogout).toHaveBeenCalled();
   });

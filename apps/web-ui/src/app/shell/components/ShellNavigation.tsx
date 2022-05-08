@@ -1,7 +1,11 @@
 import { FunctionComponent } from 'react';
 import { Divider, Drawer, List, ListItem, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { ColumnFlexBox, NoOp } from '@soccer-utilities/common-ui';
+import {
+  ColumnFlexBox,
+  FCWithChildren,
+  NoOp,
+} from '@soccer-utilities/common-ui';
 import { ROUTES } from '../routing';
 import { Role } from '@soccer-utilities/models';
 
@@ -78,7 +82,7 @@ interface LinkButtonProps {
   to: string;
 }
 
-const LinkButton: FunctionComponent<LinkButtonProps> = ({
+const LinkButton: FCWithChildren<LinkButtonProps> = ({
   to,
   visible = true,
   ...rest

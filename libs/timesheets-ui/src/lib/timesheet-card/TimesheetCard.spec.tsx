@@ -95,38 +95,38 @@ describe('TimesheetCard', () => {
     expect(screen.getByRole('button', { name: 'clock out' })).toBeDisabled();
   });
 
-  test('when clock in triggered then notifies to clock in', () => {
+  test('when clock in triggered then notifies to clock in', async () => {
     const onClockIn = jest.fn();
     const timesheet = ModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.New,
     });
     render(<TimesheetCard timesheet={timesheet} onClockIn={onClockIn} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'clock in' }));
+    await userEvent.click(screen.getByRole('button', { name: 'clock in' }));
 
     expect(onClockIn).toHaveBeenCalledWith(timesheet);
   });
 
-  test('when clock out triggered then notifies to clock out', () => {
+  test('when clock out triggered then notifies to clock out', async () => {
     const onClockOut = jest.fn();
     const timesheet = ModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.Open,
     });
     render(<TimesheetCard timesheet={timesheet} onClockOut={onClockOut} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'clock out' }));
+    await userEvent.click(screen.getByRole('button', { name: 'clock out' }));
 
     expect(onClockOut).toHaveBeenCalledWith(timesheet);
   });
 
-  test('when pay triggered then notifies to pay', () => {
+  test('when pay triggered then notifies to pay', async () => {
     const onPay = jest.fn();
     const timesheet = ModelFactory.createUserTimesheetModel({
       status: TimesheetStatus.Complete,
     });
     render(<TimesheetCard timesheet={timesheet} onPay={onPay} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'pay' }));
+    await userEvent.click(screen.getByRole('button', { name: 'pay' }));
 
     expect(onPay).toHaveBeenCalledWith(timesheet);
   });

@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'schedules-api',
-  preset: '../../jest.preset.js',
+  displayName: 'data-access',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,7 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/schedules-api',
+  coverageDirectory: '../../coverage/libs/data-access',
+  setupFilesAfterEnv: ['<rootDir>/src/testing/setup-jest.ts'],
+  preset: '../../jest.preset.ts',
 };

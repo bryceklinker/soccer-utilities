@@ -1,10 +1,11 @@
-import { FunctionComponent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { LoadingIndicator } from './LoadingIndicator';
 import { NoOp } from './no-op';
 import { RowFlexBox } from './RowFlexBox';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { HideableIconButton } from './HideableIconButton';
+import { FCWithChildren } from './with-children';
 
 interface ConfirmableButtonProps {
   show?: boolean;
@@ -15,7 +16,7 @@ interface ConfirmableButtonProps {
   onCancel?: () => void;
 }
 
-export const ConfirmableButton: FunctionComponent<ConfirmableButtonProps> = ({
+export const ConfirmableButton: FCWithChildren<ConfirmableButtonProps> = ({
   'aria-label': ariaLabel,
   show = true,
   isLoading = false,

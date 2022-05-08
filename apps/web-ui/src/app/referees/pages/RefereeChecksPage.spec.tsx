@@ -134,14 +134,14 @@ describe('RefereeChecksPage', () => {
     );
   });
 
-  test('when referee check copied then notifies referee check written', () => {
+  test('when referee check copied then notifies referee check written', async () => {
     const check = ModelFactory.createClientRefereeCheckModel();
     const store = createTestingStoreFromActions(
       RefereesActions.loadChecks.success(List.fromItems(check))
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    userEvent.click(screen.getByRole('button', { name: 'copy check' }));
+    await userEvent.click(screen.getByRole('button', { name: 'copy check' }));
 
     expect(store.getActions()).toContainEqual(
       RefereesActions.checkWritten(check)
@@ -160,7 +160,7 @@ describe('RefereeChecksPage', () => {
     expect(screen.queryAllByLabelText('referee check')).toHaveLength(0);
   });
 
-  test('when all checks are shown then shows all checks', () => {
+  test('when all checks are shown then shows all checks', async () => {
     const checks = List.fromItems(
       ModelFactory.createClientRefereeCheckModel({ hasBeenWritten: true }),
       ModelFactory.createClientRefereeCheckModel({ hasBeenWritten: false })
@@ -170,7 +170,7 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    userEvent.click(
+    await userEvent.click(
       screen.getByRole('checkbox', { name: 'show all checks toggle' })
     );
 

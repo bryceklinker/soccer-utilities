@@ -1,6 +1,6 @@
-import { FunctionComponent } from 'react';
 import { Box, BoxProps } from '@mui/material';
+import { FCWithChildren } from './with-children';
 
-export const RowFlexBox: FunctionComponent<BoxProps> = (props: BoxProps) => {
+export const RowFlexBox: FCWithChildren<BoxProps> = (props: BoxProps) => {
   return <Box display={'flex'} flex={1} flexDirection={'row'} {...props} />;
 };

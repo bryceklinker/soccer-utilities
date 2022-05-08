@@ -3,7 +3,6 @@ import {
   SeverityLevel,
 } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
-import { History } from 'history';
 import { SettingsModel } from '../settings/state/settings-model';
 
 let appInsights: ApplicationInsights;
@@ -13,15 +12,12 @@ interface Properties {
   [key: string]: string;
 }
 
-function configure(history: History, settings: SettingsModel) {
+function configure(settings: SettingsModel) {
   reactPlugin = new ReactPlugin();
   appInsights = new ApplicationInsights({
     config: {
       instrumentationKey: settings.logging.instrumentationKey,
       extensions: [reactPlugin],
-      extensionConfig: {
-        [reactPlugin.identifier]: { history: history },
-      },
       autoTrackPageVisitTime: true,
       enableAutoRouteTracking: true,
       enableAjaxErrorStatusText: true,

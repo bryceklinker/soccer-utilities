@@ -1,12 +1,12 @@
-import { FunctionComponent } from 'react';
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { ColumnFlexBox } from './ColumnFlexBox';
+import { FCWithChildren } from './with-children';
 
 type LoadingIndicatorProps = {
   show?: boolean;
   center?: boolean;
 };
-export const LoadingIndicator: FunctionComponent<LoadingIndicatorProps> = ({
+export const LoadingIndicator: FCWithChildren<LoadingIndicatorProps> = ({
   show = true,
   center = false,
   children,

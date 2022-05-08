@@ -26,19 +26,19 @@ describe('ConfirmableButton', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('when clicked then notifies of click', () => {
+  test('when clicked then notifies of click', async () => {
     const onClick = jest.fn();
     renderWithTheme(<ConfirmableButton aria-label={'idk'} onClick={onClick} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'idk' }));
+    await userEvent.click(screen.getByRole('button', { name: 'idk' }));
 
     expect(onClick).toHaveBeenCalled();
   });
 
-  test('when initially clicked then shows confirm and cancel', () => {
+  test('when initially clicked then shows confirm and cancel', async () => {
     renderWithTheme(<ConfirmableButton aria-label={'idk'} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'idk' }));
+    await userEvent.click(screen.getByRole('button', { name: 'idk' }));
 
     expect(
       screen.getByRole('button', { name: 'idk confirm' })
@@ -48,35 +48,41 @@ describe('ConfirmableButton', () => {
     ).toBeInTheDocument();
   });
 
-  test('when confirmed then notifies of confirmation', () => {
+  test('when confirmed then notifies of confirmation', async () => {
     const onConfirm = jest.fn();
     renderWithTheme(
       <ConfirmableButton aria-label={'delete'} onConfirm={onConfirm} />
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete confirm' })
+    );
 
     expect(onConfirm).toHaveBeenCalled();
   });
 
-  test('when cancelled then notifies of cancellation', () => {
+  test('when cancelled then notifies of cancellation', async () => {
     const onCancel = jest.fn();
     renderWithTheme(
       <ConfirmableButton aria-label={'delete'} onCancel={onCancel} />
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete cancel' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete cancel' })
+    );
 
     expect(onCancel).toHaveBeenCalled();
   });
 
-  test('when confirmed then hides confirm and cancel', () => {
+  test('when confirmed then hides confirm and cancel', async () => {
     renderWithTheme(<ConfirmableButton aria-label={'delete'} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete confirm' })
+    );
 
     expect(
       screen.queryByRole('button', { name: 'delete confirm' })
@@ -86,11 +92,13 @@ describe('ConfirmableButton', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('when cancelled then hides confirm and cancel', () => {
+  test('when cancelled then hides confirm and cancel', async () => {
     renderWithTheme(<ConfirmableButton aria-label={'delete'} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete cancel' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete cancel' })
+    );
 
     expect(
       screen.queryByRole('button', { name: 'delete confirm' })

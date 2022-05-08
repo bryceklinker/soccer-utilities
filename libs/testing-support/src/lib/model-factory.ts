@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 import {
   AgeGroupModel,
   ClientRefereeCheckModel,
@@ -86,9 +86,9 @@ function createRefereeCheck(
 ): RefereeCheckModel {
   return {
     date: format(faker.date.soon(), DATE_FORMAT),
-    time: format(faker.time.recent(), TIME_FORMAT),
+    time: format(faker.date.recent(), TIME_FORMAT),
     amount: faker.datatype.number(),
-    type: faker.random.arrayElement(RefereeTypes),
+    type: faker.helpers.arrayElement(RefereeTypes),
     name: faker.name.firstName(),
     ageGroup: createAgeGroup(model.ageGroup),
     ...model,

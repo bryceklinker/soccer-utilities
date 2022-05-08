@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
 import { IconButton, IconButtonProps } from '@mui/material';
+import { FCWithChildren } from './with-children';
 
 export interface HideableIconButtonProps extends IconButtonProps {
   show: boolean;
 }
 
-export const HideableIconButton: FunctionComponent<HideableIconButtonProps> = ({
+export const HideableIconButton: FCWithChildren<HideableIconButtonProps> = ({
   show,
   ...props
 }) => {

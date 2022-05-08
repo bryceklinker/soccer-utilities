@@ -1,15 +1,15 @@
 module.exports = {
-  displayName: 'models',
-  preset: '../../jest.preset.js',
+  displayName: 'testing-support',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/models',
+  coverageDirectory: '../../coverage/libs/testing-support',
+  preset: '../../jest.preset.ts',
 };

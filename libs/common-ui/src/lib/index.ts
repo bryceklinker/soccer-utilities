@@ -1,3 +1,4 @@
+export * from './with-children';
 export * from './no-op';
 export * from './create-soccer-theme';
 export * from './soccer-theme-provider';

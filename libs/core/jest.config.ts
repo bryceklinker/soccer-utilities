@@ -1,15 +1,16 @@
 module.exports = {
-  displayName: 'nest-auth0',
-  preset: '../../jest.preset.js',
+  displayName: 'core',
+
+  setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/nest-auth0',
+  coverageDirectory: '../../coverage/libs/core',
+  preset: '../../jest.preset.ts',
 };

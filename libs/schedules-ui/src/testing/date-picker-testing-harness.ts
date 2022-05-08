@@ -14,8 +14,8 @@ function changeEnd(day: string) {
   changeDate('end date', day);
 }
 
-function clickSearch() {
-  userEvent.click(getSearchButton());
+async function clickSearch() {
+  await userEvent.click(getSearchButton());
 }
 
 function getStartTextBox() {

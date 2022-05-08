@@ -1,13 +1,13 @@
-import { FunctionComponent } from 'react';
 import { ColumnFlexBox } from './ColumnFlexBox';
 import { Button } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { FCWithChildren } from './with-children';
 
 export type RetryErrorMessageProps = {
   show?: boolean;
   onRetry?: () => void;
 };
-export const RetryErrorMessage: FunctionComponent<RetryErrorMessageProps> = ({
+export const RetryErrorMessage: FCWithChildren<RetryErrorMessageProps> = ({
   children,
   show = false,
   onRetry,

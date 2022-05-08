@@ -1,6 +1,6 @@
 import { TestingCosmosClient, TestingCosmosContainer } from '../testing';
 import { CosmosRepository } from './cosmos-repository';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 import { TestingEntity } from '../testing/testing.entity';
 
 describe('CosmosRepository', () => {

@@ -1,5 +1,5 @@
-import * as ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
+import * as ReactDOM from 'react-dom/client';
+import { BrowserRouter, Router } from 'react-router-dom';
 import { SoccerThemeProvider } from '@soccer-utilities/common-ui';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
@@ -12,11 +12,9 @@ import { configureRootStore } from './app/state/configure-root-store';
 import { SettingsActions } from './app/settings/state/settings-actions';
 import { WebLogger } from './app/logging/web-logger';
 
-const history = createBrowserHistory({ basename: '' });
-
 async function loadSettings(): Promise<SettingsModel> {
   const response = await axios.get<SettingsModel>('/assets/settings.json');
-  WebLogger.configure(history, response.data);
+  WebLogger.configure(response.data);
   return response.data;
 }
 
@@ -24,10 +22,13 @@ function renderWithSettings(settings: SettingsModel) {
   const store = configureRootStore();
   store.dispatch(SettingsActions.load.success(settings));
   const { auth } = settings;
-  ReactDOM.render(
+  const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+  );
+  root.render(
     <Provider store={store}>
       <SoccerThemeProvider>
-        <Router history={history}>
+        <BrowserRouter>
           <Auth0Provider
             domain={auth.domain}
             clientId={auth.clientId}
@@ -37,10 +38,9 @@ function renderWithSettings(settings: SettingsModel) {
           >
             <ShellContainer />
           </Auth0Provider>
-        </Router>
+        </BrowserRouter>
       </SoccerThemeProvider>
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
   );
 }
 

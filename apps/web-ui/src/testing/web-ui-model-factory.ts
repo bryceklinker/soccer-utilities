@@ -1,6 +1,6 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { AuthUser } from '../app/auth/state/auth-models';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 import { SettingsModel } from '../app/settings/state/settings-model';
 
 function createAuthUser(model: Partial<AuthUser> = {}): AuthUser {

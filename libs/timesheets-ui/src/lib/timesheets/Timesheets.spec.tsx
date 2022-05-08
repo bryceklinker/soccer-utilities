@@ -37,15 +37,17 @@ describe('Timesheets', () => {
     expect(row).toHaveTextContent('9/23/2021 7:23:00 AM');
   });
 
-  test('when timesheet deleted then triggers delete timesheet', () => {
+  test('when timesheet deleted then triggers delete timesheet', async () => {
     const onDelete = jest.fn();
     const timesheet = ModelFactory.createUiUserTimesheetModel();
     renderWithTheme(
       <Timesheets timesheets={[timesheet]} onDelete={onDelete} />
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'delete' }));
-    userEvent.click(screen.getByRole('button', { name: 'delete confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: 'delete' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: 'delete confirm' })
+    );
 
     expect(onDelete).toHaveBeenCalledWith(timesheet);
   });

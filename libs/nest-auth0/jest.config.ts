@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'data-access',
-  preset: '../../jest.preset.js',
+  displayName: 'nest-auth0',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,6 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/data-access',
-  setupFilesAfterEnv: ['<rootDir>/src/testing/setup-jest.ts'],
+  coverageDirectory: '../../coverage/libs/nest-auth0',
+  preset: '../../jest.preset.ts',
 };

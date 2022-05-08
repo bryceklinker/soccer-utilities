@@ -1,12 +1,7 @@
 import { Store } from 'redux';
 import { render } from '@testing-library/react';
 import { FunctionComponent } from 'react';
-import {
-  Router,
-  MemoryRouter,
-  MemoryRouterProps,
-  RouterProps,
-} from 'react-router-dom';
+import { MemoryRouter, MemoryRouterProps, RouterProps } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createTestingStoreFromActions } from './create-testing-store-from-state';
 import { RootState } from '../app/state/root-state';
@@ -22,13 +17,8 @@ const TestingRouter: FunctionComponent<RenderWithProvidersOptions> = ({
   currentRoute,
   initialEntries,
   initialIndex,
-  history,
   children,
 }) => {
-  if (history) {
-    return <Router history={history}>{children}</Router>;
-  }
-
   let entries = ['/'];
   if (initialEntries) {
     entries = initialEntries as string[];

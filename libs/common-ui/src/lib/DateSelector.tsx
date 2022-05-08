@@ -6,6 +6,7 @@ import { parse } from 'date-fns';
 import { DATE_FORMAT } from '@soccer-utilities/models';
 import { TextField } from '@mui/material';
 import { DateFormatter } from '@soccer-utilities/core';
+import { FCWithChildren } from './with-children';
 
 export type DateSelectorProps = Omit<
   Omit<DatePickerProps<Date>, 'onChange' | 'renderInput' | 'date'>,
@@ -15,7 +16,7 @@ export type DateSelectorProps = Omit<
   onChange: (value: string | null) => void;
   value: string | null;
 };
-export const DateSelector: FunctionComponent<DateSelectorProps> = ({
+export const DateSelector: FCWithChildren<DateSelectorProps> = ({
   'aria-label': ariaLabel,
   value,
   onChange,

@@ -20,11 +20,11 @@ describe('RetryErrorMessage', () => {
     expect(screen.queryByLabelText('errors')).not.toBeInTheDocument();
   });
 
-  test('when retry triggered then notifies to retry', () => {
+  test('when retry triggered then notifies to retry', async () => {
     const onRetry = jest.fn();
     render(<RetryErrorMessage show onRetry={onRetry} />);
 
-    userEvent.click(screen.getByLabelText('retry button'));
+    await userEvent.click(screen.getByLabelText('retry button'));
 
     expect(onRetry).toHaveBeenCalled();
   });

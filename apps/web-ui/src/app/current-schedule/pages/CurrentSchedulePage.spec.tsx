@@ -74,7 +74,7 @@ describe('CurrentSchedulePage', () => {
   test('when upload schedule triggered then shows upload schedule dialog', async () => {
     renderWithProviders(<CurrentSchedulePage />);
 
-    userEvent.click(screen.getByLabelText('upload schedule'));
+    await userEvent.click(screen.getByLabelText('upload schedule'));
 
     await waitFor(() =>
       expect(screen.getByLabelText('upload schedule dialog')).toBeVisible()
@@ -112,8 +112,8 @@ describe('CurrentSchedulePage', () => {
   test('when schedule upload is cancelled then hides upload schedule dialog', async () => {
     renderWithProviders(<CurrentSchedulePage />);
 
-    userEvent.click(screen.getByLabelText('upload schedule'));
-    userEvent.click(await screen.findByLabelText('cancel upload button'));
+    await userEvent.click(screen.getByLabelText('upload schedule'));
+    await userEvent.click(await screen.findByLabelText('cancel upload button'));
 
     await waitFor(() =>
       expect(
@@ -138,7 +138,7 @@ describe('CurrentSchedulePage', () => {
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     store.clearActions();
-    userEvent.click(screen.getByLabelText('retry button'));
+    await userEvent.click(screen.getByLabelText('retry button'));
 
     expect(store.getActions()).toContainEqual(
       CurrentScheduleActions.load.request()
@@ -150,7 +150,7 @@ describe('CurrentSchedulePage', () => {
     renderWithProviders(<CurrentSchedulePage />, { store });
 
     store.clearActions();
-    userEvent.click(screen.getByLabelText('refresh schedule'));
+    await userEvent.click(screen.getByLabelText('refresh schedule'));
 
     expect(store.getActions()).toContainEqual(
       CurrentScheduleActions.load.request()
@@ -164,7 +164,7 @@ describe('CurrentSchedulePage', () => {
     renderWithProviders(<CurrentSchedulePage />, { store });
     store.clearActions();
 
-    userEvent.click(screen.getByLabelText('upload schedule'));
+    await userEvent.click(screen.getByLabelText('upload schedule'));
 
     expect(
       await screen.findByLabelText('upload schedule dialog')
@@ -183,12 +183,14 @@ describe('CurrentSchedulePage', () => {
   });
 
   async function uploadScheduleFile(file: File) {
-    userEvent.click(screen.getByLabelText('upload schedule'));
-    userEvent.upload(await screen.findByLabelText('schedule file'), file);
+    await userEvent.click(screen.getByLabelText('upload schedule'));
+    await userEvent.upload(await screen.findByLabelText('schedule file'), file);
     await waitFor(() =>
       expect(screen.getByLabelText('upload schedule button')).toBeEnabled()
     );
 
-    userEvent.click(await screen.findByLabelText('upload schedule button'));
+    await userEvent.click(
+      await screen.findByLabelText('upload schedule button')
+    );
   }
 });

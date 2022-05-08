@@ -1,6 +1,6 @@
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { GameScheduleEntity } from './game-schedule.entity';
-import * as faker from 'faker';
+import faker from '@faker-js/faker';
 import { DEFAULT_REFEREE_PAY_SCALES } from '@soccer-utilities/core';
 import { DateRangeModel, RefereeType } from '@soccer-utilities/models';
 

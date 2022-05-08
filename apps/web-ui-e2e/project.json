@@ -1,0 +1,27 @@
+{
+  "sourceRoot": "apps/web-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/web-ui-e2e/cypress.json",
+        "tsConfig": "apps/web-ui-e2e/tsconfig.e2e.json"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "web-ui:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/web-ui-e2e/**/*.{js,ts}"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["web-ui"]
+}

@@ -9,19 +9,19 @@ describe('DateSelector', () => {
     jest.useFakeTimers('modern').setSystemTime(CURRENT_DATE);
   });
 
-  test('when date selected then notifies of change', () => {
+  test('when date selected then notifies of change', async () => {
     const onChange = jest.fn();
     renderWithTheme(
       <DateSelector onChange={onChange} value={null} aria-label={'idk'} />
     );
 
-    changeDate('idk', 'Jul 15, 2021');
+    await changeDate('idk', 'Jul 15, 2021');
 
     expect(onChange).toHaveBeenCalledWith('2021-07-15');
   });
 
-  function changeDate(label: string, day: string) {
-    userEvent.click(screen.getByRole('button', { name: label }));
-    userEvent.click(screen.getByRole('button', { name: day }));
+  async function changeDate(label: string, day: string) {
+    await userEvent.click(screen.getByRole('button', { name: label }));
+    await userEvent.click(screen.getByRole('button', { name: day }));
   }
 });

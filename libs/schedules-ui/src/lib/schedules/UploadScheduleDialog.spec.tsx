@@ -39,7 +39,9 @@ describe('UploadScheduleDialog', () => {
       expect(screen.getByLabelText('upload schedule button')).toBeEnabled()
     );
 
-    userEvent.click(await screen.findByLabelText('upload schedule button'));
+    await userEvent.click(
+      await screen.findByLabelText('upload schedule button')
+    );
 
     const expectedForm = new FormData();
     expectedForm.append('scheduleFile', file);
@@ -50,7 +52,7 @@ describe('UploadScheduleDialog', () => {
     const onCancel = jest.fn();
     render(<UploadScheduleDialog open={true} onCancel={onCancel} />);
 
-    userEvent.click(await screen.findByLabelText('cancel upload button'));
+    await userEvent.click(await screen.findByLabelText('cancel upload button'));
 
     await waitFor(() => expect(onCancel).toHaveBeenCalled());
   });
