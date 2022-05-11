@@ -34,7 +34,7 @@ describe('UploadScheduleDialog', () => {
     const file = new File(['data'], 'schedule.csv');
     render(<UploadScheduleDialog open={true} onUpload={onUpload} />);
 
-    userEvent.upload(await screen.findByLabelText('schedule file'), file);
+    await userEvent.upload(await screen.findByLabelText('schedule file'), file);
     await waitFor(() =>
       expect(screen.getByLabelText('upload schedule button')).toBeEnabled()
     );

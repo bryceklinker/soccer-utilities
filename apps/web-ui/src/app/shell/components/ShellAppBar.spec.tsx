@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { ShellAppBar } from './ShellAppBar';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 
 describe('ShellAppBar', () => {
   test('when user logs out then notifies to logout', async () => {
@@ -21,10 +21,12 @@ describe('ShellAppBar', () => {
     render(<ShellAppBar onNavigationToggle={jest.fn()} />);
 
     await userEvent.click(screen.getByRole('button', { name: 'user menu' }));
-    await userEvent.keyboard('{esc}');
+    await userEvent.keyboard('{Escape}');
 
-    expect(
-      screen.queryByRole('menuitem', { name: 'logout' })
-    ).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('menuitem', { name: 'logout' })
+      ).not.toBeInTheDocument()
+    );
   });
 });

@@ -4,7 +4,7 @@ import {
 } from '../../../testing';
 import { ShellView } from './ShellView';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 import { NotificationsActions } from '../../notifications/state/notifications-actions';
 import { ModelFactory } from '@soccer-utilities/testing-support';
 import { Role } from '@soccer-utilities/models';
@@ -31,7 +31,7 @@ describe('ShellView', () => {
     renderWithProviders(<ShellView />);
 
     await userEvent.click(screen.getByLabelText('navigation toggle'));
-    await userEvent.keyboard('{esc}');
+    await userEvent.keyboard('{Escape}');
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
@@ -40,7 +40,7 @@ describe('ShellView', () => {
     renderWithProviders(<ShellView />);
 
     await userEvent.click(screen.getByLabelText('navigation toggle'));
-    await userEvent.keyboard('{esc}');
+    await userEvent.keyboard('{Escape}');
 
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
@@ -62,10 +62,12 @@ describe('ShellView', () => {
     expect(screen.getByLabelText('current schedule')).toBeInTheDocument();
   });
 
-  test('when rendered then redirects to welcome', () => {
+  test('when rendered then redirects to welcome', async () => {
     renderWithProviders(<ShellView roles={[]} />);
 
-    expect(screen.getByLabelText('welcome message')).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByLabelText('welcome message')).toBeInTheDocument()
+    );
   });
 
   test('when user has concessions role then redirects to timesheet', () => {
