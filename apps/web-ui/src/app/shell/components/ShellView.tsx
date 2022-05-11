@@ -150,9 +150,7 @@ export const ShellView: FunctionComponent<ShellViewProps> = ({
                   </Suspense>
                 }
               />
-              <Route path={'**'}>
-                <Navigate to={redirectRoute} />
-              </Route>
+              <Route path={'**'} element={<Navigate to={redirectRoute} />} />
             </Routes>
           </ColumnFlexBox>
         </ColumnFlexBox>

@@ -28,7 +28,7 @@ import {
 function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
   return {
     age: faker.datatype.number({ min: 5, max: 19 }),
-    gender: faker.random.arrayElement(Genders),
+    gender: faker.helpers.arrayElement(Genders),
     ...ageGroup,
   };
 }
@@ -36,7 +36,7 @@ function createAgeGroup(ageGroup: Partial<AgeGroupModel> = {}): AgeGroupModel {
 function createReferee(referee: Partial<RefereeModel> = {}): RefereeModel {
   return {
     name: faker.name.lastName(),
-    type: faker.random.arrayElement(RefereeTypes),
+    type: faker.helpers.arrayElement(RefereeTypes),
     ...referee,
   };
 }
@@ -76,7 +76,7 @@ function createPayScale(
   return {
     ageGroup: createAgeGroup(),
     amount: faker.datatype.number({ min: 15, max: 50 }),
-    refereeType: faker.random.arrayElement(RefereeTypes),
+    refereeType: faker.helpers.arrayElement(RefereeTypes),
     ...model,
   };
 }
@@ -152,7 +152,7 @@ function createUiUserTimesheetModel(
 function createUserRole(model: Partial<UserRoleModel> = {}): UserRoleModel {
   return {
     id: faker.datatype.uuid(),
-    name: faker.random.arrayElement(Roles),
+    name: faker.helpers.arrayElement(Roles),
     ...model,
   };
 }

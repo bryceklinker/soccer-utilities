@@ -10,14 +10,9 @@ import userEvent from '@testing-library/user-event';
 import { List } from '@soccer-utilities/models';
 import { DatePickerTestingHarness } from '@soccer-utilities/schedules-ui/testing';
 
-const CURRENT_TIME = new Date(2021, 6, 10);
 const JULY_23_2021 = '07/23/2021';
 const JULY_24_2021 = '07/24/2021';
 describe('RefereeChecksPage', () => {
-  beforeEach(() => {
-    jest.useFakeTimers('modern').setSystemTime(CURRENT_TIME);
-  });
-
   test('when rendered then requests to load referee checks', () => {
     const store = createTestingStoreFromActions();
     renderWithProviders(<RefereeChecksPage />, { store });
@@ -75,7 +70,7 @@ describe('RefereeChecksPage', () => {
     );
   });
 
-  test('when date range selected then requests to load checks for range', () => {
+  test('when date range selected then requests to load checks for range', async () => {
     const checks = ModelFactory.createListResult(
       ModelFactory.createClientRefereeCheckModel,
       3
@@ -85,9 +80,9 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.changeStart(JULY_23_2021);
-    DatePickerTestingHarness.changeEnd(JULY_24_2021);
-    DatePickerTestingHarness.clickSearch();
+    await DatePickerTestingHarness.changeStart(JULY_23_2021);
+    await DatePickerTestingHarness.changeEnd(JULY_24_2021);
+    await DatePickerTestingHarness.clickSearch();
 
     expect(store.getActions()).toContainEqual(
       RefereesActions.loadChecks.request({
@@ -97,7 +92,7 @@ describe('RefereeChecksPage', () => {
     );
   });
 
-  test('when date range selected then date range stays selected', () => {
+  test('when date range selected then date range stays selected', async () => {
     const checks = ModelFactory.createListResult(
       ModelFactory.createClientRefereeCheckModel,
       3
@@ -107,9 +102,9 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.changeStart(JULY_23_2021);
-    DatePickerTestingHarness.changeEnd(JULY_24_2021);
-    DatePickerTestingHarness.clickSearch();
+    await DatePickerTestingHarness.changeStart(JULY_23_2021);
+    await DatePickerTestingHarness.changeEnd(JULY_24_2021);
+    await DatePickerTestingHarness.clickSearch();
 
     expect(DatePickerTestingHarness.getStartTextBox()).toHaveValue(
       '07/23/2021'
@@ -117,7 +112,7 @@ describe('RefereeChecksPage', () => {
     expect(DatePickerTestingHarness.getEndTextBox()).toHaveValue('07/24/2021');
   });
 
-  test('when empty dates are searched then notifies to load referee checks', () => {
+  test('when empty dates are searched then notifies to load referee checks', async () => {
     const checks = ModelFactory.createListResult(
       ModelFactory.createClientRefereeCheckModel,
       3
@@ -127,7 +122,7 @@ describe('RefereeChecksPage', () => {
     );
     renderWithProviders(<RefereeChecksPage />, { store });
 
-    DatePickerTestingHarness.clickSearch();
+    await DatePickerTestingHarness.clickSearch();
 
     expect(store.getActions()).toContainEqual(
       RefereesActions.loadChecks.request()

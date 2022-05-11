@@ -1,17 +1,17 @@
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 
-function changeDate(label: string, day: string) {
-  userEvent.type(screen.getByRole('textbox', { name: label }), day);
-  userEvent.tab();
+async function changeDate(label: string, day: string) {
+  await userEvent.type(screen.getByRole('textbox', { name: label }), day);
+  await userEvent.tab();
 }
 
-function changeStart(day: string) {
-  changeDate('start date', day);
+async function changeStart(day: string) {
+  await changeDate('start date', day);
 }
 
-function changeEnd(day: string) {
-  changeDate('end date', day);
+async function changeEnd(day: string) {
+  await changeDate('end date', day);
 }
 
 async function clickSearch() {

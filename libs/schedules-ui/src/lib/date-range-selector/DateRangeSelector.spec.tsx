@@ -3,14 +3,9 @@ import { DateRangeSelector } from './DateRangeSelector';
 import { DatePickerTestingHarness } from '../../testing/date-picker-testing-harness';
 import { renderWithTheme } from '@soccer-utilities/common-ui/testing';
 
-const CURRENT_DATE = new Date(2015, 3, 30);
 const APRIL_22_DATE = '04/22/2015';
 const APRIL_23_DATE = '04/23/2015';
 describe('DateRangeSelector', () => {
-  beforeEach(() => {
-    jest.useFakeTimers('modern').setSystemTime(CURRENT_DATE);
-  });
-
   test('when no dates provided then no dates are selected', () => {
     renderWithTheme(<DateRangeSelector />);
 
@@ -41,13 +36,13 @@ describe('DateRangeSelector', () => {
     expect(getEndDateTextBox()).toHaveValue('04/30/2021');
   });
 
-  test('when searched then notifies with start and end dates', () => {
+  test('when searched then notifies with start and end dates', async () => {
     const onSearch = jest.fn();
     renderWithTheme(<DateRangeSelector onSearch={onSearch} />);
 
-    DatePickerTestingHarness.changeStart(APRIL_22_DATE);
-    DatePickerTestingHarness.changeEnd(APRIL_23_DATE);
-    DatePickerTestingHarness.clickSearch();
+    await DatePickerTestingHarness.changeStart(APRIL_22_DATE);
+    await DatePickerTestingHarness.changeEnd(APRIL_23_DATE);
+    await DatePickerTestingHarness.clickSearch();
 
     expect(onSearch).toHaveBeenCalledWith({
       start: '2015-04-22',
@@ -55,27 +50,27 @@ describe('DateRangeSelector', () => {
     });
   });
 
-  test('when start date filled in without end date then search is disabled', () => {
+  test('when start date filled in without end date then search is disabled', async () => {
     renderWithTheme(<DateRangeSelector />);
 
-    DatePickerTestingHarness.changeStart(APRIL_22_DATE);
+    await DatePickerTestingHarness.changeStart(APRIL_22_DATE);
 
     expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
   });
 
-  test('when end date filled in without start date then search is disabled', () => {
+  test('when end date filled in without start date then search is disabled', async () => {
     renderWithTheme(<DateRangeSelector />);
 
-    DatePickerTestingHarness.changeEnd(APRIL_22_DATE);
+    await DatePickerTestingHarness.changeEnd(APRIL_22_DATE);
 
     expect(DatePickerTestingHarness.getSearchButton()).toBeDisabled();
   });
 
-  test('when searching without dates then notifies of search without range', () => {
+  test('when searching without dates then notifies of search without range', async () => {
     const onSearch = jest.fn();
     renderWithTheme(<DateRangeSelector onSearch={onSearch} />);
 
-    DatePickerTestingHarness.clickSearch();
+    await DatePickerTestingHarness.clickSearch();
 
     expect(onSearch).toHaveBeenCalledWith(undefined);
   });
