@@ -62,20 +62,6 @@ describe('ShellView', () => {
     expect(screen.getByLabelText('current schedule')).toBeInTheDocument();
   });
 
-  test('when rendered then redirects to welcome', async () => {
-    renderWithProviders(<ShellView roles={[]} />);
-
-    await waitFor(() =>
-      expect(screen.getByLabelText('welcome message')).toBeInTheDocument()
-    );
-  });
-
-  test('when user has concessions role then redirects to timesheet', () => {
-    renderWithProviders(<ShellView roles={[Role.concessions]} />);
-
-    expect(screen.queryByLabelText('welcome message')).not.toBeInTheDocument();
-  });
-
   test('when user logs out then notifies to logout', async () => {
     const onLogout = jest.fn();
     renderWithProviders(
