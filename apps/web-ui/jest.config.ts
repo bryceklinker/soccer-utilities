@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'web-ui',
 
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
@@ -8,5 +8,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/web-ui',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

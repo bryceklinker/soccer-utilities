@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'timesheets-ui',
 
   transform: {
@@ -7,5 +7,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/timesheets-ui',
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

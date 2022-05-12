@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'testing-support',
 
   globals: {
@@ -11,5 +11,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/testing-support',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

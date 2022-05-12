@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'rest-api',
 
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-tests.ts'],
@@ -13,5 +13,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/rest-api',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };

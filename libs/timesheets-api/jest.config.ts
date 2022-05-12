@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'timesheets-api',
 
   globals: {
@@ -13,5 +13,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/timesheets-api',
   setupFilesAfterEnv: ['<rootDir>/src/testing/setup-jest.ts'],
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };
